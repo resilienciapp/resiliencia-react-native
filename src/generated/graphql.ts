@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -10,6 +9,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** Date custom scalar type */
+  Date: any;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
@@ -20,17 +21,64 @@ export enum CacheControlScope {
   Private = 'PRIVATE'
 }
 
+export type Category = {
+  __typename?: 'Category';
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+};
+
+
 export type Marker = {
   __typename?: 'Marker';
+  active: Scalars['Boolean'];
+  category: Category;
   description?: Maybe<Scalars['String']>;
+  expiresAt?: Maybe<Scalars['Date']>;
   id: Scalars['Int'];
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  recurrence: Scalars['String'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  signUp: SignUpResponse;
+};
+
+
+export type MutationSignUpArgs = {
+  input: SignUpInput;
+};
+
+export type Profile = {
+  __typename?: 'Profile';
+  email: Scalars['String'];
+  isAdmin: Scalars['Boolean'];
+  name: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
   markers: Array<Marker>;
+  user: User;
 };
 
+export type SignUpInput = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type SignUpResponse = {
+  __typename?: 'SignUpResponse';
+  jwt: Scalars['String'];
+};
+
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['Int'];
+  profile: Profile;
+};

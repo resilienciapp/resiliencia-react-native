@@ -1,4 +1,5 @@
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { LatLng, MapEvent, Marker } from 'react-native-maps'
+import React, { useState } from 'react'
 import {
   SafeAreaView,
   StatusBar,
@@ -6,10 +7,11 @@ import {
   useColorScheme,
 } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
-import React from 'react'
+import LocalizedStrings from 'react-native-localization'
 import { useMarkers } from './useMarkers'
 
 export const Root = () => {
+  const [coordinate, setCoordinate] = useState<LatLng>()
   const { data } = useMarkers()
 
   const isDarkMode = useColorScheme() === 'dark'
@@ -28,7 +30,9 @@ export const Root = () => {
           longitude: -56.187666,
           longitudeDelta: 0.0421,
         }}
-        onLongPress={() => console.log('LongPress')}
+        onLongPress={(event: MapEvent) =>
+          setCoordinate(event.nativeEvent.coordinate)
+        }
         style={styles.map}>
         {data?.markers.map((marker, index) => (
           <Marker
@@ -41,10 +45,22 @@ export const Root = () => {
             description={marker.description ?? undefined}
           />
         ))}
+        {coordinate && (
+          <Marker key={-1} coordinate={coordinate} title={strings.title} />
+        )}
       </MapView>
     </SafeAreaView>
   )
 }
+
+const strings = new LocalizedStrings({
+  'en-US': {
+    title: 'Add event',
+  },
+  'es-UY': {
+    title: 'Agregar evento',
+  },
+})
 
 const styles = StyleSheet.create({
   container: {
