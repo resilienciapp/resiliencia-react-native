@@ -2,15 +2,20 @@
   "name": "resiliencia-react-native",
   "version": "0.0.1",
   "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": "15.x"
+  },
   "scripts": {
     "android": "run.env react-native run-android --no-packager",
-    "generate-types": "TZ=UTC graphql-codegen --config codegen.yml",
+    "generate-types": "yarn update-schema && apollo client:codegen --target=typescript --no-addTypename --localSchemaFile=graphql-schema.json --outputFlat=src/gql/types.ts",
     "ios": "react-native run-ios",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "start": "react-native start"
+    "start": "react-native start",
+    "update-schema": "apollo client:download-schema --endpoint=http://localhost:4000/graphql graphql-schema.json"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.17",
+    "@apollo/client": "^3.3.18",
     "graphql": "^15.5.0",
     "lodash": "^4.17.21",
     "react": "17.0.2",
@@ -21,14 +26,14 @@
   "devDependencies": {
     "@babel/core": "^7.14.2",
     "@babel/runtime": "^7.14.0",
-    "@graphql-codegen/cli": "^1.21.4",
-    "@graphql-codegen/typescript": "^1.22.0",
     "@types/graphql": "^14.5.0",
     "@types/lodash": "^4.14.169",
+    "@types/node": "^15.0.3",
     "@types/react": "^17.0.5",
     "@types/react-native": "^0.64.5",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
+    "apollo": "^2.33.2",
     "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",

@@ -1,11 +1,12 @@
+import { Platform } from 'react-native'
 import { createHttpLink } from '@apollo/client'
 import { format } from 'util'
 
-const uri = format(
+export const uri = format(
   '%s://%s:%s/graphql',
-  process.env.REACT_APP_API_SCHEME,
-  process.env.REACT_APP_API_HOST,
-  process.env.REACT_APP_API_PORT,
+  process.env.API_SCHEME || 'http',
+  process.env.API_HOST || (Platform.OS === 'ios' ? 'localhost' : '10.0.2.2'),
+  process.env.API_PORT || 4000,
 )
 
 export const http = createHttpLink({ uri })

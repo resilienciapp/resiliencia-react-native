@@ -14,5 +14,10 @@
     "strict": true,
     "target": "ESNext"
   },
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js"]
+  "exclude": [
+    "babel.config.js",
+    "metro.config.js",
+    "node_modules",
+    "src/gql/types.ts"
+  ]
 }

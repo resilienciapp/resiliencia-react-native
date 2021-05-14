@@ -1,8 +1,8 @@
 import { gql, useQuery } from '@apollo/client'
-import { Marker } from './generated/graphql'
+import { MarkersQuery as MarkersQueryData } from '../src/gql/types'
 
 const MarkersQuery = gql`
-  query markers {
+  query MarkersQuery {
     markers {
       description
       id
@@ -13,8 +13,4 @@ const MarkersQuery = gql`
   }
 `
 
-interface Result {
-  markers: Marker[]
-}
-
-export const useMarkers = () => useQuery<Result>(MarkersQuery)
+export const useMarkers = () => useQuery<MarkersQueryData>(MarkersQuery)
