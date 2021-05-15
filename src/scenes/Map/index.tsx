@@ -10,7 +10,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 import LocalizedStrings from 'react-native-localization'
 import { useMarkers } from './useMarkers'
 
-export const Root = () => {
+export const Map = () => {
   const [coordinate, setCoordinate] = useState<LatLng>()
   const { data } = useMarkers()
 
