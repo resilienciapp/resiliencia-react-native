@@ -1,9 +1,10 @@
-import { Map } from '../scenes/Map'
-import React from 'react'
-import { Routes } from './Routes'
-import { SignUp } from '../scenes/SignUp'
-import { StyleSheet } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import React from 'react'
+import { StyleSheet } from 'react-native'
+
+import { Map } from '../scenes/Map'
+import { SignUp } from '../scenes/SignUp'
+import { Routes } from './Routes'
 
 const Tab = createBottomTabNavigator()
 

@@ -1,4 +1,3 @@
-import MapView, { LatLng, MapEvent, Marker } from 'react-native-maps'
 import React, { useState } from 'react'
 import {
   SafeAreaView,
@@ -8,6 +7,8 @@ import {
 } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import LocalizedStrings from 'react-native-localization'
+import MapView, { LatLng, MapEvent, Marker } from 'react-native-maps'
+
 import { useMarkers } from './useMarkers'
 
 export const Map = () => {

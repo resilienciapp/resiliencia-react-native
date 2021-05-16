@@ -1,5 +1,5 @@
-import { Platform } from 'react-native'
 import { createHttpLink } from '@apollo/client'
+import { Platform } from 'react-native'
 import { format } from 'util'
 
 // export const uri = format(

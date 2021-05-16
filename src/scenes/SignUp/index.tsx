@@ -1,6 +1,6 @@
+import React from 'react'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
-import React from 'react'
 
 export const SignUp = () => (
   <SafeAreaView style={styles.safeArea}>
