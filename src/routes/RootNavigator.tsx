@@ -3,8 +3,8 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 
 import { Map } from '../scenes/Map'
-import { SignUp } from '../scenes/SignUp'
 import { Routes } from './Routes'
+import { UnauthenticatedStack } from './UnauthenticatedStack'
 
 const Tab = createBottomTabNavigator()
 
@@ -19,7 +19,10 @@ export const Root = () => (
       tabStyle: styles.tabStyle,
     }}>
     <Tab.Screen name={Routes.Map} component={Map} />
-    <Tab.Screen name={Routes.SignUp} component={SignUp} />
+    <Tab.Screen
+      name={Routes.UnauthenticatedStack}
+      component={UnauthenticatedStack}
+    />
   </Tab.Navigator>
 )
 
