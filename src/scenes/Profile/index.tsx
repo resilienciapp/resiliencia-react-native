@@ -1,6 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 
-export const Profile = () => (
-  <View style={{ backgroundColor: 'red', flex: 1 }} />
-)
+import { Button, ButtonMode } from '../../components/Button'
+
+export const Profile: React.FunctionComponent = () => {
+  const logOut = async () => {
+    try {
+      await AsyncStorage.removeItem('JWT')
+      return true
+    } catch (exception) {
+      return false
+    }
+  }
+
+  return (
+    <View>
+      <Text> Profile</Text>
+      <Button
+        mode={ButtonMode.Primary}
+        text={'Log out'}
+        onButtonPressed={logOut}
+      />
+    </View>
+  )
+}
