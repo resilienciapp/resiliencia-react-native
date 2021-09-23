@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": "15.x"
+    "node": "^16"
   },
   "scripts": {
     "android": "run.env react-native run-android --no-packager",

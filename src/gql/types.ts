@@ -4,27 +4,6 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: SignInMutation
-// ====================================================
-
-export interface SignInMutation_signIn {
-  jwt: string;
-}
-
-export interface SignInMutation {
-  signIn: SignInMutation_signIn;
-}
-
-export interface SignInMutationVariables {
-  input: SignInInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: MarkersQuery
 // ====================================================
 
@@ -48,6 +27,51 @@ export interface MarkersQuery_markers {
 
 export interface MarkersQuery {
   markers: MarkersQuery_markers[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: UserQuery
+// ====================================================
+
+export interface UserQuery_user_profile {
+  email: string;
+  isAdmin: boolean;
+  name: string;
+}
+
+export interface UserQuery_user {
+  id: number;
+  profile: UserQuery_user_profile;
+}
+
+export interface UserQuery {
+  user: UserQuery_user;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SignInMutation
+// ====================================================
+
+export interface SignInMutation_signIn {
+  jwt: string;
+}
+
+export interface SignInMutation {
+  signIn: SignInMutation_signIn;
+}
+
+export interface SignInMutationVariables {
+  input: SignInInput;
 }
 
 /* tslint:disable */

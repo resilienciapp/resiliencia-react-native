@@ -7,11 +7,18 @@ export const useAuthorization = () => {
   AsyncStorage.getItem('JWT').then(setToken)
 
   const storeToken = async (token: string) => {
+    console.log('store')
     await AsyncStorage.setItem('JWT', token)
     setToken(token)
   }
 
+  const deleteToken = async () => {
+    await AsyncStorage.removeItem('JWT')
+    setToken('')
+  }
+
   return {
+    deleteToken,
     storeToken,
     token,
   }

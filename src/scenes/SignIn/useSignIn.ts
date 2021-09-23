@@ -21,17 +21,20 @@ export const useSignIn = () => {
   const [mutate] = useMutation<SignInMutationData, SignInMutationVariables>(
     SignInMutation,
     {
-      onCompleted: async ({ signIn: { jwt } }) => storeToken(jwt),
+      onCompleted: ({ signIn: { jwt } }) => {
+        console.log('JWT ----', jwt)
+        storeToken(jwt)
+      },
+      onError: error => console.log(error.message),
     },
   )
 
   return {
-    signIn: (input: SignInInput) => () => {
+    signIn: (input: SignInInput) => () =>
       mutate({
         variables: {
           input,
         },
-      })
-    },
+      }),
   }
 }

@@ -5,7 +5,6 @@ export const UserFragment = gql`
     id
     profile {
       email
-      isAdmin
       name
     }
   }

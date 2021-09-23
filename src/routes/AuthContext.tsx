@@ -5,6 +5,7 @@ import { useAuthorization } from './useAuthorization'
 interface Props {
   token: string | null
   storeToken(token: string): void
+  deleteToken(): void
 }
 
 const AuthContext = createContext({} as Props)

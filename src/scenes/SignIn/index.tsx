@@ -18,6 +18,11 @@ export const SignIn: React.FunctionComponent = () => {
 
   const { signIn } = useSignIn()
 
+  const onSignIn = () => {
+    console.log('email: -', email, '    pass: -', password)
+    signIn({ email, password })
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -41,17 +46,14 @@ export const SignIn: React.FunctionComponent = () => {
           keyboardType="default"
           onSubmitEditing={Keyboard.dismiss}
           blurOnSubmit={false}
-          secureTextEntry={true}
+          secureTextEntry={false}
           underlineColorAndroid="#f000"
           returnKeyType="next"
         />
         <Button
           mode={ButtonMode.Primary}
           text={strings.signIn}
-          onButtonPressed={signIn({
-            email,
-            password,
-          })}
+          onButtonPressed={onSignIn}
         />
       </ScrollView>
     </SafeAreaView>

@@ -14,6 +14,7 @@
 		495C33446B7D2D5D3A9444CF /* libPods-resiliencia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AA503CBD91636C6CB3E8039 /* libPods-resiliencia.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		97EBBC544CB6D7120A86FE8A /* libPods-resiliencia-resilienciaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 217306B2B30A0CD268785152 /* libPods-resiliencia-resilienciaTests.a */; };
+		E045B98B26FBE31C004118E0 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E045B98A26FBE31C004118E0 /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		2AA503CBD91636C6CB3E8039 /* libPods-resiliencia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-resiliencia.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = resiliencia/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0F46886D66A0191FDD7E15D /* Pods-resiliencia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-resiliencia.release.xcconfig"; path = "Target Support Files/Pods-resiliencia/Pods-resiliencia.release.xcconfig"; sourceTree = "<group>"; };
+		E045B98A26FBE31C004118E0 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FF6F93BBC6A56EDE5E70752B /* Pods-resiliencia-resilienciaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-resiliencia-resilienciaTests.debug.xcconfig"; path = "Target Support Files/Pods-resiliencia-resilienciaTests/Pods-resiliencia-resilienciaTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +94,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				E045B98A26FBE31C004118E0 /* File.swift */,
 			);
 			name = resiliencia;
 			sourceTree = "<group>";
@@ -145,7 +148,6 @@
 				FF6F93BBC6A56EDE5E70752B /* Pods-resiliencia-resilienciaTests.debug.xcconfig */,
 				11486B244AF3A5CAF48503AD /* Pods-resiliencia-resilienciaTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -208,7 +210,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1300;
 					};
 				};
 			};
@@ -412,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				E045B98B26FBE31C004118E0 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,6 +434,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FF6F93BBC6A56EDE5E70752B /* Pods-resiliencia-resilienciaTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -458,6 +462,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 11486B244AF3A5CAF48503AD /* Pods-resiliencia-resilienciaTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = resilienciaTests/Info.plist;

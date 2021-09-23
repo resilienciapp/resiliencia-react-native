@@ -1,20 +1,11 @@
 import { gql, useMutation } from '@apollo/client'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from 'react-native'
 
 import {
   SignUpInput,
   SignUpMutation as SignUpMutationData,
   SignUpMutationVariables,
 } from '../../gql/types'
-
-const storeData = async (jwt: string) => {
-  try {
-    await AsyncStorage.setItem('JWT', jwt)
-  } catch {
-    Alert.alert('Error', 'Invalid email or password', [{ text: 'OK' }])
-  }
-}
+import { useAuthContext } from '../../routes/AuthContext'
 
 const SignUpMutation = gql`
   mutation SignUpMutation($input: SignUpInput!) {
@@ -25,20 +16,21 @@ const SignUpMutation = gql`
 `
 
 export const useSignUp = () => {
+  const { storeToken } = useAuthContext()
+
   const [mutate] = useMutation<SignUpMutationData, SignUpMutationVariables>(
     SignUpMutation,
     {
-      onCompleted: ({ signUp }) => storeData(signUp.jwt),
+      onCompleted: ({ signUp: { jwt } }) => storeToken(jwt),
     },
   )
 
   return {
-    signUp: (input: SignUpInput) => {
+    signUp: (input: SignUpInput) =>
       mutate({
         variables: {
           input,
         },
-      })
-    },
+      }),
   }
 }
