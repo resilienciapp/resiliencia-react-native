@@ -1,7 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
-
-import { MarkerFragment } from '../../gql/fragments/marker'
-import { MarkersQuery as MarkersQueryData } from '../../gql/types'
+import { MarkerFragment } from 'src/gql/fragments/marker'
+import { MarkersQuery as MarkersQueryData } from 'src/gql/types'
 
 const MarkersQuery = gql`
   query MarkersQuery {

@@ -1,28 +1,46 @@
+import { useQuery } from '@apollo/client'
+import { gql } from 'graphql-tag'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import profilePlaceholder from 'src/assets/profilePlaceholder.png'
+import { ProfileQuery as ProfileQueryData } from 'src/gql/types'
 
-import profilePlaceholder from '../../assets/profile-placeholder.png'
+const ProfileQuery = gql`
+  query ProfileQuery {
+    user {
+      id
+      profile {
+        email
+        name
+      }
+    }
+  }
+`
 
-interface Props {
-  name?: string
-  email?: string
-}
+export const PersonalInfo: React.FC = () => {
+  const { data } = useQuery<ProfileQueryData>(ProfileQuery)
 
-export const PersonalInfo: React.FC<Props> = ({ name, email }) => (
-  <View style={styles.container}>
-    <Image style={styles.image} source={profilePlaceholder} />
-    <View style={styles.infoContainer}>
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.subtitle}>{email}</Text>
+  if (!data) {
+    return null
+  }
+
+  return (
+    <View style={styles.container}>
+      <Image style={styles.image} source={profilePlaceholder} />
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{data.user.profile.name}</Text>
+        <Text style={styles.subtitle}>{data.user.profile.email}</Text>
+      </View>
     </View>
-  </View>
-)
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: 'white',
     flex: 1,
+    justifyContent: 'center',
   },
   image: {
     alignContent: 'center',

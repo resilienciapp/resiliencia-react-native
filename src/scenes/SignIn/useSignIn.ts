@@ -1,11 +1,10 @@
 import { gql, useMutation } from '@apollo/client'
-
 import {
   SignInInput,
   SignInMutation as SignInMutationData,
   SignInMutationVariables,
-} from '../../gql/types'
-import { useAuthContext } from '../../routes/AuthContext'
+} from 'src/gql/types'
+import { useAuthContext } from 'src/routes/AuthContext'
 
 const SignInMutation = gql`
   mutation SignInMutation($input: SignInInput!) {

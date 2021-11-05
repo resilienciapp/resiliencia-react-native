@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/core'
 import { isEmail } from 'class-validator'
 import React, { useState } from 'react'
 import {
@@ -10,10 +9,11 @@ import {
   TextInput,
 } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
+import { Button, ButtonMode } from 'src/components/Button'
+import { Route } from 'src/routes/Route'
+import { RouteComponent } from 'src/routes/Stack'
+import { Color } from 'src/styles/Color'
 
-import { Button, ButtonMode } from '../../components/Button'
-import { Routes } from '../../routes/Routes'
-import { Colors } from '../../styles/Colors'
 import { useSignUp } from './useSignUp'
 
 const isValidEmail = (email?: string) => isEmail(email)
@@ -30,15 +30,14 @@ const isValidPassword = (password?: string) => {
   return expression.test(password)
 }
 
-export const SignUp: React.FunctionComponent = () => {
+export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
 
-  const { navigate } = useNavigation()
   const { signUp } = useSignUp()
 
-  const navigateToSignIn = () => navigate(Routes.SignIn)
+  const navigateToSignIn = () => navigation.navigate(Route.SignIn)
 
   const onSignUp = () => {
     if (isValidEmail(email) && isValidPassword(password)) {
@@ -54,7 +53,7 @@ export const SignUp: React.FunctionComponent = () => {
         <TextInput
           style={styles.input}
           placeholder={strings.name}
-          placeholderTextColor={Colors.Placeholder}
+          placeholderTextColor={Color.MysticGray}
           onChangeText={setName}
           onSubmitEditing={Keyboard.dismiss}
           blurOnSubmit={false}
@@ -67,7 +66,7 @@ export const SignUp: React.FunctionComponent = () => {
           keyboardType="email-address"
           onChangeText={setEmail}
           placeholder={strings.email}
-          placeholderTextColor={Colors.Placeholder}
+          placeholderTextColor={Color.MysticGray}
           style={[
             styles.input,
             !isValidEmail(email) && email != '' && styles.inputError,
@@ -84,7 +83,7 @@ export const SignUp: React.FunctionComponent = () => {
           ]}
           onChangeText={setPassword}
           placeholder={strings.password}
-          placeholderTextColor={Colors.Placeholder}
+          placeholderTextColor={Color.MysticGray}
           blurOnSubmit={false}
           secureTextEntry={true}
           underlineColorAndroid="black"
@@ -113,6 +112,13 @@ const strings = new LocalizedStrings({
     register: 'Register',
     signIn: 'I already have an account',
   },
+  'es-UY': {
+    email: 'Email',
+    name: 'Nombre',
+    password: 'Contraseña',
+    register: 'Registrarse',
+    signIn: 'Ya tengo una cuenta',
+  },
 })
 
 const styles = StyleSheet.create({
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    borderColor: Colors.Border,
+    borderColor: Color.Gray,
     borderRadius: 10,
     borderWidth: 1,
     color: 'black',
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   inputError: {
-    borderColor: Colors.Error,
+    borderColor: Color.Red,
   },
   scrollView: {
     alignItems: 'center',

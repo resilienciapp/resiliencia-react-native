@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../resiliencia-node"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../resiliencia-react"
+		}
+	]
+}

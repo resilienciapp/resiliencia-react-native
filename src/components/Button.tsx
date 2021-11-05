@@ -6,8 +6,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native'
-
-import { Colors } from '../styles/Colors'
+import { Color } from 'src/styles/Color'
 
 export enum ButtonMode {
   Primary = 'Primary',
@@ -54,7 +53,7 @@ const commonStyles = StyleSheet.create({
 const styles = {
   [ButtonMode.Primary]: StyleSheet.create({
     container: {
-      backgroundColor: Colors.Primary,
+      backgroundColor: Color.Blue,
       borderRadius: 15,
       shadowColor: 'gray',
       shadowOffset: {
@@ -65,7 +64,7 @@ const styles = {
       shadowRadius: 5,
     },
     text: {
-      color: 'white',
+      color: Color.White,
     },
   }),
   [ButtonMode.Secondary]: StyleSheet.create({
@@ -73,7 +72,7 @@ const styles = {
       backgroundColor: 'transparent',
     },
     text: {
-      color: 'gray',
+      color: Color.Gray,
     },
   }),
 }

@@ -10,7 +10,7 @@ const contextSetter: ContextSetter = async (_, context) => {
       ...context,
       headers: {
         ...context.headers,
-        authorization: token ? token : null,
+        authorization: token,
       },
     }
   } else {
