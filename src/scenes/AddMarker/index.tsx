@@ -4,7 +4,6 @@ import gql from 'graphql-tag'
 import React, { useState } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
-import { DateTimePicker } from 'src/components/DateTimePicker/index.ios'
 import { CategoriesQuery as CategoriesQueryData } from 'src/gql/types'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
@@ -49,7 +48,6 @@ export const AddMarker: RouteComponent<Route.AddMarker> = () => {
       </Picker>
 
       <Label text={strings.duration} />
-      <DateTimePicker value={date} setValue={setDate} />
     </View>
   )
 }
