@@ -15,25 +15,14 @@ const SignInMutation = gql`
 `
 
 export const useSignIn = () => {
-  const { storeToken } = useAuthContext()
+  const { signIn } = useAuthContext()
 
   const [mutate] = useMutation<SignInMutationData, SignInMutationVariables>(
     SignInMutation,
-    {
-      onCompleted: ({ signIn: { jwt } }) => {
-        console.log('JWT ----', jwt)
-        storeToken(jwt)
-      },
-      onError: error => console.log(error.message),
-    },
+    { onCompleted: ({ signIn: { jwt } }) => signIn(jwt) },
   )
 
   return {
-    signIn: (input: SignInInput) => () =>
-      mutate({
-        variables: {
-          input,
-        },
-      }),
+    signIn: (input: SignInInput) => () => mutate({ variables: { input } }),
   }
 }

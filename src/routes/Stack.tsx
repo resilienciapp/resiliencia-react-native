@@ -4,6 +4,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack'
+import React from 'react'
 import { LatLng } from 'react-native-maps'
 import { UserQuery_user_subscriptions as Subscription } from 'src/gql/types'
 

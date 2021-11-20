@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import { Picker } from '@react-native-picker/picker'
 import gql from 'graphql-tag'
 import React, { useState } from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { ScrollView, StyleSheet, TextInput } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { CategoriesQuery as CategoriesQueryData } from 'src/gql/types'
 import { Route } from 'src/routes/Route'
@@ -26,29 +26,34 @@ export const AddMarker: RouteComponent<Route.AddMarker> = () => {
 
   const [date, setDate] = useState<Date>(new Date())
 
+  const [show, setShow] = useState(false)
+
   if (!data) {
     return null
   }
 
   return (
-    <View style={styles.container}>
-      <Label text={strings.description} />
+    <ScrollView style={styles.container}>
+      <TextInput
+        multiline={true}
+        placeholder={strings.name}
+        placeholderTextColor={Color.Steel}
+        style={styles.description}
+      />
       <TextInput
         multiline={true}
         placeholder={strings.description}
-        placeholderTextColor={Color.Gray}
+        placeholderTextColor={Color.Steel}
         style={styles.description}
       />
 
-      <Label text={strings.category} />
       <Picker>
         {data.categories.map(({ id, name }, index) => (
           <Picker.Item key={index} label={name} value={id} />
         ))}
       </Picker>
-
       <Label text={strings.duration} />
-    </View>
+    </ScrollView>
   )
 }
 
@@ -57,11 +62,13 @@ const strings = new LocalizedStrings({
     category: 'Category',
     description: 'Description',
     duration: 'Duration',
+    name: 'Name',
   },
   es: {
     category: 'Categoría',
     description: 'Descripción',
     duration: 'Duración',
+    name: 'Nombre',
   },
 })
 
@@ -72,7 +79,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   description: {
-    borderColor: Color.Gray,
+    borderColor: Color.Steel,
     borderRadius: 8,
     borderWidth: 1,
     marginBottom: 16,

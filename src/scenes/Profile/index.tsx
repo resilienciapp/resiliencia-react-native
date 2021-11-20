@@ -1,34 +1,20 @@
-import { gql, useQuery } from '@apollo/client'
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { Button, ButtonMode } from 'src/components/Button'
-import { EmptySubscription } from 'src/components/EmptySubscription'
-import { PersonalInfo } from 'src/components/PersonalInfo'
 import { SubscriptionItem } from 'src/components/SubscriptionItem'
-import { UserFragment } from 'src/gql/fragments/user'
-import {
-  UserQuery as UserQueryData,
-  UserQuery_user_subscriptions as Subscription,
-} from 'src/gql/types'
+import { UserQuery_user_subscriptions as Subscription } from 'src/gql/types'
 import { useAuthContext } from 'src/routes/AuthContext'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
-const UserQuery = gql`
-  query UserQuery {
-    user {
-      ...User
-    }
-  }
-  ${UserFragment}
-`
+import { PersonalInfo } from './PersonalInfo'
+import { useUser } from './useUser'
 
 export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
-  const { deleteToken } = useAuthContext()
-  const { data } = useQuery<UserQueryData>(UserQuery)
+  const { signOut } = useAuthContext()
+  const { data } = useUser()
 
   if (!data) {
     return null
@@ -43,16 +29,14 @@ export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
       <FlatList
         contentContainerStyle={styles.listContainer}
         ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
-        ListEmptyComponent={<EmptySubscription />}
         data={data.user.subscriptions}
         renderItem={({ item }) => (
           <SubscriptionItem
             name={item.marker.name}
-            category={item.marker.description}
+            category={item.marker.category}
             onItemPress={navigateToDetail(item)}
           />
         )}
-        keyExtractor={index => index.marker.id}
         ListHeaderComponent={
           <Text style={styles.headerTitle}>Subscriptions</Text>
         }
@@ -63,7 +47,7 @@ export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
         style={styles.button}
         mode={ButtonMode.Primary}
         text={strings.logout}
-        onButtonPressed={deleteToken}
+        onButtonPressed={signOut}
       />
     </View>
   )

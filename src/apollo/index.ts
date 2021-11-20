@@ -1,9 +1,6 @@
-import { ApolloClient, from, InMemoryCache } from '@apollo/client'
+import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-import { auth } from './auth'
-import { http } from './http'
-
-const link = from([auth, http])
+import { link } from './link'
 
 export const getClient = () =>
   new ApolloClient({

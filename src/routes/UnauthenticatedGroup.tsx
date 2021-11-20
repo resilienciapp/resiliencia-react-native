@@ -6,7 +6,7 @@ import { Route } from './Route'
 import { Stack } from './Stack'
 
 export const UnauthenticatedGroup = (
-  <Stack.Group>
+  <Stack.Group screenOptions={{ headerShown: false }}>
     <Stack.Screen name={Route.SignUp} component={SignUp} />
     <Stack.Screen name={Route.SignIn} component={SignIn} />
   </Stack.Group>

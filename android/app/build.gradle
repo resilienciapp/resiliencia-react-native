@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -138,7 +139,7 @@ android {
         versionName "1.0"
 
         manifestPlaceholders = [
-                GOOGLE_API_KEY: System.getenv('GOOGLE_API_KEY')
+                GOOGLE_API_KEY: "$System.env.GOOGLE_API_KEY"
         ]
     }
     splits {

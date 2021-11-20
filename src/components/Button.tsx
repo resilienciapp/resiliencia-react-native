@@ -14,6 +14,7 @@ export enum ButtonMode {
 }
 
 interface ButtonProps {
+  disabled?: boolean
   mode: ButtonMode
   onButtonPressed(): void
   style?: StyleProp<ViewStyle>
@@ -22,6 +23,7 @@ interface ButtonProps {
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ({
+  disabled = false,
   mode,
   onButtonPressed,
   style,
@@ -30,6 +32,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
 }) => (
   <TouchableOpacity
     activeOpacity={0.75}
+    disabled={disabled}
     onPress={onButtonPressed}
     style={[commonStyles.container, styles[mode].container, style]}>
     <Text style={[commonStyles.text, styles[mode].text, textStyle]}>
@@ -72,7 +75,7 @@ const styles = {
       backgroundColor: 'transparent',
     },
     text: {
-      color: Color.Gray,
+      color: Color.Steel,
     },
   }),
 }

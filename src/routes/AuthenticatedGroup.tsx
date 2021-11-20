@@ -7,7 +7,7 @@ import { Stack } from './Stack'
 
 export const AuthenticatedGroup = (
   <Stack.Group>
-    <Stack.Screen name={Route.Profile} component={Profile} />
-    <Stack.Screen name={Route.Details} component={Details} />
+    <Stack.Screen component={Profile} name={Route.Profile} />
+    <Stack.Screen component={Details} name={Route.Details} />
   </Stack.Group>
 )

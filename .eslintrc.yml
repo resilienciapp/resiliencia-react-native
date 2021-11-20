@@ -2,9 +2,7 @@ env:
   es2021: true
   node: true
 extends:
-  - 'eslint:recommended'
-  - 'plugin:@typescript-eslint/recommended'
-  - 'plugin:react/recommended'
+  - '@react-native-community'
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaFeatures:
@@ -12,15 +10,12 @@ parserOptions:
   ecmaVersion: 12
   sourceType: module
 plugins:
-  - '@typescript-eslint'
-  - 'react-hooks'
   - 'simple-import-sort'
 rules:
-  '@typescript-eslint/explicit-module-boundary-types': off
-  'react/prop-types': off
-  'react-hooks/rules-of-hooks': off
   'no-duplicate-imports':
     - error
     - includeExports: true
+  'no-shadow': off
+  'semi': off
   'simple-import-sort/imports': error
   'sort-keys': error

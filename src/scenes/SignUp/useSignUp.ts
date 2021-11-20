@@ -15,21 +15,14 @@ const SignUpMutation = gql`
 `
 
 export const useSignUp = () => {
-  const { storeToken } = useAuthContext()
+  const { signIn } = useAuthContext()
 
   const [mutate] = useMutation<SignUpMutationData, SignUpMutationVariables>(
     SignUpMutation,
-    {
-      onCompleted: ({ signUp: { jwt } }) => storeToken(jwt),
-    },
+    { onCompleted: ({ signUp: { jwt } }) => signIn(jwt) },
   )
 
   return {
-    signUp: (input: SignUpInput) =>
-      mutate({
-        variables: {
-          input,
-        },
-      }),
+    signUp: (input: SignUpInput) => () => mutate({ variables: { input } }),
   }
 }

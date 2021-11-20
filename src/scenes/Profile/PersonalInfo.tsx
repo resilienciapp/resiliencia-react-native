@@ -1,8 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { gql } from 'graphql-tag'
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
-import profilePlaceholder from 'src/assets/profilePlaceholder.png'
+import { StyleSheet, Text, View } from 'react-native'
 import { ProfileQuery as ProfileQueryData } from 'src/gql/types'
 
 const ProfileQuery = gql`
@@ -26,7 +25,6 @@ export const PersonalInfo: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={profilePlaceholder} />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{data.user.profile.name}</Text>
         <Text style={styles.subtitle}>{data.user.profile.email}</Text>

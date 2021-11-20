@@ -6,7 +6,6 @@ export enum Route {
   MapGroup = 'MapGroup',
   Profile = 'Profile',
   ProfileGroup = 'ProfileGroup',
-  Root = 'Root',
   SignUp = 'Sign Up',
   SignIn = 'Sign In',
   UnauthenticatedGroup = 'UnauthenticatedGroup',

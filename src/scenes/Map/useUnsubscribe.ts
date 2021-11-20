@@ -25,18 +25,11 @@ export const useUnSubscribe = () => {
     UnsubscribeMarkerMutationData,
     UnsubscribeMarkerMutationVariables
   >(UnsubscribeMutation, {
-    onCompleted: ({ unsubscribeMarker: { id } }) => {
-      console.log('unsubscribe to: ', id)
-    },
     refetchQueries: ['MarkersQuery'],
   })
 
   return {
-    unsubscribeMarker: (input: UnsubscribeMarkerInput) =>
-      mutate({
-        variables: {
-          input,
-        },
-      }),
+    unsubscribeMarker: (input: UnsubscribeMarkerInput) => () =>
+      mutate({ variables: { input } }),
   }
 }

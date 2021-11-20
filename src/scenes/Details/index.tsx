@@ -22,7 +22,8 @@ export const Details: RouteComponent<Route.Details> = ({ route }) => (
         coordinate={{
           latitude: route.params.marker.latitude,
           longitude: route.params.marker.longitude,
-        }}></Marker>
+        }}
+      />
     </MapView>
     <Text style={styles.badge}>{route.params.marker.category.name}</Text>
     <Text>{route.params.marker.description}</Text>
@@ -48,7 +49,7 @@ export const Details: RouteComponent<Route.Details> = ({ route }) => (
 
 const styles = StyleSheet.create({
   badge: {
-    color: Color.Gray,
+    color: Color.Steel,
     fontSize: 12,
     fontWeight: 'bold',
     paddingVertical: 5,

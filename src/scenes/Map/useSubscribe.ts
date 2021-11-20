@@ -18,18 +18,11 @@ export const useSubscribe = () => {
     SubscribeMutationData,
     SubscribeMutationVariables
   >(SubscribeMutation, {
-    onCompleted: ({ subscribeMarker: { id } }) => {
-      console.log('subscription to: ', id)
-    },
     refetchQueries: ['MarkersQuery'],
   })
 
   return {
-    subscribeMarker: (input: SubscribeMarkerInput) =>
-      mutate({
-        variables: {
-          input,
-        },
-      }),
+    subscribeMarker: (input: SubscribeMarkerInput) => () =>
+      mutate({ variables: { input } }),
   }
 }

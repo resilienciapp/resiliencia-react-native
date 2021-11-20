@@ -4,29 +4,6 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ProfileQuery
-// ====================================================
-
-export interface ProfileQuery_user_profile {
-  email: string;
-  name: string;
-}
-
-export interface ProfileQuery_user {
-  id: number;
-  profile: ProfileQuery_user_profile;
-}
-
-export interface ProfileQuery {
-  user: ProfileQuery_user;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: CategoriesQuery
 // ====================================================
 
@@ -164,6 +141,29 @@ export interface UnsubscribeMarkerMutation {
 
 export interface UnsubscribeMarkerMutationVariables {
   input: UnsubscribeMarkerInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: ProfileQuery
+// ====================================================
+
+export interface ProfileQuery_user_profile {
+  email: string;
+  name: string;
+}
+
+export interface ProfileQuery_user {
+  id: number;
+  profile: ProfileQuery_user_profile;
+}
+
+export interface ProfileQuery {
+  user: ProfileQuery_user;
 }
 
 /* tslint:disable */

@@ -1,19 +1,35 @@
-import React, { createContext, useContext } from 'react'
-
-import { useAuthorization } from './useAuthorization'
+import React, { createContext, useContext, useState } from 'react'
+import { localStorage, LocalStorageItem } from 'src/common/localStorage'
 
 interface Props {
-  token: string | null
-  storeToken(token: string): void
-  deleteToken(): void
+  isAuthenticated: boolean
+  signIn(token: string): void
+  signOut(): void
 }
 
 const AuthContext = createContext({} as Props)
 
 export const AuthProvider: React.FunctionComponent = ({ children }) => {
-  const values = useAuthorization()
+  const [token, setToken] = useState(
+    localStorage.getString(LocalStorageItem.JWT),
+  )
 
-  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
+  const signIn = (token: string) => {
+    localStorage.set(LocalStorageItem.JWT, token)
+    setToken(token)
+  }
+
+  const signOut = () => {
+    localStorage.delete(LocalStorageItem.JWT)
+    setToken(undefined)
+  }
+
+  return (
+    <AuthContext.Provider
+      value={{ isAuthenticated: Boolean(token), signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuthContext = () => useContext(AuthContext)

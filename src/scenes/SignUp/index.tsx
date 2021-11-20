@@ -1,14 +1,8 @@
 import { isEmail } from 'class-validator'
 import React, { useState } from 'react'
-import {
-  Alert,
-  Keyboard,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-} from 'react-native'
+import { Keyboard, StyleSheet, TextInput } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button, ButtonMode } from 'src/components/Button'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
@@ -17,17 +11,14 @@ import { Color } from 'src/styles/Color'
 import { useSignUp } from './useSignUp'
 
 const isValidEmail = (email?: string) => isEmail(email)
-
 const isValidPassword = (password?: string) => {
   if (!password) {
     return false
   }
 
-  const expression = new RegExp(
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+  return new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/).test(
+    password,
   )
-
-  return expression.test(password)
 }
 
 export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
@@ -37,69 +28,61 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
 
   const { signUp } = useSignUp()
 
-  const navigateToSignIn = () => navigation.navigate(Route.SignIn)
-
-  const onSignUp = () => {
-    if (isValidEmail(email) && isValidPassword(password)) {
-      signUp({ email, name, password })
-    } else {
-      Alert.alert('Error', 'Invalid email or password', [{ text: 'OK' }])
-    }
+  const navigateToSignIn = () => {
+    navigation.navigate(Route.SignIn)
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <TextInput
-          style={styles.input}
-          placeholder={strings.name}
-          placeholderTextColor={Color.MysticGray}
-          onChangeText={setName}
-          onSubmitEditing={Keyboard.dismiss}
-          blurOnSubmit={false}
-          secureTextEntry={false}
-          underlineColorAndroid="black"
-          returnKeyType="next"
-        />
-        <TextInput
-          autoCapitalize="none"
-          keyboardType="email-address"
-          onChangeText={setEmail}
-          placeholder={strings.email}
-          placeholderTextColor={Color.MysticGray}
-          style={[
-            styles.input,
-            !isValidEmail(email) && email != '' && styles.inputError,
-          ]}
-          secureTextEntry={false}
-          returnKeyType="next"
-          underlineColorAndroid="black"
-          blurOnSubmit={false}
-        />
-        <TextInput
-          style={[
-            styles.input,
-            !isValidPassword(password) && password != '' && styles.inputError,
-          ]}
-          onChangeText={setPassword}
-          placeholder={strings.password}
-          placeholderTextColor={Color.MysticGray}
-          blurOnSubmit={false}
-          secureTextEntry={true}
-          underlineColorAndroid="black"
-          returnKeyType="next"
-        />
-        <Button
-          mode={ButtonMode.Primary}
-          text={strings.register}
-          onButtonPressed={onSignUp}
-        />
-        <Button
-          mode={ButtonMode.Secondary}
-          text={strings.signIn}
-          onButtonPressed={navigateToSignIn}
-        />
-      </ScrollView>
+      <TextInput
+        blurOnSubmit={false}
+        onChangeText={setName}
+        onSubmitEditing={Keyboard.dismiss}
+        placeholder={strings.name}
+        placeholderTextColor={Color.Steel}
+        returnKeyType="next"
+        style={styles.input}
+        underlineColorAndroid={Color.Black}
+      />
+      <TextInput
+        autoCapitalize="none"
+        blurOnSubmit={false}
+        keyboardType="email-address"
+        onChangeText={setEmail}
+        placeholder={strings.email}
+        placeholderTextColor={Color.Steel}
+        returnKeyType="next"
+        secureTextEntry={false}
+        style={[
+          styles.input,
+          !isValidEmail(email) && !!email && styles.inputError,
+        ]}
+        underlineColorAndroid={Color.Black}
+      />
+      <TextInput
+        blurOnSubmit={false}
+        onChangeText={setPassword}
+        placeholder={strings.password}
+        placeholderTextColor={Color.Steel}
+        returnKeyType="next"
+        secureTextEntry={true}
+        style={[
+          styles.input,
+          !isValidPassword(password) && !!password && styles.inputError,
+        ]}
+        underlineColorAndroid={Color.Black}
+      />
+      <Button
+        disabled={!isValidEmail(email) && !isValidPassword(password)}
+        mode={ButtonMode.Primary}
+        onButtonPressed={signUp({ email, name, password })}
+        text={strings.register}
+      />
+      <Button
+        mode={ButtonMode.Secondary}
+        onButtonPressed={navigateToSignIn}
+        text={strings.signIn}
+      />
     </SafeAreaView>
   )
 }
@@ -123,10 +106,13 @@ const strings = new LocalizedStrings({
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     flex: 1,
+    justifyContent: 'center',
+    padding: 16,
   },
   input: {
-    borderColor: Color.Gray,
+    borderColor: Color.Steel,
     borderRadius: 10,
     borderWidth: 1,
     color: 'black',
@@ -135,11 +121,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   inputError: {
-    borderColor: Color.Red,
-  },
-  scrollView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
+    borderColor: Color.Reddish,
   },
 })

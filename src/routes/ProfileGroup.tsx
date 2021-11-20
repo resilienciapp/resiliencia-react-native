@@ -7,16 +7,20 @@ import { Stack } from './Stack'
 import { UnauthenticatedGroup } from './UnauthenticatedGroup'
 
 export const ProfileGroup = () => {
-  const token = useAuthContext()
+  const { isAuthenticated } = useAuthContext()
+
+  const initialRouteName = isAuthenticated ? Route.Profile : Route.SignUp
+
+  const Group = isAuthenticated ? AuthenticatedGroup : UnauthenticatedGroup
 
   return (
     <Stack.Navigator
-      initialRouteName={token ? Route.Profile : Route.SignUp}
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerBackTitleVisible: false,
         headerShadowVisible: false,
       }}>
-      {token ? AuthenticatedGroup : UnauthenticatedGroup}
+      {Group}
     </Stack.Navigator>
   )
 }

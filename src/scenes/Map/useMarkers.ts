@@ -11,4 +11,8 @@ const MarkersQuery = gql`
   ${MarkerFragment}
 `
 
-export const useMarkers = () => useQuery<MarkersQueryData>(MarkersQuery)
+export const useMarkers = () => {
+  const { data } = useQuery<MarkersQueryData>(MarkersQuery)
+
+  return { markers: data?.markers ?? [] }
+}
