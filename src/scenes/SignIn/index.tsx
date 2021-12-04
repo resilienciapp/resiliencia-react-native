@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
-import { Keyboard, StyleSheet, TextInput } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Keyboard, StyleSheet } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { focusNextRef } from 'src/common/references'
 import { Button, ButtonMode } from 'src/components/Button'
+import { InputText } from 'src/components/TextInput'
 import { useSignIn } from 'src/gql/hooks/useSignIn'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
-import { Color } from 'src/styles/Color'
+import { validator } from 'src/validator'
 
 export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState(false)
   const [password, setPassword] = useState('')
+
+  const passwordRef = useRef(null)
 
   const { signIn } = useSignIn()
 
@@ -18,35 +23,36 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
     navigation.navigate(Route.SignUp)
   }
 
+  const validateEmail = () => {
+    setEmailError(!!email && !validator.email(email))
+  }
+
+  const buttonDisabled = !email || !validator.email(email) || !password
+
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        blurOnSubmit={false}
+      <InputText
+        error={emailError}
         keyboardType="email-address"
+        onBlur={validateEmail}
         onChangeText={setEmail}
+        onFocus={() => setEmailError(false)}
+        onSubmitEditing={focusNextRef(passwordRef)}
         placeholder={strings.email}
-        placeholderTextColor={Color.Steel}
-        returnKeyType="next"
         secureTextEntry={false}
-        style={styles.input}
-        underlineColorAndroid={Color.Black}
+        textContentType="emailAddress"
       />
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        blurOnSubmit={false}
-        keyboardType="default"
+      <InputText
         onChangeText={setPassword}
         onSubmitEditing={Keyboard.dismiss}
         placeholder={strings.password}
-        placeholderTextColor={Color.Steel}
-        returnKeyType="next"
-        style={styles.input}
-        underlineColorAndroid={Color.Black}
+        reference={passwordRef}
+        returnKeyType="done"
+        secureTextEntry={true}
+        textContentType="password"
       />
       <Button
+        disabled={buttonDisabled}
         mode={ButtonMode.Primary}
         onPress={signIn({ email, password })}
         text={strings.signIn}
@@ -81,14 +87,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-  },
-  input: {
-    borderColor: Color.Steel,
-    borderRadius: 10,
-    borderWidth: 1,
-    color: 'black',
-    marginVertical: 15,
-    padding: 10,
-    width: '100%',
   },
 })

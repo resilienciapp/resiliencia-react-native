@@ -1,40 +1,24 @@
-import { isEmail } from 'class-validator'
 import React, { useRef, useState } from 'react'
-import { StyleSheet, TextInput } from 'react-native'
+import { Keyboard, StyleSheet } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { focusNextRef } from 'src/common/references'
 import { Button, ButtonMode } from 'src/components/Button'
+import { InputText } from 'src/components/TextInput'
 import { useSignUp } from 'src/gql/hooks/useSignUp'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
-import { Color } from 'src/styles/Color'
-
-const isValidEmail = (email?: string) => isEmail(email)
-
-const isValidPassword = (password?: string) => {
-  if (!password) {
-    return false
-  }
-
-  return new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/).test(
-    password,
-  )
-}
-
-const focusNextRef = (ref: React.MutableRefObject<any>) => () =>
-  ref.current.focus()
-
-const pressButton = (ref: React.MutableRefObject<any>) => () =>
-  ref.current.touchableHandlePress()
+import { validator } from 'src/validator'
 
 export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState(false)
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState(false)
 
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
-  const buttonRef = useRef(null)
 
   const { signUp } = useSignUp()
 
@@ -42,51 +26,55 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
     navigation.navigate(Route.SignIn)
   }
 
+  const validateEmail = () => {
+    setEmailError(!!email && !validator.email(email))
+  }
+
+  const validatePassword = () => {
+    setPasswordError(!!password && !validator.password(password))
+  }
+
+  const buttonDisabled =
+    !name ||
+    !email ||
+    !validator.email(email) ||
+    !password ||
+    !validator.password(password)
+
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput
-        autoCorrect={false}
+      <InputText
+        autoCapitalize="words"
         onChangeText={setName}
         onSubmitEditing={focusNextRef(emailRef)}
         placeholder={strings.name}
-        placeholderTextColor={Color.Steel}
-        returnKeyType="next"
-        style={styles.input}
       />
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
+      <InputText
+        error={emailError}
         keyboardType="email-address"
+        onBlur={validateEmail}
         onChangeText={setEmail}
+        onFocus={() => setEmailError(false)}
         onSubmitEditing={focusNextRef(passwordRef)}
         placeholder={strings.email}
-        placeholderTextColor={Color.Steel}
-        ref={emailRef}
-        returnKeyType="next"
-        style={[
-          styles.input,
-          !isValidEmail(email) && !!email && styles.inputError,
-        ]}
+        reference={emailRef}
+        textContentType="emailAddress"
       />
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
+      <InputText
+        error={passwordError}
         onChangeText={setPassword}
-        onSubmitEditing={pressButton(passwordRef)}
+        onBlur={validatePassword}
+        onFocus={() => setPasswordError(false)}
+        onSubmitEditing={Keyboard.dismiss}
         placeholder={strings.password}
-        placeholderTextColor={Color.Steel}
-        ref={passwordRef}
-        returnKeyType="next"
+        reference={passwordRef}
+        returnKeyType="done"
         secureTextEntry={true}
-        style={[
-          styles.input,
-          !isValidPassword(password) && !!password && styles.inputError,
-        ]}
+        textContentType="password"
       />
       <Button
-        disabled={!isValidEmail(email) || !isValidPassword(password)}
+        disabled={buttonDisabled}
         mode={ButtonMode.Primary}
-        reference={buttonRef}
         onPress={signUp({ email, name, password })}
         text={strings.register}
       />
@@ -122,17 +110,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-  },
-  input: {
-    borderColor: Color.Steel,
-    borderRadius: 10,
-    borderWidth: 1,
-    color: 'black',
-    marginVertical: 15,
-    padding: 10,
-    width: '100%',
-  },
-  inputError: {
-    borderColor: Color.Reddish,
   },
 })
