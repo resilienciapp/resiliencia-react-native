@@ -17,6 +17,7 @@ export const MarkerFragment = gql`
     name
     recurrence
     requests {
+      createdAt
       description
       expiresAt
       id

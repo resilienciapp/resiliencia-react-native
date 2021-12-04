@@ -38,6 +38,7 @@ export interface MarkersQuery_markers_requests_user {
 }
 
 export interface MarkersQuery_markers_requests {
+  createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
@@ -72,8 +73,47 @@ export interface MarkersQuery {
 // GraphQL mutation operation: SubscribeMutation
 // ====================================================
 
+export interface SubscribeMutation_subscribeMarker_subscriptions_marker_category {
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface SubscribeMutation_subscribeMarker_subscriptions_marker_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface SubscribeMutation_subscribeMarker_subscriptions_marker_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: SubscribeMutation_subscribeMarker_subscriptions_marker_requests_user;
+}
+
+export interface SubscribeMutation_subscribeMarker_subscriptions_marker {
+  category: SubscribeMutation_subscribeMarker_subscriptions_marker_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  isSubscribed: boolean;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: SubscribeMutation_subscribeMarker_subscriptions_marker_requests[];
+  state: MarkerState;
+}
+
+export interface SubscribeMutation_subscribeMarker_subscriptions {
+  marker: SubscribeMutation_subscribeMarker_subscriptions_marker;
+}
+
 export interface SubscribeMutation_subscribeMarker {
   id: number;
+  subscriptions: SubscribeMutation_subscribeMarker_subscriptions[];
 }
 
 export interface SubscribeMutation {
@@ -105,6 +145,7 @@ export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marke
 }
 
 export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_requests {
+  createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
@@ -149,29 +190,6 @@ export interface UnsubscribeMarkerMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ProfileQuery
-// ====================================================
-
-export interface ProfileQuery_user_profile {
-  email: string;
-  name: string;
-}
-
-export interface ProfileQuery_user {
-  id: number;
-  profile: ProfileQuery_user_profile;
-}
-
-export interface ProfileQuery {
-  user: ProfileQuery_user;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL query operation: UserQuery
 // ====================================================
 
@@ -192,6 +210,7 @@ export interface UserQuery_user_subscriptions_marker_requests_user {
 }
 
 export interface UserQuery_user_subscriptions_marker_requests {
+  createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
@@ -305,6 +324,7 @@ export interface Marker_requests_user {
 }
 
 export interface Marker_requests {
+  createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
@@ -352,6 +372,7 @@ export interface User_subscriptions_marker_requests_user {
 }
 
 export interface User_subscriptions_marker_requests {
+  createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;

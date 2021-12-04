@@ -1,4 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
+import { Keyboard } from 'react-native'
 import {
   SignUpInput,
   SignUpMutation as SignUpMutationData,
@@ -23,6 +24,9 @@ export const useSignUp = () => {
   )
 
   return {
-    signUp: (input: SignUpInput) => () => mutate({ variables: { input } }),
+    signUp: (input: SignUpInput) => () => {
+      Keyboard.dismiss()
+      mutate({ variables: { input } })
+    },
   }
 }

@@ -16,7 +16,8 @@ export enum ButtonMode {
 interface ButtonProps {
   disabled?: boolean
   mode: ButtonMode
-  onButtonPressed(): void
+  onPress(): void
+  reference?: React.LegacyRef<TouchableOpacity>
   style?: StyleProp<ViewStyle>
   text?: string
   textStyle?: StyleProp<ViewStyle>
@@ -25,7 +26,8 @@ interface ButtonProps {
 export const Button: React.FunctionComponent<ButtonProps> = ({
   disabled = false,
   mode,
-  onButtonPressed,
+  onPress,
+  reference,
   style,
   text,
   textStyle,
@@ -33,9 +35,10 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
   <TouchableOpacity
     activeOpacity={0.75}
     disabled={disabled}
-    onPress={onButtonPressed}
-    style={[commonStyles.container, styles[mode].container, style]}>
-    <Text style={[commonStyles.text, styles[mode].text, textStyle]}>
+    onPress={onPress}
+    ref={reference}
+    style={[commonStyles.container, styles(disabled)[mode].container, style]}>
+    <Text style={[commonStyles.text, styles(disabled)[mode].text, textStyle]}>
       {text}
     </Text>
   </TouchableOpacity>
@@ -44,23 +47,24 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
 const commonStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    height: 50,
+    height: 45,
     justifyContent: 'center',
-    width: 200,
+    width: '75%',
   },
   text: {
     fontWeight: 'bold',
   },
 })
 
-const styles = {
-  [ButtonMode.Primary]: StyleSheet.create({
+const styles = (disabled: boolean) => ({
+  [ButtonMode.Primary]: {
     container: {
-      backgroundColor: Color.Blue,
-      borderRadius: 15,
-      shadowColor: 'gray',
+      backgroundColor: disabled ? Color.Steel : Color.Blue,
+      borderRadius: 16,
+      elevation: 8,
+      shadowColor: Color.Steel,
       shadowOffset: {
-        height: 10,
+        height: 5,
         width: 0,
       },
       shadowOpacity: 0.75,
@@ -69,13 +73,13 @@ const styles = {
     text: {
       color: Color.White,
     },
-  }),
-  [ButtonMode.Secondary]: StyleSheet.create({
+  },
+  [ButtonMode.Secondary]: {
     container: {
-      backgroundColor: 'transparent',
+      backgroundColor: Color.Transparent,
     },
     text: {
       color: Color.Steel,
     },
-  }),
-}
+  },
+})

@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 
 #import <GoogleMaps/GoogleMaps.h>
+#import "ReactNativeConfig.h"
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -29,7 +30,8 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"GOOGLE_API_KEY"];
+  NSString *googleKey = [ReactNativeConfig envFor:@"GOOGLE_API_KEY"];
+  [GMSServices provideAPIKey:googleKey];
   
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);

@@ -139,7 +139,7 @@ android {
         versionName "1.0"
 
         manifestPlaceholders = [
-                GOOGLE_API_KEY: "$System.env.GOOGLE_API_KEY"
+                GOOGLE_API_KEY: project.env.get("GOOGLE_API_KEY")
         ]
     }
     splits {

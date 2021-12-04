@@ -11,16 +11,9 @@ export const ProfileGroup = () => {
 
   const initialRouteName = isAuthenticated ? Route.Profile : Route.SignUp
 
-  const Group = isAuthenticated ? AuthenticatedGroup : UnauthenticatedGroup
-
   return (
-    <Stack.Navigator
-      initialRouteName={initialRouteName}
-      screenOptions={{
-        headerBackTitleVisible: false,
-        headerShadowVisible: false,
-      }}>
-      {Group}
+    <Stack.Navigator initialRouteName={initialRouteName}>
+      {isAuthenticated ? AuthenticatedGroup : UnauthenticatedGroup}
     </Stack.Navigator>
   )
 }

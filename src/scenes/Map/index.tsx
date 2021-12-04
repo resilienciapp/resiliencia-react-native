@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import LocalizedStrings from 'react-native-localization'
-import MapView, { Callout, LatLng, MapEvent, Marker } from 'react-native-maps'
+import { StyleSheet } from 'react-native'
+import MapView, { LatLng, MapEvent } from 'react-native-maps'
+import { useMarkers } from 'src/gql/hooks/useMarkers'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 
-import { SubscriptionButton } from './SubscriptionButton'
-import { useMarkers } from './useMarkers'
+import { InfoMarker } from './InfoMarker'
+import { NewMarker } from './NewMarker'
 
 const initialRegion = {
   latitude: -34.895376,
@@ -15,89 +15,29 @@ const initialRegion = {
   longitudeDelta: 0.0421,
 }
 
-export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
+export const Map: RouteComponent<Route.Map> = () => {
   const [coordinate, setCoordinate] = useState<LatLng>()
   const { markers } = useMarkers()
 
-  const navigateToAddMarker = () => {
-    if (coordinate) {
-      navigation.navigate(Route.AddMarker, { coordinate })
-    }
-  }
-
-  const onLongPress = (event: MapEvent) => {
+  const registerCoordinate = (event: MapEvent) => {
     setCoordinate(event.nativeEvent.coordinate)
   }
 
   return (
     <MapView
       initialRegion={initialRegion}
-      onLongPress={onLongPress}
+      onLongPress={registerCoordinate}
       style={styles.container}>
-      {markers.map((marker, index) => (
-        <Marker
-          key={index}
-          coordinate={{
-            latitude: marker.latitude,
-            longitude: marker.longitude,
-          }}>
-          <Callout>
-            <View style={styles.boxStyle}>
-              <Text style={styles.title}>
-                {marker.name ?? marker.id.toString()}
-              </Text>
-              <Text style={styles.description}>
-                {marker.description ?? undefined}
-              </Text>
-              <SubscriptionButton
-                isSubscribed={marker.isSubscribed}
-                marker={marker.id}
-              />
-            </View>
-          </Callout>
-        </Marker>
+      {markers.map(marker => (
+        <InfoMarker marker={marker} />
       ))}
-      {coordinate && (
-        <Marker key={-1} coordinate={coordinate}>
-          <Callout style={styles.boxStyle} onPress={navigateToAddMarker}>
-            <Text>{strings.addEvent}</Text>
-          </Callout>
-        </Marker>
-      )}
+      {coordinate && <NewMarker coordinate={coordinate} />}
     </MapView>
   )
 }
 
-const strings = new LocalizedStrings({
-  'en-US': {
-    addEvent: 'Add event',
-    createNewEvent: 'Create new event',
-  },
-  'es-UY': {
-    addEvent: 'Agregar evento',
-    createNewEvent: 'Crear nuevo evento',
-  },
-})
-
 const styles = StyleSheet.create({
-  boxStyle: {
-    maxWidth: 300,
-    padding: 16,
-  },
   container: {
     flex: 1,
-  },
-  description: {
-    fontSize: 12,
-    paddingVertical: 8,
-  },
-  map: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    paddingTop: 5,
-    textAlign: 'center',
   },
 })

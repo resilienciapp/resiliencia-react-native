@@ -1,87 +1,118 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
+import LocalizedStrings from 'react-native-localization'
 import MapView, { Marker } from 'react-native-maps'
-import { RequestItem } from 'src/components/RequestItem'
+import { Button, ButtonMode } from 'src/components/Button'
+import { useUnSubscribe } from 'src/gql/hooks/useUnsubscribe'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
-export const Details: RouteComponent<Route.Details> = ({ route }) => (
-  <View style={styles.container}>
-    <Text style={styles.title}>{route.params.marker.name}</Text>
-    <MapView
-      initialRegion={{
-        latitude: route.params.marker.latitude,
-        latitudeDelta: 0.00922,
-        longitude: route.params.marker.longitude,
-        longitudeDelta: 0.00421,
-      }}
-      style={styles.map}>
-      <Marker
-        key={1}
-        coordinate={{
-          latitude: route.params.marker.latitude,
-          longitude: route.params.marker.longitude,
-        }}
-      />
-    </MapView>
-    <Text style={styles.badge}>{route.params.marker.category.name}</Text>
-    <Text>{route.params.marker.description}</Text>
-    {/* lista de requests */}
+import { RequestItem } from './RequestItem'
 
-    <FlatList
-      contentContainerStyle={styles.listContainer}
-      ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
-      ListEmptyComponent={<View />}
-      data={route.params.marker.requests}
-      renderItem={({ item }) => (
-        <RequestItem
-          description={item.description}
-          expiresAt={item.expiresAt}
+export const Details: RouteComponent<Route.Details> = ({
+  navigation,
+  route: { params },
+}) => {
+  const { unsubscribeMarker } = useUnSubscribe({
+    onCompleted: navigation.goBack,
+  })
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: params.marker.category.name,
+    })
+  }, [])
+
+  return (
+    <View style={styles.container}>
+      <MapView
+        initialRegion={{
+          latitude: params.marker.latitude,
+          latitudeDelta: 0.00922,
+          longitude: params.marker.longitude,
+          longitudeDelta: 0.00421,
+        }}
+        style={styles.map}>
+        <Marker
+          coordinate={{
+            latitude: params.marker.latitude,
+            longitude: params.marker.longitude,
+          }}
         />
-      )}
-      ListHeaderComponent={<Text style={styles.headerTitle}>Requests</Text>}
-      stickyHeaderIndices={[0]}
-      style={styles.list}
-    />
-  </View>
-)
+      </MapView>
+      <Text numberOfLines={2} style={styles.title}>
+        {params.marker.name}
+      </Text>
+      <Text numberOfLines={5} style={styles.description}>
+        {params.marker.description}
+      </Text>
+      <View style={styles.requestsContainer}>
+        <FlatList
+          data={params.marker.requests}
+          ItemSeparatorComponent={() => (
+            <View style={styles.requestsSeparator} />
+          )}
+          renderItem={props => <RequestItem {...props} />}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          mode={ButtonMode.Primary}
+          onPress={unsubscribeMarker({ marker: params.marker.id })}
+          text={strings.unsubscribe}
+        />
+      </View>
+    </View>
+  )
+}
+
+const strings = new LocalizedStrings({
+  'en-US': {
+    unsubscribe: 'Unsubscribe',
+  },
+  'es-UY': {
+    unsubscribe: 'Desubscribirse',
+  },
+})
 
 const styles = StyleSheet.create({
-  badge: {
-    color: Color.Steel,
-    fontSize: 12,
-    fontWeight: 'bold',
-    paddingVertical: 5,
+  buttonContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: 8,
+    width: '100%',
   },
   container: {
-    backgroundColor: 'white',
+    backgroundColor: Color.White,
     flex: 1,
-    paddingBottom: 5,
     paddingHorizontal: 16,
   },
-  headerTitle: {
-    backgroundColor: Color.White,
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingVertical: 16,
-  },
-  itemSeparator: {
-    backgroundColor: Color.White,
-    marginVertical: 5,
-  },
-  list: {
-    flex: 1,
-  },
-  listContainer: {
-    flexGrow: 2,
+  description: {
+    fontSize: 12,
   },
   map: {
-    height: '30%',
-    marginVertical: 10,
+    height: '25%',
+    marginVertical: 16,
+    width: '100%',
+  },
+  requestsContainer: {
+    backgroundColor: Color.White,
+    borderRadius: 16,
+    flex: 1,
+    marginVertical: 16,
+    paddingTop: 16,
+    width: '100%',
+  },
+  requestsSeparator: {
+    height: 16,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
+    width: '100%',
   },
 })

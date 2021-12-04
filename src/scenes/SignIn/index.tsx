@@ -3,11 +3,10 @@ import { Keyboard, StyleSheet, TextInput } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button, ButtonMode } from 'src/components/Button'
+import { useSignIn } from 'src/gql/hooks/useSignIn'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
-
-import { useSignIn } from './useSignIn'
 
 export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
   const [email, setEmail] = useState('')
@@ -23,6 +22,7 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <TextInput
         autoCapitalize="none"
+        autoCorrect={false}
         blurOnSubmit={false}
         keyboardType="email-address"
         onChangeText={setEmail}
@@ -34,6 +34,8 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
         underlineColorAndroid={Color.Black}
       />
       <TextInput
+        autoCapitalize="none"
+        autoCorrect={false}
         blurOnSubmit={false}
         keyboardType="default"
         onChangeText={setPassword}
@@ -46,12 +48,12 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
       />
       <Button
         mode={ButtonMode.Primary}
-        onButtonPressed={signIn({ email, password })}
+        onPress={signIn({ email, password })}
         text={strings.signIn}
       />
       <Button
         mode={ButtonMode.Secondary}
-        onButtonPressed={navigateToSignUp}
+        onPress={navigateToSignUp}
         text={strings.signUp}
       />
     </SafeAreaView>
@@ -88,13 +90,5 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     padding: 10,
     width: '100%',
-  },
-  sectionStyle: {
-    flexDirection: 'row',
-    height: 40,
-    justifyContent: 'center',
-    margin: 10,
-    marginHorizontal: 35,
-    marginTop: 20,
   },
 })

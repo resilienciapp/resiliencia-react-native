@@ -20,11 +20,18 @@ const UnsubscribeMutation = gql`
   ${MarkerFragment}
 `
 
-export const useUnSubscribe = () => {
+interface Props {
+  onCompleted?(): void
+  onError?(): void
+}
+
+export const useUnSubscribe = ({ onCompleted, onError }: Props) => {
   const [mutate] = useMutation<
     UnsubscribeMarkerMutationData,
     UnsubscribeMarkerMutationVariables
   >(UnsubscribeMutation, {
+    onCompleted,
+    onError,
     refetchQueries: ['MarkersQuery'],
   })
 

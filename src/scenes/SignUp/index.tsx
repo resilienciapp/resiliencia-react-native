@@ -1,16 +1,16 @@
 import { isEmail } from 'class-validator'
-import React, { useState } from 'react'
-import { Keyboard, StyleSheet, TextInput } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { StyleSheet, TextInput } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Button, ButtonMode } from 'src/components/Button'
+import { useSignUp } from 'src/gql/hooks/useSignUp'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
-import { useSignUp } from './useSignUp'
-
 const isValidEmail = (email?: string) => isEmail(email)
+
 const isValidPassword = (password?: string) => {
   if (!password) {
     return false
@@ -21,10 +21,20 @@ const isValidPassword = (password?: string) => {
   )
 }
 
+const focusNextRef = (ref: React.MutableRefObject<any>) => () =>
+  ref.current.focus()
+
+const pressButton = (ref: React.MutableRefObject<any>) => () =>
+  ref.current.touchableHandlePress()
+
 export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
+
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
+  const buttonRef = useRef(null)
 
   const { signUp } = useSignUp()
 
@@ -35,52 +45,54 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
-        blurOnSubmit={false}
+        autoCorrect={false}
         onChangeText={setName}
-        onSubmitEditing={Keyboard.dismiss}
+        onSubmitEditing={focusNextRef(emailRef)}
         placeholder={strings.name}
         placeholderTextColor={Color.Steel}
         returnKeyType="next"
         style={styles.input}
-        underlineColorAndroid={Color.Black}
       />
       <TextInput
         autoCapitalize="none"
-        blurOnSubmit={false}
+        autoCorrect={false}
         keyboardType="email-address"
         onChangeText={setEmail}
+        onSubmitEditing={focusNextRef(passwordRef)}
         placeholder={strings.email}
         placeholderTextColor={Color.Steel}
+        ref={emailRef}
         returnKeyType="next"
-        secureTextEntry={false}
         style={[
           styles.input,
           !isValidEmail(email) && !!email && styles.inputError,
         ]}
-        underlineColorAndroid={Color.Black}
       />
       <TextInput
-        blurOnSubmit={false}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setPassword}
+        onSubmitEditing={pressButton(passwordRef)}
         placeholder={strings.password}
         placeholderTextColor={Color.Steel}
+        ref={passwordRef}
         returnKeyType="next"
         secureTextEntry={true}
         style={[
           styles.input,
           !isValidPassword(password) && !!password && styles.inputError,
         ]}
-        underlineColorAndroid={Color.Black}
       />
       <Button
-        disabled={!isValidEmail(email) && !isValidPassword(password)}
+        disabled={!isValidEmail(email) || !isValidPassword(password)}
         mode={ButtonMode.Primary}
-        onButtonPressed={signUp({ email, name, password })}
+        reference={buttonRef}
+        onPress={signUp({ email, name, password })}
         text={strings.register}
       />
       <Button
         mode={ButtonMode.Secondary}
-        onButtonPressed={navigateToSignIn}
+        onPress={navigateToSignIn}
         text={strings.signIn}
       />
     </SafeAreaView>

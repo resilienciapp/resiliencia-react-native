@@ -15,7 +15,9 @@ export const Root = () => (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: Color.Reddish,
+        tabBarActiveTintColor: Color.Blue,
+        tabBarAllowFontScaling: false,
+        tabBarHideOnKeyboard: true,
         tabBarInactiveTintColor: Color.Steel,
         tabBarLabelStyle: { fontSize: 12 },
       }}>

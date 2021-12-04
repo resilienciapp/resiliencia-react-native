@@ -16,6 +16,7 @@ rules:
     - error
     - includeExports: true
   'no-shadow': off
+  'react-hooks/exhaustive-deps': off
   'semi': off
   'simple-import-sort/imports': error
   'sort-keys': error

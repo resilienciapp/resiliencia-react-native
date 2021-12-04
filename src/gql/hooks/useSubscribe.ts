@@ -1,4 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
+import { MarkerFragment } from 'src/gql/fragments/marker'
 import {
   SubscribeMarkerInput,
   SubscribeMutation as SubscribeMutationData,
@@ -9,15 +10,28 @@ const SubscribeMutation = gql`
   mutation SubscribeMutation($input: SubscribeMarkerInput!) {
     subscribeMarker(input: $input) {
       id
+      subscriptions {
+        marker {
+          ...Marker
+        }
+      }
     }
   }
+  ${MarkerFragment}
 `
 
-export const useSubscribe = () => {
+interface Props {
+  onCompleted?(): void
+  onError?(): void
+}
+
+export const useSubscribe = ({ onCompleted, onError }: Props) => {
   const [mutate] = useMutation<
     SubscribeMutationData,
     SubscribeMutationVariables
   >(SubscribeMutation, {
+    onCompleted,
+    onError,
     refetchQueries: ['MarkersQuery'],
   })
 
