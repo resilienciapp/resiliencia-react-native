@@ -1,11 +1,12 @@
 export enum Color {
   Black = '#000000',
   Blue = '#007AFF',
-  BrightOrange = '#EB912A',
-  MysticGray = '#EBF0F2',
-  Reddish = '#D23030',
-  Steel = '#898C92',
-  Teal = '#61BBC3',
+  DarkBlue = '#005EDB',
+  MysticGray = '#F0F2F3',
+  Reddish = '#FF3E28',
+  Steel = '#B6B9BB',
+  Grey = '#8A8C8F',
+  SkyBlue = '#99D8FF',
   Transparent = 'transparent',
   White = '#FFFFFF',
 }
