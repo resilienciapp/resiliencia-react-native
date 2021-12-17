@@ -1,19 +1,15 @@
 import React from 'react'
+import { Details } from 'src/scenes/Details'
+import { Profile } from 'src/scenes/Profile'
+import { Request } from 'src/scenes/Request'
 
-import { useAuthContext } from './AuthContext'
-import { AuthenticatedGroup } from './AuthenticatedGroup'
 import { Route } from './Route'
 import { Stack } from './Stack'
-import { UnauthenticatedGroup } from './UnauthenticatedGroup'
 
-export const ProfileGroup = () => {
-  const { isAuthenticated } = useAuthContext()
-
-  const initialRouteName = isAuthenticated ? Route.Profile : Route.SignUp
-
-  return (
-    <Stack.Navigator initialRouteName={initialRouteName}>
-      {isAuthenticated ? AuthenticatedGroup : UnauthenticatedGroup}
-    </Stack.Navigator>
-  )
-}
+export const ProfileGroup = (
+  <Stack.Group>
+    <Stack.Screen component={Profile} name={Route.Profile} />
+    <Stack.Screen component={Details} name={Route.Details} />
+    <Stack.Screen component={Request} name={Route.Request} />
+  </Stack.Group>
+)

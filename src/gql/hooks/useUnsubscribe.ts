@@ -1,4 +1,6 @@
 import { gql, useMutation } from '@apollo/client'
+import { strings as commonStrings } from 'src/common/strings'
+import { useFlashCardContext } from 'src/contexts/FlashCardContext'
 import { MarkerFragment } from 'src/gql/fragments/marker'
 import {
   UnsubscribeMarkerInput,
@@ -22,20 +24,21 @@ const UnsubscribeMutation = gql`
 
 interface Props {
   onCompleted?(): void
-  onError?(): void
 }
 
-export const useUnSubscribe = ({ onCompleted, onError }: Props) => {
-  const [mutate] = useMutation<
+export const useUnsubscribe = ({ onCompleted }: Props) => {
+  const { showErrorMessage } = useFlashCardContext()
+
+  const [mutate, { loading }] = useMutation<
     UnsubscribeMarkerMutationData,
     UnsubscribeMarkerMutationVariables
   >(UnsubscribeMutation, {
     onCompleted,
-    onError,
-    refetchQueries: ['MarkersQuery'],
+    onError: () => showErrorMessage(commonStrings.error),
   })
 
   return {
+    loading,
     unsubscribeMarker: (input: UnsubscribeMarkerInput) => () =>
       mutate({ variables: { input } }),
   }

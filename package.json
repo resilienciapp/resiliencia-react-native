@@ -14,13 +14,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.17",
+    "@apollo/client": "^3.5.5",
+    "@react-native-community/datetimepicker": "^4.0.1",
     "@react-native-picker/picker": "^2.2.1",
-    "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
-    "class-validator": "^0.13.1",
-    "graphql": "^15.7.2",
+    "class-validator": "^0.13.2",
+    "graphql": "^15.8.0",
     "lodash": "^4.17.21",
     "luxon": "^2.1.1",
     "react": "17.0.2",
@@ -30,8 +30,9 @@
     "react-native-maps": "^0.29.4",
     "react-native-mmkv": "^1.5.3",
     "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.9.0",
+    "react-native-screens": "^3.10.0",
     "react-native-svg": "^12.1.1",
+    "rrule": "^2.6.8",
     "util": "^0.12.4"
   },
   "devDependencies": {
@@ -41,16 +42,16 @@
     "@types/jest": "^27.0.3",
     "@types/lodash": "^4.14.177",
     "@types/luxon": "^2.0.7",
-    "@types/react-native": "^0.66.5",
+    "@types/react-native": "^0.66.8",
     "@types/react-test-renderer": "^17.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
     "apollo": "^2.33.9",
-    "babel-jest": "^27.3.1",
+    "babel-jest": "^27.4.2",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint": "^8.2.0",
+    "eslint": "^8.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "jest": "^27.3.1",
+    "jest": "^27.4.3",
     "metro-react-native-babel-preset": "^0.66.2",
     "react-native-svg-transformer": "^0.14.3",
     "react-test-renderer": "17.0.2",
@@ -58,7 +59,8 @@
   },
   "resolutions": {
     "@types/node": "^16",
-    "@types/react": "^17"
+    "@types/react": "^17",
+    "graphql": "^15"
   },
   "jest": {
     "preset": "react-native",

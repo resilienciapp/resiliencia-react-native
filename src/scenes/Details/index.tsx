@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import LocalizedStrings from 'react-native-localization'
 import MapView, { Marker } from 'react-native-maps'
-import { Button, ButtonMode } from 'src/components/Button'
-import { useUnSubscribe } from 'src/gql/hooks/useUnsubscribe'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { RequestButton } from 'src/components/RequestButton'
+import { SubscriptionButton } from 'src/components/SubscriptionButton'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
@@ -14,10 +14,6 @@ export const Details: RouteComponent<Route.Details> = ({
   navigation,
   route: { params },
 }) => {
-  const { unsubscribeMarker } = useUnSubscribe({
-    onCompleted: navigation.goBack,
-  })
-
   useEffect(() => {
     navigation.setOptions({
       title: params.marker.category.name,
@@ -25,7 +21,7 @@ export const Details: RouteComponent<Route.Details> = ({
   }, [])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <MapView
         initialRegion={{
           latitude: params.marker.latitude,
@@ -57,32 +53,27 @@ export const Details: RouteComponent<Route.Details> = ({
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          mode={ButtonMode.Primary}
-          onPress={unsubscribeMarker({ marker: params.marker.id })}
-          text={strings.unsubscribe}
+        <SubscriptionButton
+          marker={params.marker}
+          onCompleted={navigation.goBack}
+          style={styles.button}
         />
+        <RequestButton marker={params.marker} style={styles.button} />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
-const strings = new LocalizedStrings({
-  'en-US': {
-    unsubscribe: 'Unsubscribe',
-  },
-  'es-UY': {
-    unsubscribe: 'Desubscribirse',
-  },
-})
-
 const styles = StyleSheet.create({
+  button: {
+    width: '45%',
+  },
   buttonContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
     flex: 1,
-    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     paddingBottom: 8,
-    width: '100%',
   },
   container: {
     backgroundColor: Color.White,

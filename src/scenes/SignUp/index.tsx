@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react'
-import { Keyboard, StyleSheet } from 'react-native'
-import LocalizedStrings from 'react-native-localization'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { Keyboard, View } from 'react-native'
 import { focusNextRef } from 'src/common/references'
 import { Button, ButtonMode } from 'src/components/Button'
-import { InputText } from 'src/components/TextInput'
+import { InputText } from 'src/components/InputText'
 import { useSignUp } from 'src/gql/hooks/useSignUp'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { validator } from 'src/validator'
+
+import { strings } from './strings'
+import { styles } from './styles'
 
 export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   const [email, setEmail] = useState('')
@@ -20,7 +21,7 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
 
-  const { signUp } = useSignUp()
+  const { loading, signUp } = useSignUp()
 
   const navigateToSignIn = () => {
     navigation.navigate(Route.SignIn)
@@ -39,10 +40,11 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
     !email ||
     !validator.email(email) ||
     !password ||
-    !validator.password(password)
+    !validator.password(password) ||
+    loading
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <InputText
         autoCapitalize="words"
         onChangeText={setName}
@@ -83,32 +85,6 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
         onPress={navigateToSignIn}
         text={strings.signIn}
       />
-    </SafeAreaView>
+    </View>
   )
 }
-
-const strings = new LocalizedStrings({
-  'en-US': {
-    email: 'Email',
-    name: 'Name',
-    password: 'Password',
-    register: 'Register',
-    signIn: 'I already have an account',
-  },
-  'es-UY': {
-    email: 'Email',
-    name: 'Nombre',
-    password: 'Contraseña',
-    register: 'Registrarse',
-    signIn: 'Ya tengo una cuenta',
-  },
-})
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-  },
-})

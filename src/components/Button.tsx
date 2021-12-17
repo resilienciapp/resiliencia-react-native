@@ -49,6 +49,7 @@ const commonStyles = StyleSheet.create({
     alignItems: 'center',
     height: 45,
     justifyContent: 'center',
+    marginTop: 16,
     width: '75%',
   },
   text: {

@@ -8,11 +8,7 @@ interface Props {
   onPress?(): void
 }
 
-export const SubscriptionItem: React.FC<Props> = ({
-  category,
-  name,
-  onPress,
-}) => (
+export const EventItem: React.FC<Props> = ({ category, name, onPress }) => (
   <TouchableOpacity onPress={onPress}>
     <Text numberOfLines={1} style={styles.category}>
       -{category}-

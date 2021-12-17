@@ -32,7 +32,7 @@ static void InitializeFlipper(UIApplication *application) {
 {
   NSString *googleKey = [ReactNativeConfig envFor:@"GOOGLE_API_KEY"];
   [GMSServices provideAPIKey:googleKey];
-  
+
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif

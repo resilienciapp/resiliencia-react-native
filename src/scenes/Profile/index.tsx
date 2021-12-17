@@ -1,22 +1,22 @@
 import React from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import Person from 'src/assets/person.svg'
 import { Button, ButtonMode } from 'src/components/Button'
+import { List } from 'src/components/List'
 import { Spinner } from 'src/components/Spinner'
+import { useAuthenticationContext } from 'src/contexts/AuthenticationContext'
 import { useUser } from 'src/gql/hooks/useUser'
 import { UserQuery_user_subscriptions as Subscription } from 'src/gql/types'
-import { useAuthContext } from 'src/routes/AuthContext'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
-import { EmptyList } from './EmptyList'
+import { EventItem } from './EventItem'
 import { SubscriptionItem } from './SubscriptionItem'
 
 export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
-  const { signOut } = useAuthContext()
+  const { signOut } = useAuthenticationContext()
   const { data, loading } = useUser()
 
   if (loading) {
@@ -31,35 +31,40 @@ export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
     navigation.navigate(Route.Details, item)
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.infoContainer}>
         <Person style={styles.placeholder} />
         <View style={styles.textContainer}>
           <Text numberOfLines={1} style={styles.infoHeader}>
             {data.user.profile.name}
           </Text>
-          <Text numberOfLines={1}>{data.user.profile.email}</Text>
+          <Text numberOfLines={1} style={styles.infoEmail}>
+            {data.user.profile.email}
+          </Text>
         </View>
       </View>
-      <View style={styles.subscriptionsContainer}>
-        <Text numberOfLines={1} style={styles.subscriptionsHeader}>
-          {strings.subscriptions}
-        </Text>
-        <FlatList
-          data={data.user.subscriptions}
-          ListEmptyComponent={EmptyList}
-          ItemSeparatorComponent={() => (
-            <View style={styles.subscriptionsSeparator} />
-          )}
-          renderItem={({ item }) => (
-            <SubscriptionItem
-              name={item.marker.name}
-              category={item.marker.category.name}
-              onPress={navigateToDetail(item)}
-            />
-          )}
-        />
-      </View>
+      <List
+        data={data.user.subscriptions}
+        header={strings.subscriptions}
+        renderItem={({ item }) => (
+          <SubscriptionItem
+            name={item.marker.name}
+            category={item.marker.category.name}
+            onPress={navigateToDetail(item)}
+          />
+        )}
+      />
+      <List
+        data={data.user.events}
+        header={strings.events}
+        renderItem={({ item }) => (
+          <EventItem
+            name={item.marker.name}
+            category={item.marker.category.name}
+            onPress={navigateToDetail(item)}
+          />
+        )}
+      />
       <View style={styles.buttonContainer}>
         <Button
           mode={ButtonMode.Primary}
@@ -67,16 +72,18 @@ export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
           onPress={signOut}
         />
       </View>
-    </SafeAreaView>
+    </View>
   )
 }
 
 const strings = new LocalizedStrings({
   'en-US': {
+    events: 'My Events',
     logout: 'Log out',
     subscriptions: 'Subscriptions',
   },
   'es-UY': {
+    events: 'Mis Eventos',
     logout: 'Cerrar sesión',
     subscriptions: 'Subscripciones',
   },
@@ -92,42 +99,31 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: Color.MysticGray,
+    backgroundColor: Color.White,
     flex: 1,
-    padding: 8,
+    padding: 16,
   },
   infoContainer: {
     alignItems: 'center',
-    backgroundColor: Color.White,
+    backgroundColor: Color.MysticGray,
     borderRadius: 16,
     justifyContent: 'center',
     padding: 16,
     width: '100%',
   },
+  infoEmail: {
+    color: Color.Steel,
+  },
   infoHeader: {
+    color: Color.Black,
     fontSize: 16,
     fontWeight: 'bold',
     paddingVertical: 4,
   },
   placeholder: {
-    backgroundColor: Color.MysticGray,
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  subscriptionsContainer: {
     backgroundColor: Color.White,
     borderRadius: 16,
-    marginVertical: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 24,
-    width: '100%',
-  },
-  subscriptionsHeader: {
-    fontSize: 18,
-    paddingBottom: 16,
-  },
-  subscriptionsSeparator: {
-    height: 16,
+    overflow: 'hidden',
   },
   textContainer: {
     alignItems: 'center',

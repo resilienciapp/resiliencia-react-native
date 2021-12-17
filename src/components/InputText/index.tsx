@@ -29,14 +29,17 @@ export const InputText: React.FunctionComponent<Props> = ({
 const styles = StyleSheet.create({
   container: {
     marginTop: 16,
+    maxHeight: 150,
   },
   input: {
     borderColor: Color.Steel,
     borderRadius: 10,
     borderWidth: 1,
     color: Color.Black,
-    marginVertical: 15,
-    padding: 10,
+    marginTop: 16,
+    paddingBottom: 12,
+    paddingHorizontal: 8,
+    paddingTop: 12,
     width: '100%',
   },
   invalidInput: {

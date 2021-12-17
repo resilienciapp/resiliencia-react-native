@@ -4,6 +4,75 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AddMarkerMutation
+// ====================================================
+
+export interface AddMarkerMutation_addMarker_category {
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface AddMarkerMutation_addMarker_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface AddMarkerMutation_addMarker_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: AddMarkerMutation_addMarker_requests_user;
+}
+
+export interface AddMarkerMutation_addMarker {
+  category: AddMarkerMutation_addMarker_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: AddMarkerMutation_addMarker_requests[];
+  state: MarkerState;
+}
+
+export interface AddMarkerMutation {
+  addMarker: AddMarkerMutation_addMarker[];
+}
+
+export interface AddMarkerMutationVariables {
+  input: AddMarkerInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: AddRequestMutation
+// ====================================================
+
+export interface AddRequestMutation_addRequest {}
+
+export interface AddRequestMutation {
+  addRequest: AddRequestMutation_addRequest;
+}
+
+export interface AddRequestMutationVariables {
+  input: AddRequestInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CategoriesQuery
 // ====================================================
 
@@ -51,7 +120,6 @@ export interface MarkersQuery_markers {
   duration: number;
   expiresAt: any | null;
   id: number;
-  isSubscribed: boolean;
   latitude: number;
   longitude: number;
   name: string;
@@ -62,6 +130,48 @@ export interface MarkersQuery_markers {
 
 export interface MarkersQuery {
   markers: MarkersQuery_markers[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SignInMutation
+// ====================================================
+
+export interface SignInMutation_signIn {
+  jwt: string;
+}
+
+export interface SignInMutation {
+  signIn: SignInMutation_signIn;
+}
+
+export interface SignInMutationVariables {
+  input: SignInInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: SignUpMutation
+// ====================================================
+
+export interface SignUpMutation_signUp {
+  jwt: string;
+}
+
+export interface SignUpMutation {
+  signUp: SignUpMutation_signUp;
+}
+
+export interface SignUpMutationVariables {
+  input: SignUpInput;
 }
 
 /* tslint:disable */
@@ -98,7 +208,6 @@ export interface SubscribeMutation_subscribeMarker_subscriptions_marker {
   duration: number;
   expiresAt: any | null;
   id: number;
-  isSubscribed: boolean;
   latitude: number;
   longitude: number;
   name: string;
@@ -158,7 +267,6 @@ export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marke
   duration: number;
   expiresAt: any | null;
   id: number;
-  isSubscribed: boolean;
   latitude: number;
   longitude: number;
   name: string;
@@ -193,6 +301,43 @@ export interface UnsubscribeMarkerMutationVariables {
 // GraphQL query operation: UserQuery
 // ====================================================
 
+export interface UserQuery_user_events_marker_category {
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface UserQuery_user_events_marker_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface UserQuery_user_events_marker_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: UserQuery_user_events_marker_requests_user;
+}
+
+export interface UserQuery_user_events_marker {
+  category: UserQuery_user_events_marker_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: UserQuery_user_events_marker_requests[];
+  state: MarkerState;
+}
+
+export interface UserQuery_user_events {
+  marker: UserQuery_user_events_marker;
+}
+
 export interface UserQuery_user_profile {
   email: string;
   name: string;
@@ -223,7 +368,6 @@ export interface UserQuery_user_subscriptions_marker {
   duration: number;
   expiresAt: any | null;
   id: number;
-  isSubscribed: boolean;
   latitude: number;
   longitude: number;
   name: string;
@@ -233,10 +377,13 @@ export interface UserQuery_user_subscriptions_marker {
 }
 
 export interface UserQuery_user_subscriptions {
+  date: any;
+  id: number;
   marker: UserQuery_user_subscriptions_marker;
 }
 
 export interface UserQuery_user {
+  events: UserQuery_user_events[];
   id: number;
   profile: UserQuery_user_profile;
   subscriptions: UserQuery_user_subscriptions[];
@@ -244,48 +391,6 @@ export interface UserQuery_user {
 
 export interface UserQuery {
   user: UserQuery_user;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: SignInMutation
-// ====================================================
-
-export interface SignInMutation_signIn {
-  jwt: string;
-}
-
-export interface SignInMutation {
-  signIn: SignInMutation_signIn;
-}
-
-export interface SignInMutationVariables {
-  input: SignInInput;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: SignUpMutation
-// ====================================================
-
-export interface SignUpMutation_signUp {
-  jwt: string;
-}
-
-export interface SignUpMutation {
-  signUp: SignUpMutation_signUp;
-}
-
-export interface SignUpMutationVariables {
-  input: SignUpInput;
 }
 
 /* tslint:disable */
@@ -337,7 +442,6 @@ export interface Marker {
   duration: number;
   expiresAt: any | null;
   id: number;
-  isSubscribed: boolean;
   latitude: number;
   longitude: number;
   name: string;
@@ -352,8 +456,67 @@ export interface Marker {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: Request
+// ====================================================
+
+export interface Request_user {
+  email: string;
+  name: string;
+}
+
+export interface Request {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: Request_user;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: User
 // ====================================================
+
+export interface User_events_marker_category {
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface User_events_marker_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface User_events_marker_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: User_events_marker_requests_user;
+}
+
+export interface User_events_marker {
+  category: User_events_marker_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: User_events_marker_requests[];
+  state: MarkerState;
+}
+
+export interface User_events {
+  marker: User_events_marker;
+}
 
 export interface User_profile {
   email: string;
@@ -385,7 +548,6 @@ export interface User_subscriptions_marker {
   duration: number;
   expiresAt: any | null;
   id: number;
-  isSubscribed: boolean;
   latitude: number;
   longitude: number;
   name: string;
@@ -395,10 +557,13 @@ export interface User_subscriptions_marker {
 }
 
 export interface User_subscriptions {
+  date: any;
+  id: number;
   marker: User_subscriptions_marker;
 }
 
 export interface User {
+  events: User_events[];
   id: number;
   profile: User_profile;
   subscriptions: User_subscriptions[];
@@ -417,6 +582,24 @@ export enum MarkerState {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
   PENDING_CONFIRMATION = "PENDING_CONFIRMATION",
+}
+
+export interface AddMarkerInput {
+  category: number;
+  description?: string | null;
+  duration: number;
+  expiresAt?: any | null;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+}
+
+export interface AddRequestInput {
+  description: string;
+  expiresAt?: any | null;
+  marker: number;
+  notifiable: boolean;
 }
 
 export interface SignInInput {

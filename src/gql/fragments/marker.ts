@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client'
 
 import { CategoryFragment } from './category'
+import { RequestFragment } from './request'
 
 export const MarkerFragment = gql`
   fragment Marker on Marker {
@@ -11,22 +12,15 @@ export const MarkerFragment = gql`
     duration
     expiresAt
     id
-    isSubscribed
     latitude
     longitude
     name
     recurrence
     requests {
-      createdAt
-      description
-      expiresAt
-      id
-      user {
-        email
-        name
-      }
+      ...Request
     }
     state
   }
   ${CategoryFragment}
+  ${RequestFragment}
 `

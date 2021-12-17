@@ -3,20 +3,15 @@ import { strings as commonStrings } from 'src/common/strings'
 import { useFlashCardContext } from 'src/contexts/FlashCardContext'
 import { MarkerFragment } from 'src/gql/fragments/marker'
 import {
-  SubscribeMarkerInput,
-  SubscribeMutation as SubscribeMutationData,
-  SubscribeMutationVariables,
+  AddMarkerInput,
+  AddMarkerMutation as AddMarkerMutationData,
+  AddMarkerMutationVariables,
 } from 'src/gql/types'
 
-const SubscribeMutation = gql`
-  mutation SubscribeMutation($input: SubscribeMarkerInput!) {
-    subscribeMarker(input: $input) {
-      id
-      subscriptions {
-        marker {
-          ...Marker
-        }
-      }
+const AddMarkerMutation = gql`
+  mutation AddMarkerMutation($input: AddMarkerInput!) {
+    addMarker(input: $input) {
+      ...Marker
     }
   }
   ${MarkerFragment}
@@ -26,20 +21,20 @@ interface Props {
   onCompleted?(): void
 }
 
-export const useSubscribe = ({ onCompleted }: Props) => {
+export const useAddMarker = ({ onCompleted }: Props) => {
   const { showErrorMessage } = useFlashCardContext()
 
   const [mutate, { loading }] = useMutation<
-    SubscribeMutationData,
-    SubscribeMutationVariables
-  >(SubscribeMutation, {
+    AddMarkerMutationData,
+    AddMarkerMutationVariables
+  >(AddMarkerMutation, {
     onCompleted,
     onError: () => showErrorMessage(commonStrings.error),
+    refetchQueries: ['MarkersQuery'],
   })
 
   return {
+    addMarker: (input: AddMarkerInput) => mutate({ variables: { input } }),
     loading,
-    subscribeMarker: (input: SubscribeMarkerInput) => () =>
-      mutate({ variables: { input } }),
   }
 }
