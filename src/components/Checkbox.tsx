@@ -10,21 +10,30 @@ import { Color } from 'src/styles/Color'
 
 interface Props {
   checked: boolean
+  checkedBorderColor?: Color
   onPress?(): void
   style?: StyleProp<ViewStyle>
 }
 
 export const Checkbox: React.FunctionComponent<Props> = ({
   checked,
+  checkedBorderColor = Color.Steel,
   onPress,
   style,
-}) => (
-  <TouchableOpacity
-    onPress={onPress}
-    style={[styles.container, checked && styles.selected, style]}>
-    {checked && <Done height="100%" width="100%" />}
-  </TouchableOpacity>
-)
+}) => {
+  const selectedStyle = {
+    borderColor: checkedBorderColor,
+    borderWidth: 2,
+  }
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.container, checked && selectedStyle, style]}>
+      {checked && <Done height="100%" width="100%" />}
+    </TouchableOpacity>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -33,9 +42,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 30,
     width: 30,
-  },
-  selected: {
-    borderColor: Color.Blue,
-    borderWidth: 2,
   },
 })

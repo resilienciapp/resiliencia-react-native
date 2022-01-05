@@ -8,6 +8,7 @@
 // ====================================================
 
 export interface AddMarkerMutation_addMarker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -77,6 +78,7 @@ export interface AddRequestMutationVariables {
 // ====================================================
 
 export interface CategoriesQuery_categories {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -96,6 +98,7 @@ export interface CategoriesQuery {
 // ====================================================
 
 export interface MarkersQuery_markers_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -184,6 +187,7 @@ export interface SignUpMutationVariables {
 // ====================================================
 
 export interface SubscribeMutation_subscribeMarker_subscriptions_marker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -243,6 +247,7 @@ export interface SubscribeMutationVariables {
 // ====================================================
 
 export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -302,6 +307,7 @@ export interface UnsubscribeMarkerMutationVariables {
 // ====================================================
 
 export interface UserQuery_user_events_marker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -344,6 +350,7 @@ export interface UserQuery_user_profile {
 }
 
 export interface UserQuery_user_subscriptions_marker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -403,6 +410,7 @@ export interface UserQuery {
 // ====================================================
 
 export interface Category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -418,6 +426,7 @@ export interface Category {
 // ====================================================
 
 export interface Marker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -482,6 +491,7 @@ export interface Request {
 // ====================================================
 
 export interface User_events_marker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;
@@ -524,6 +534,7 @@ export interface User_profile {
 }
 
 export interface User_subscriptions_marker_category {
+  color: string;
   description: string | null;
   id: number;
   name: string;

@@ -109,7 +109,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  picker: {},
+  picker: {
+    width: '100%',
+  },
   sectionContainer: {
     alignItems: 'center',
     borderColor: Color.Steel,

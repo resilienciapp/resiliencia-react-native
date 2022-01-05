@@ -14,7 +14,8 @@ export const Marker: React.FunctionComponent<Props> = ({ marker }) => (
     coordinate={{
       latitude: marker.latitude,
       longitude: marker.longitude,
-    }}>
+    }}
+    pinColor={marker.category.color}>
     <Callout>
       <View style={styles.container}>
         <Text numberOfLines={2} style={styles.name}>

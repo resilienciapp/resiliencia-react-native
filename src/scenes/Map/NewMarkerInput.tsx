@@ -267,6 +267,7 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
               <Text style={styles.endRepeat}>{strings.endRepeat}</Text>
               <Checkbox
                 checked={expiresAt}
+                checkedBorderColor={Color.Blue}
                 onPress={() => {
                   setExpiresAt(!expiresAt)
                   setShowExpiresAt(!expiresAt)

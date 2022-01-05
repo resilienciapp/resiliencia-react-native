@@ -1,21 +1,31 @@
 import React from 'react'
-import { FlatList, ListRenderItem, StyleSheet, Text, View } from 'react-native'
+import {
+  FlatList,
+  ListRenderItem,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native'
 import { Color } from 'src/styles/Color'
 
 import { EmptyList } from './EmptyList'
 
-interface Props {
-  data: any[]
+interface Props<T> {
+  data: T[]
   header: string
-  renderItem: ListRenderItem<any>
+  renderItem: ListRenderItem<T>
+  style?: StyleProp<ViewStyle>
 }
 
-export const List: React.FunctionComponent<Props> = ({
+export const List = <T extends any>({
   data,
   header,
   renderItem,
-}) => (
-  <View style={styles.container}>
+  style,
+}: Props<T>) => (
+  <View style={[styles.container, style]}>
     <Text numberOfLines={1} style={styles.header}>
       {header}
     </Text>
