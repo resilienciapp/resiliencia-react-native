@@ -4,6 +4,7 @@ export enum Route {
   Map = 'Map',
   Profile = 'Profile',
   Request = 'Request',
+  Settings = 'Settings',
   SignUp = 'Sign Up',
   SignIn = 'Sign In',
   UnauthenticatedGroup = 'UnauthenticatedGroup',

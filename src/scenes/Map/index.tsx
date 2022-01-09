@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   StatusBar,
   StyleSheet,
@@ -46,19 +46,15 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
   const { markers } = useMarkers()
   const { categories } = useCategories()
 
-  const selectedMarkers = useMemo(
-    () =>
-      markers.filter(({ category }) =>
-        categories
-          .filter((_, index) => selectedCategories[index])
-          .find(({ id }) => id === category.id),
-      ),
-    [selectedCategories],
-  )
-
   useEffect(() => {
     setSelectedCategories(Array(categories.length).fill(true))
   }, [categories.length])
+
+  const selectedMarkers = markers.filter(({ category }) =>
+    categories
+      .filter((_, index) => selectedCategories[index])
+      .find(({ id }) => id === category.id),
+  )
 
   const toggleCategorySelected = (index: number) => () => {
     const newSelectedCategories = [...selectedCategories]

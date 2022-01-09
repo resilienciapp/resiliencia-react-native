@@ -1,23 +1,26 @@
+import { isNull } from 'lodash'
+import { DateTime } from 'luxon'
 import React from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { Button, ButtonMode } from 'src/components/Button'
+import { useMarker } from 'src/gql/hooks/useMarker'
 import { useSubscribe } from 'src/gql/hooks/useSubscribe'
 import { useUnsubscribe } from 'src/gql/hooks/useUnsubscribe'
 import { useUser } from 'src/gql/hooks/useUser'
-import { MarkersQuery_markers as Marker } from 'src/gql/types'
 
 interface Props {
-  marker: Marker
+  markerId: number
   onCompleted?(): void
   style?: StyleProp<ViewStyle>
 }
 
 export const SubscriptionButton: React.FunctionComponent<Props> = ({
-  marker,
+  markerId,
   onCompleted,
   style,
 }) => {
+  const marker = useMarker(markerId)
   const { data } = useUser()
 
   const { loading: loadingSubscribe, subscribeMarker } = useSubscribe({
@@ -27,13 +30,27 @@ export const SubscriptionButton: React.FunctionComponent<Props> = ({
     onCompleted,
   })
 
-  if (!data) {
+  if (!marker || !data) {
     return null
   }
+
+  const isOwner = data.user.events.find(event => event.marker.id === marker.id)
+
+  if (isOwner) {
+    return null
+  }
+
+  const activeMarker =
+    isNull(marker.expiresAt) ||
+    DateTime.fromISO(marker.expiresAt).diffNow().milliseconds > 0
 
   const isSubscribed = data.user.subscriptions.find(
     subscription => subscription.marker.id === marker.id,
   )
+
+  if (!activeMarker && !isSubscribed) {
+    return null
+  }
 
   const onPress = isSubscribed
     ? unsubscribeMarker({ marker: marker.id })

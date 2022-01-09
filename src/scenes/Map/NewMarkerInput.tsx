@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     bottom: 0,
     flex: 1,
-    maxHeight: Dimensions.get('screen').height / 2.5,
+    maxHeight: Dimensions.get('screen').height / 1.5,
     position: 'absolute',
     width: '100%',
   },

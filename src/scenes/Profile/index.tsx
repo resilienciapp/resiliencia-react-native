@@ -1,23 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
+import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 import Person from 'src/assets/person.svg'
-import { Button, ButtonMode } from 'src/components/Button'
-import { List } from 'src/components/List'
 import { Spinner } from 'src/components/Spinner'
-import { useAuthenticationContext } from 'src/contexts/AuthenticationContext'
 import { useUser } from 'src/gql/hooks/useUser'
-import { UserQuery_user_subscriptions as Subscription } from 'src/gql/types'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
 import { EventItem } from './EventItem'
+import { MarkerList } from './MarkerList'
+import { RequestList } from './RequestList'
 import { SubscriptionItem } from './SubscriptionItem'
 
-export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
-  const { signOut } = useAuthenticationContext()
+export const Profile: RouteComponent<Route.Profile> = () => {
   const { data, loading } = useUser()
+  const [index, setIndex] = useState(0)
 
   if (loading) {
     return <Spinner color={Color.Blue} />
@@ -26,9 +25,6 @@ export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
   if (!data) {
     return null
   }
-
-  const navigateToDetail = (item: Subscription) => () =>
-    navigation.navigate(Route.Details, item)
 
   return (
     <View style={styles.container}>
@@ -43,35 +39,39 @@ export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
           </Text>
         </View>
       </View>
-      <List
-        data={data.user.subscriptions}
-        header={strings.subscriptions}
-        renderItem={({ item }) => (
-          <SubscriptionItem
-            name={item.marker.name}
-            category={item.marker.category.name}
-            onPress={navigateToDetail(item)}
+      <TabView
+        navigationState={{ index, routes }}
+        onIndexChange={setIndex}
+        renderScene={SceneMap({
+          first: RequestList,
+          second: () => (
+            <MarkerList
+              data={data.user.subscriptions}
+              Item={SubscriptionItem}
+            />
+          ),
+          third: () => <MarkerList data={data.user.events} Item={EventItem} />,
+        })}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            activeColor={Color.Blue}
+            inactiveColor={Color.Steel}
+            indicatorStyle={styles.tabBarIndicator}
+            renderLabel={({ color, focused, route }) => {
+              const fontWeight = focused ? '500' : 'normal'
+              return (
+                <Text style={[{ color, fontWeight }, styles.tabBarLabel]}>
+                  {route.title}
+                </Text>
+              )
+            }}
+            scrollEnabled={true}
+            style={styles.tabBarContainer}
+            tabStyle={styles.tabBar}
           />
         )}
       />
-      <List
-        data={data.user.events}
-        header={strings.events}
-        renderItem={({ item }) => (
-          <EventItem
-            name={item.marker.name}
-            category={item.marker.category.name}
-            onPress={navigateToDetail(item)}
-          />
-        )}
-      />
-      <View style={styles.buttonContainer}>
-        <Button
-          mode={ButtonMode.Primary}
-          text={strings.logout}
-          onPress={signOut}
-        />
-      </View>
     </View>
   )
 }
@@ -79,37 +79,34 @@ export const Profile: RouteComponent<Route.Profile> = ({ navigation }) => {
 const strings = new LocalizedStrings({
   'en-US': {
     events: 'My Events',
-    logout: 'Log out',
+    requests: 'Active requests',
     subscriptions: 'Subscriptions',
   },
   'es-UY': {
     events: 'Mis Eventos',
-    logout: 'Cerrar sesión',
+    requests: 'Pedidos activos',
     subscriptions: 'Subscripciones',
   },
 })
 
+const routes = [
+  { key: 'first', title: strings.requests },
+  { key: 'second', title: strings.subscriptions },
+  { key: 'third', title: strings.events },
+]
+
 const styles = StyleSheet.create({
-  buttonContainer: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'flex-end',
-    paddingBottom: 8,
-    width: '100%',
-  },
   container: {
-    alignItems: 'center',
     backgroundColor: Color.White,
     flex: 1,
-    padding: 16,
   },
   infoContainer: {
     alignItems: 'center',
     backgroundColor: Color.MysticGray,
     borderRadius: 16,
     justifyContent: 'center',
+    margin: 16,
     padding: 16,
-    width: '100%',
   },
   infoEmail: {
     color: Color.Steel,
@@ -124,6 +121,18 @@ const styles = StyleSheet.create({
     backgroundColor: Color.White,
     borderRadius: 16,
     overflow: 'hidden',
+  },
+  tabBar: {
+    width: 'auto',
+  },
+  tabBarContainer: {
+    backgroundColor: Color.White,
+  },
+  tabBarIndicator: {
+    backgroundColor: Color.Blue,
+  },
+  tabBarLabel: {
+    paddingHorizontal: 4,
   },
   textContainer: {
     alignItems: 'center',

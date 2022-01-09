@@ -29,9 +29,11 @@
     "react-native-localization": "^2.1.7",
     "react-native-maps": "^0.29.4",
     "react-native-mmkv": "^1.5.3",
+    "react-native-pager-view": "^5.4.9",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.0",
     "react-native-svg": "^12.1.1",
+    "react-native-tab-view": "^3.1.1",
     "rrule": "^2.6.8",
     "util": "^0.12.4"
   },

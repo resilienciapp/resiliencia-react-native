@@ -1,4 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { isNull } from 'lodash'
+import { DateTime } from 'luxon'
 import React from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
@@ -21,7 +23,11 @@ export const RequestButton: React.FunctionComponent<Props> = ({
   const { data } = useUser()
   const { navigate } = useNavigation<NavigationProp<ParamList>>()
 
-  if (!data) {
+  const activeMarker =
+    isNull(marker.expiresAt) ||
+    DateTime.fromISO(marker.expiresAt).diffNow().milliseconds > 0
+
+  if (!data || !activeMarker) {
     return null
   }
 
@@ -31,7 +37,7 @@ export const RequestButton: React.FunctionComponent<Props> = ({
     return null
   }
 
-  const onPress = () => navigate(Route.Request, marker)
+  const onPress = () => navigate(Route.Request, { markerId: marker.id })
 
   return (
     <Button

@@ -12,7 +12,11 @@ import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
-export const Request: RouteComponent<Route.Request> = ({ route }) => {
+export const Request: RouteComponent<Route.Request> = ({
+  route: {
+    params: { markerId },
+  },
+}) => {
   const [description, setDescription] = useState('')
   const [expiresAt, setExpiresAt] = useState(false)
   const [expiresAtDate, setExpiresAtDate] = useState(DateTime.local())
@@ -30,26 +34,30 @@ export const Request: RouteComponent<Route.Request> = ({ route }) => {
     setExpiresAtDate(date)
   }
 
+  const onPressExpiresAt = () => {
+    setExpiresAt(!expiresAt)
+    setShowExpiresAt(!expiresAt)
+  }
+
+  const onPressNotifiable = () => {
+    setNotifiable(!notifiable)
+  }
+
   return (
     <View style={styles.container}>
       <InputText
         multiline={true}
         numberOfLines={2}
+        onChangeText={setDescription}
         placeholder={strings.description}
         placeholderTextColor={Color.Steel}
-        onChangeText={setDescription}
+        style={styles.input}
         value={description}
       />
       <View style={styles.sectionContainer}>
         <View style={styles.subSectionContainer}>
           <Text style={styles.sectionText}>{strings.expiresAt}</Text>
-          <Checkbox
-            checked={expiresAt}
-            onPress={() => {
-              setExpiresAt(!expiresAt)
-              setShowExpiresAt(!expiresAt)
-            }}
-          />
+          <Checkbox checked={expiresAt} onPress={onPressExpiresAt} />
         </View>
         {showExpiresAt && (
           <DateTimePicker
@@ -66,23 +74,22 @@ export const Request: RouteComponent<Route.Request> = ({ route }) => {
       <View style={styles.sectionContainer}>
         <View style={styles.subSectionContainer}>
           <Text style={styles.sectionText}>{strings.notifiable}</Text>
-          <Checkbox
-            checked={notifiable}
-            onPress={() => setNotifiable(!notifiable)}
-          />
+          <Checkbox checked={notifiable} onPress={onPressNotifiable} />
         </View>
       </View>
-      <Button
-        disabled={loading}
-        mode={ButtonMode.Primary}
-        onPress={addRequest({
-          description,
-          expiresAt,
-          marker: route.params.id,
-          notifiable,
-        })}
-        text={strings.submit}
-      />
+      <View style={styles.buttonContainer}>
+        <Button
+          disabled={loading}
+          mode={ButtonMode.Primary}
+          onPress={addRequest({
+            description,
+            expiresAt: expiresAt ? expiresAtDate.toISO() : null,
+            marker: markerId,
+            notifiable,
+          })}
+          text={strings.submit}
+        />
+      </View>
     </View>
   )
 }
@@ -103,11 +110,22 @@ const strings = new LocalizedStrings({
 })
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
   container: {
     alignItems: 'center',
     backgroundColor: Color.White,
     flex: 1,
     padding: 16,
+  },
+  input: {
+    marginTop: 0,
+    paddingBottom: 19,
+    paddingTop: 19,
   },
   picker: {
     width: '100%',

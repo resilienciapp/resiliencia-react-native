@@ -58,7 +58,39 @@ export interface AddMarkerMutationVariables {
 // GraphQL mutation operation: AddRequestMutation
 // ====================================================
 
-export interface AddRequestMutation_addRequest {}
+export interface AddRequestMutation_addRequest_category {
+  color: string;
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface AddRequestMutation_addRequest_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface AddRequestMutation_addRequest_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: AddRequestMutation_addRequest_requests_user;
+}
+
+export interface AddRequestMutation_addRequest {
+  category: AddRequestMutation_addRequest_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: AddRequestMutation_addRequest_requests[];
+  state: MarkerState;
+}
 
 export interface AddRequestMutation {
   addRequest: AddRequestMutation_addRequest;
@@ -86,6 +118,57 @@ export interface CategoriesQuery_categories {
 
 export interface CategoriesQuery {
   categories: CategoriesQuery_categories[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: MarkerQuery
+// ====================================================
+
+export interface MarkerQuery_marker_category {
+  color: string;
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface MarkerQuery_marker_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface MarkerQuery_marker_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: MarkerQuery_marker_requests_user;
+}
+
+export interface MarkerQuery_marker {
+  category: MarkerQuery_marker_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: MarkerQuery_marker_requests[];
+  state: MarkerState;
+}
+
+export interface MarkerQuery {
+  marker: MarkerQuery_marker;
+}
+
+export interface MarkerQueryVariables {
+  id: number;
 }
 
 /* tslint:disable */

@@ -22,7 +22,7 @@ export const Marker: React.FunctionComponent<Props> = ({ marker }) => (
           {marker.name}
         </Text>
         <Text style={styles.description}>{marker.description}</Text>
-        <SubscriptionButton marker={marker} />
+        <SubscriptionButton markerId={marker.id} />
       </View>
     </Callout>
   </MapMarker>
