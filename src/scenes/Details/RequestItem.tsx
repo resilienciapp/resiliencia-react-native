@@ -1,23 +1,26 @@
 import { DateTime } from 'luxon'
 import React from 'react'
-import { ListRenderItemInfo, StyleSheet, Text } from 'react-native'
-import { UserQuery_user_subscriptions_marker_requests as Requests } from 'src/gql/types'
+import { StyleSheet, Text } from 'react-native'
+import { UserQuery_user_subscriptions_marker_requests as Request } from 'src/gql/types'
+import { Color } from 'src/styles/Color'
 
-export const RequestItem: React.FC<ListRenderItemInfo<Requests>> = ({
-  item,
+export const RequestItem: React.FunctionComponent<Request> = ({
+  createdAt,
+  description,
 }) => (
   <Text style={styles.text}>
     <Text style={styles.textBold}>
-      {DateTime.fromISO(item.createdAt).toLocaleString(DateTime.DATETIME_SHORT)}
+      {DateTime.fromISO(createdAt).toLocaleString(DateTime.DATETIME_SHORT)}
     </Text>
     {': '}
-    {item.description}
+    {description}
   </Text>
 )
 
 const styles = StyleSheet.create({
   text: {
-    paddingBottom: 5,
+    color: Color.Black,
+    paddingBottom: 16,
   },
   textBold: {
     fontWeight: 'bold',

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "312186008504",
+    "project_id": "resiliencia-fing",
+    "storage_bucket": "resiliencia-fing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312186008504:android:9e3376744c00777fa0954d",
+        "android_client_info": {
+          "package_name": "com.resiliencia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312186008504-eshe69cn9tbrf4nlb52jtqsaghu61s7t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.resiliencia",
+            "certificate_hash": "f007f7f80744dd7bfe09aeab0b40225d62ba84ae"
+          }
+        },
+        {
+          "client_id": "312186008504-l9cn3392jvps30bk8nk961bq1kj15je9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpUE9zGmcE9WoULr2xWOTj2pRryKgLMo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312186008504-l9cn3392jvps30bk8nk961bq1kj15je9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "312186008504-s9u9a8mef6thsl82tgt2mf1asbkme6jl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.resiliencia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -197,7 +197,7 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
           />
           <InputText
             multiline={true}
-            numberOfLines={2}
+            numberOfLines={5}
             placeholder={strings.description}
             placeholderTextColor={Color.Steel}
             onChangeText={setDescription}
@@ -262,7 +262,7 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
               value={endTime.toJSDate()}
             />
           )}
-          <View style={styles.categoryContainer}>
+          <View style={styles.categoryContainer2}>
             <View style={styles.categorySubContainer}>
               <Text style={styles.endRepeat}>{strings.endRepeat}</Text>
               <Checkbox
@@ -325,6 +325,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: 'center',
     marginTop: 16,
+    width: '100%',
+  },
+  categoryContainer2: {
+    alignItems: 'center',
+    borderColor: Color.Steel,
+    borderRadius: 8,
+    borderWidth: 1,
+    justifyContent: 'center',
+    marginTop: 16,
     padding: 12,
     width: '100%',
   },
@@ -358,6 +367,7 @@ const styles = StyleSheet.create({
     color: Color.Steel,
   },
   picker: {
+    color: Color.Black,
     width: '100%',
   },
   pickerText: {
@@ -369,7 +379,7 @@ const styles = StyleSheet.create({
   },
   time: {
     color: Color.Black,
-    fontSize: 14,
+    fontSize: 16,
   },
   timeContainer: {
     alignItems: 'center',
@@ -379,7 +389,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 16,
-    padding: 12,
+    padding: 14,
     width: '100%',
   },
 })

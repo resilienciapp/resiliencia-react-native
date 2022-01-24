@@ -1,12 +1,19 @@
 import { isNumber } from 'lodash'
 import { DateTime } from 'luxon'
-import React, { useEffect } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import LocalizedStrings from 'react-native-localization'
+import React, { useEffect, useMemo } from 'react'
+import {
+  Dimensions,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { RRuleSet } from 'rrule'
+import RRule from 'rrule'
 import { RequestButton } from 'src/components/RequestButton'
+import { Spinner } from 'src/components/Spinner'
 import { SubscriptionButton } from 'src/components/SubscriptionButton'
 import { useMarker } from 'src/gql/hooks/useMarker'
 import { Route } from 'src/routes/Route'
@@ -25,7 +32,7 @@ export const Details: RouteComponent<Route.Details> = ({
     params: { markerId },
   },
 }) => {
-  const marker = useMarker(markerId)
+  const { loading, marker, refetch } = useMarker(markerId)
 
   useEffect(() => {
     if (marker) {
@@ -35,136 +42,154 @@ export const Details: RouteComponent<Route.Details> = ({
     }
   }, [marker])
 
+  const requests = useMemo(
+    () =>
+      (marker ? [...marker.requests] : []).sort(
+        (a, b) =>
+          DateTime.fromISO(b.createdAt).diff(DateTime.fromISO(a.createdAt))
+            .milliseconds,
+      ),
+    [marker?.requests.length],
+  )
+
+  if (loading) {
+    return <Spinner />
+  }
+
   if (!marker) {
     return null
   }
 
-  const recurrence = RRuleSet.fromString(marker.recurrence).options
+  const recurrence = RRule.fromString(marker.recurrence).options
 
   const weekdays = recurrence.byweekday ?? days
-  const startTime = DateTime.fromJSDate(recurrence.dtstart)
+  const startTime = DateTime.local().set({
+    hour: recurrence.byhour[0],
+    millisecond: 0,
+    minute: recurrence.byminute[0],
+    second: 0,
+  })
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <MapView
-        initialRegion={{
-          latitude: marker.latitude,
-          latitudeDelta: 0.00922,
-          longitude: marker.longitude,
-          longitudeDelta: 0.00421,
-        }}
-        style={styles.map}>
-        <Marker
-          coordinate={{
+      <ScrollView
+        refreshControl={
+          <RefreshControl onRefresh={refetch} refreshing={loading} />
+        }
+        showsVerticalScrollIndicator={false}>
+        <MapView
+          initialRegion={{
             latitude: marker.latitude,
+            latitudeDelta: 0.00922,
             longitude: marker.longitude,
+            longitudeDelta: 0.00421,
           }}
-        />
-      </MapView>
-      <Text numberOfLines={2} style={styles.title}>
-        {marker.name}
-      </Text>
-      <Text numberOfLines={5} style={styles.description}>
-        {marker.description}
-      </Text>
-      <View style={styles.daysContainer}>
-        {days.map((day, index) => (
-          <CheckBox
-            disabled={true}
-            key={index}
-            selected={isNumber(weekdays.find(weekday => weekday === day))}
-            text={getDay(index)}
+          pitchEnabled={false}
+          rotateEnabled={false}
+          scrollEnabled={false}
+          style={styles.map}
+          zoomEnabled={false}>
+          <Marker
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+            }}
           />
-        ))}
-      </View>
-      <Text style={styles.time}>
-        {startTime.toLocaleString(DateTime.TIME_24_SIMPLE)}
-        {' - '}
-        {startTime
-          .plus({ minutes: marker.duration })
-          .toLocaleString(DateTime.TIME_24_SIMPLE)}
-      </Text>
-      <View style={styles.requestsContainer}>
-        {!!marker.requests.length && (
-          <Text style={styles.requestsTitle}>{strings.requests}</Text>
+        </MapView>
+        <Text numberOfLines={1} style={styles.category}>
+          -{marker.category.name}-
+        </Text>
+        <Text numberOfLines={2} style={styles.title}>
+          {marker.name}
+        </Text>
+        {!!marker.description && (
+          <Text numberOfLines={5} style={styles.description}>
+            {marker.description}
+          </Text>
         )}
-        <FlatList
-          data={marker.requests}
-          extraData={marker}
-          ItemSeparatorComponent={() => (
-            <View style={styles.requestsSeparator} />
-          )}
-          renderItem={props => <RequestItem {...props} />}
-        />
-      </View>
+        <View style={styles.sectionContainer}>
+          <View style={styles.daysContainer}>
+            {days.map((day, index) => (
+              <CheckBox
+                disabled={true}
+                key={index}
+                selected={isNumber(weekdays.find(weekday => weekday === day))}
+                text={getDay(index)}
+              />
+            ))}
+          </View>
+          <Text style={styles.time}>
+            {startTime.toLocaleString(DateTime.TIME_24_SIMPLE)}
+            {'  -  '}
+            {startTime
+              .plus({ minutes: marker.duration })
+              .toLocaleString(DateTime.TIME_24_SIMPLE)}
+          </Text>
+        </View>
+        {!!marker.requests.length && (
+          <View style={styles.sectionContainer}>
+            {requests.map(request => (
+              <RequestItem key={request.id} {...request} />
+            ))}
+          </View>
+        )}
+      </ScrollView>
       <View style={styles.buttonContainer}>
-        <RequestButton marker={marker} style={styles.button} />
-        <SubscriptionButton
-          markerId={marker.id}
-          onCompleted={navigation.goBack}
-          style={styles.button}
-        />
+        <RequestButton marker={marker} />
+        <SubscriptionButton markerId={marker.id} />
       </View>
     </SafeAreaView>
   )
 }
 
-const strings = new LocalizedStrings({
-  'en-US': {
-    requests: 'Requests',
-  },
-  'es-UY': {
-    requests: 'Solicitudes',
-  },
-})
-
 const styles = StyleSheet.create({
-  button: {
-    width: '45%',
-  },
   buttonContainer: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingBottom: 8,
+    alignItems: 'center',
+  },
+  category: {
+    color: Color.Black,
+    fontSize: 10,
+    marginBottom: 4,
+    textAlign: 'center',
   },
   container: {
     backgroundColor: Color.White,
     flex: 1,
+    paddingBottom: 16,
     paddingHorizontal: 16,
   },
   daysContainer: {
     flexDirection: 'row',
-    marginVertical: 16,
   },
   description: {
+    color: Color.Black,
     fontSize: 12,
+    marginTop: 24,
   },
   map: {
-    height: '25%',
+    height: Dimensions.get('window').height * 0.2,
     marginVertical: 16,
     width: '100%',
   },
-  requestsContainer: {
-    backgroundColor: Color.White,
-    borderRadius: 16,
-    flex: 1,
+  scrollContainer: {
+    flexGrow: 1,
   },
-  requestsSeparator: {
-    height: 16,
-  },
-  requestsTitle: {
-    fontWeight: 'bold',
-    paddingBottom: 8,
-    paddingTop: 16,
+  sectionContainer: {
+    borderColor: Color.MysticGray,
+    borderTopWidth: 2,
+    marginTop: 24,
+    paddingTop: 24,
   },
   time: {
     alignSelf: 'center',
+    color: Color.Black,
+    fontSize: 16,
+    marginTop: 16,
   },
   title: {
+    color: Color.Black,
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 16,
     textAlign: 'center',
     width: '100%',
   },

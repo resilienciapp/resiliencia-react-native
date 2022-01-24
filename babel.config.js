@@ -7,6 +7,7 @@ module.exports = {
         root: ['.'],
       },
     ],
+    'react-native-reanimated/plugin',
   ],
   presets: [
     '@babel/preset-typescript',

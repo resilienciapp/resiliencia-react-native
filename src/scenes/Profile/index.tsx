@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 import Person from 'src/assets/person.svg'
@@ -9,10 +9,9 @@ import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
-import { EventItem } from './EventItem'
-import { MarkerList } from './MarkerList'
+import { EventsList } from './EventsList'
 import { RequestList } from './RequestList'
-import { SubscriptionItem } from './SubscriptionItem'
+import { SubscriptionsList } from './SubscriptionsList'
 
 export const Profile: RouteComponent<Route.Profile> = () => {
   const { data, loading } = useUser()
@@ -44,13 +43,8 @@ export const Profile: RouteComponent<Route.Profile> = () => {
         onIndexChange={setIndex}
         renderScene={SceneMap({
           first: RequestList,
-          second: () => (
-            <MarkerList
-              data={data.user.subscriptions}
-              Item={SubscriptionItem}
-            />
-          ),
-          third: () => <MarkerList data={data.user.events} Item={EventItem} />,
+          second: SubscriptionsList,
+          third: EventsList,
         })}
         renderTabBar={props => (
           <TabBar
@@ -58,10 +52,19 @@ export const Profile: RouteComponent<Route.Profile> = () => {
             activeColor={Color.Blue}
             inactiveColor={Color.Steel}
             indicatorStyle={styles.tabBarIndicator}
+            pressColor={Color.Transparent}
             renderLabel={({ color, focused, route }) => {
               const fontWeight = focused ? '500' : 'normal'
               return (
-                <Text style={[{ color, fontWeight }, styles.tabBarLabel]}>
+                <Text
+                  style={[
+                    {
+                      color,
+                      fontWeight,
+                      minWidth: Dimensions.get('screen').width / 4,
+                    },
+                    styles.tabBarLabel,
+                  ]}>
                   {route.title}
                 </Text>
               )

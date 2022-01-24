@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   header: {
     color: Color.Black,
     fontSize: 18,
-    paddingBottom: 16,
+    paddingBottom: 24,
   },
   separator: {
     height: 16,

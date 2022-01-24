@@ -20,7 +20,7 @@ export const SubscriptionButton: React.FunctionComponent<Props> = ({
   onCompleted,
   style,
 }) => {
-  const marker = useMarker(markerId)
+  const { marker } = useMarker(markerId)
   const { data } = useUser()
 
   const { loading: loadingSubscribe, subscribeMarker } = useSubscribe({

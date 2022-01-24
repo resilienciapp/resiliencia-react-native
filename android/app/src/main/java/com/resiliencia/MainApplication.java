@@ -13,6 +13,8 @@ import com.facebook.soloader.SoLoader;
 
 import com.reactnativemmkv.MmkvModulePackage;
 
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class MainApplication extends Application implements ReactApplication {
 
                 @Override
                 protected JSIModulePackage getJSIModulePackage() {
-                    return new MmkvModulePackage();
+                    return new ExampleJSIPackage();
                 }
             };
 

@@ -2,34 +2,37 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { EmptyList } from 'src/components/List/EmptyList'
-import {
-  MarkersQuery_markers as Marker,
-  UserQuery_user_events as Event,
-  UserQuery_user_subscriptions as Subscription,
-} from 'src/gql/types'
+import { Spinner } from 'src/components/Spinner'
+import { useUserSubscriptions } from 'src/gql/hooks/useUser'
+import { MarkersQuery_markers as Marker } from 'src/gql/types'
 import { Route } from 'src/routes/Route'
 import { ParamList } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
 
-interface Props {
-  data: (Subscription | Event)[]
-  Item: any
-}
+import { SubscriptionItem } from './SubscriptionItem'
 
-export const MarkerList: React.FunctionComponent<Props> = ({ data, Item }) => {
+export const SubscriptionsList: React.FunctionComponent = () => {
   const { navigate } = useNavigation<NavigationProp<ParamList>>()
+
+  const { data, loading, refetch } = useUserSubscriptions()
 
   const navigateToDetail = (marker: Marker) => () =>
     navigate(Route.Details, { markerId: marker.id })
 
+  if (!data && loading) {
+    return <Spinner />
+  }
+
   return (
     <FlatList
       contentContainerStyle={styles.contentContainer}
-      data={data}
+      data={data?.user.subscriptions ?? []}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       ListEmptyComponent={EmptyList}
+      onRefresh={refetch}
+      refreshing={loading}
       renderItem={({ item }) => (
-        <Item
+        <SubscriptionItem
           name={item.marker.name}
           category={item.marker.category.name}
           onPress={navigateToDetail(item.marker)}

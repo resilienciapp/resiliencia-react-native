@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash'
 import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -18,14 +19,16 @@ const getSeverityColor = (severity: Severity) => {
 export const FlashCard = () => {
   const { message, severity } = useFlashCardContext()
 
-  if (!message || !severity) {
+  if (!message || isUndefined(severity)) {
     return null
   }
 
+  const color = getSeverityColor(severity)
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>•</Text>
-      <Text style={[styles.text, { borderColor: getSeverityColor(severity) }]}>
+    <SafeAreaView style={[styles.container, { borderColor: color }]}>
+      <Text style={{ color }}>•</Text>
+      <Text numberOfLines={10} style={styles.text}>
         {message}
       </Text>
     </SafeAreaView>

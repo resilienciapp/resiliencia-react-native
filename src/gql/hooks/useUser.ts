@@ -1,8 +1,16 @@
 import { gql, useQuery } from '@apollo/client'
-import { UserFragment } from 'src/gql/fragments/user'
-import { UserQuery as UserQueryData } from 'src/gql/types'
+import {
+  EventsFragment,
+  SubscriptionsFragment,
+  UserFragment,
+} from 'src/gql/fragments/user'
+import {
+  UserEventsQuery as UserEventsQueryData,
+  UserQuery as UserQueryData,
+  UserSubscriptionsQuery as UserSubscriptionsQueryData,
+} from 'src/gql/types'
 
-const UserQuery = gql`
+export const UserQuery = gql`
   query UserQuery {
     user {
       ...User
@@ -11,4 +19,28 @@ const UserQuery = gql`
   ${UserFragment}
 `
 
+export const UserEventsQuery = gql`
+  query UserEventsQuery {
+    user {
+      ...Events
+    }
+  }
+  ${EventsFragment}
+`
+
+export const UserSubscriptionsQuery = gql`
+  query UserSubscriptionsQuery {
+    user {
+      ...Subscriptions
+    }
+  }
+  ${SubscriptionsFragment}
+`
+
 export const useUser = () => useQuery<UserQueryData>(UserQuery)
+
+export const useUserEvents = () =>
+  useQuery<UserEventsQueryData>(UserEventsQuery)
+
+export const useUserSubscriptions = () =>
+  useQuery<UserSubscriptionsQueryData>(UserSubscriptionsQuery)

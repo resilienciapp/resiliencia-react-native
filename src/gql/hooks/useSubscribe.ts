@@ -1,7 +1,7 @@
 import { gql, useMutation } from '@apollo/client'
 import { strings as commonStrings } from 'src/common/strings'
 import { useFlashCardContext } from 'src/contexts/FlashCardContext'
-import { MarkerFragment } from 'src/gql/fragments/marker'
+import { SubscriptionsFragment } from 'src/gql/fragments/user'
 import {
   SubscribeMarkerInput,
   SubscribeMutation as SubscribeMutationData,
@@ -11,15 +11,10 @@ import {
 const SubscribeMutation = gql`
   mutation SubscribeMutation($input: SubscribeMarkerInput!) {
     subscribeMarker(input: $input) {
-      id
-      subscriptions {
-        marker {
-          ...Marker
-        }
-      }
+      ...Subscriptions
     }
   }
-  ${MarkerFragment}
+  ${SubscriptionsFragment}
 `
 
 interface Props {

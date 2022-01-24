@@ -12,9 +12,9 @@ const MarkerQuery = gql`
 `
 
 export const useMarker = (id: number) => {
-  const { data } = useQuery<MarkerQueryData>(MarkerQuery, {
+  const { data, loading, refetch } = useQuery<MarkerQueryData>(MarkerQuery, {
     variables: { id },
   })
 
-  return data?.marker
+  return { loading, marker: data?.marker, refetch }
 }

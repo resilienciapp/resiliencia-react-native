@@ -1,4 +1,6 @@
 import { useApolloClient } from '@apollo/client'
+import notifee from '@notifee/react-native'
+import messaging from '@react-native-firebase/messaging'
 import React, { createContext, useContext, useState } from 'react'
 import { localStorage, LocalStorageItem } from 'src/common/localStorage'
 
@@ -28,6 +30,8 @@ export const AuthenticationProvider: React.FunctionComponent = ({
     setToken(undefined)
     localStorage.delete(LocalStorageItem.JWT)
     await client.clearStore()
+    await messaging().deleteToken()
+    await notifee.cancelAllNotifications()
   }
 
   return (

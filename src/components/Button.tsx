@@ -47,9 +47,9 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
 const commonStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    height: 45,
     justifyContent: 'center',
     marginTop: 16,
+    padding: 10,
     width: '75%',
   },
   text: {

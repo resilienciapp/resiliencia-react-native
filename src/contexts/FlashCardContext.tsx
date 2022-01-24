@@ -18,9 +18,6 @@ export const FlashCardProvider: React.FunctionComponent = ({ children }) => {
   const [message, setMessage] = useState<string>()
   const [severity, setSeverity] = useState<Severity>()
 
-  const showErrorMessage = (text: string) => showMessage(text, Severity.ERROR)
-  const showInfoMessage = (text: string) => showMessage(text, Severity.INFO)
-
   const showMessage = (text: string, severity: Severity) => {
     setMessage(text)
     setSeverity(severity)
@@ -28,8 +25,11 @@ export const FlashCardProvider: React.FunctionComponent = ({ children }) => {
     setTimeout(() => {
       setMessage(undefined)
       setSeverity(undefined)
-    }, 3000)
+    }, 4000)
   }
+
+  const showErrorMessage = (text: string) => showMessage(text, Severity.ERROR)
+  const showInfoMessage = (text: string) => showMessage(text, Severity.INFO)
 
   return (
     <FlashCardContext.Provider

@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import LocalizedStrings from 'react-native-localization'
+import { useDrawerStatus } from '@react-navigation/drawer'
+import React, { useState } from 'react'
+import { StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native'
 import MapView, {
   MapEvent,
   Marker as MapMarker,
@@ -14,9 +8,7 @@ import MapView, {
 } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Menu from 'src/assets/menu.svg'
-import { Checkbox } from 'src/components/Checkbox'
-import { List } from 'src/components/List'
-import { useAuthenticationContext } from 'src/contexts/AuthenticationContext'
+import { useSelectedCategoriesContext } from 'src/contexts/SelectedCategoriesContext'
 import { useCategories } from 'src/gql/hooks/useCategories'
 import { useMarkers } from 'src/gql/hooks/useMarkers'
 import { Route } from 'src/routes/Route'
@@ -39,28 +31,19 @@ const initialRegion = {
 
 export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
   const [coordinate, setCoordinate] = useState<Region>()
-  const [selectedCategories, setSelectedCategories] = useState<boolean[]>([])
 
-  const { isAuthenticated } = useAuthenticationContext()
+  const isDrawerClosed = useDrawerStatus() === 'closed'
+
   const { top } = useSafeAreaInsets()
   const { markers } = useMarkers()
   const { categories } = useCategories()
-
-  useEffect(() => {
-    setSelectedCategories(Array(categories.length).fill(true))
-  }, [categories.length])
+  const { selectedCategories } = useSelectedCategoriesContext()
 
   const selectedMarkers = markers.filter(({ category }) =>
     categories
       .filter((_, index) => selectedCategories[index])
       .find(({ id }) => id === category.id),
   )
-
-  const toggleCategorySelected = (index: number) => () => {
-    const newSelectedCategories = [...selectedCategories]
-    newSelectedCategories[index] = !newSelectedCategories[index]
-    setSelectedCategories(newSelectedCategories)
-  }
 
   const clearNewMarkerCoordinates = () => {
     setCoordinate(undefined)
@@ -70,9 +53,7 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
     setCoordinate({ ...event.nativeEvent.coordinate, ...delta })
   }
 
-  const navigateToProfile = () => {
-    navigation.navigate(isAuthenticated ? Route.Profile : Route.SignIn)
-  }
+  const showMenu = isDrawerClosed && !coordinate
 
   return (
     <View style={styles.container}>
@@ -84,11 +65,18 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
       <MapView
         initialRegion={initialRegion}
         onLongPress={setNewMarkerCoordinates}
-        region={coordinate}
+        region={
+          coordinate
+            ? { ...coordinate, latitude: coordinate.latitude - 0.03 }
+            : undefined
+        }
+        renderToHardwareTextureAndroid={true}
         rotateEnabled={true}
+        scrollDuringRotateOrZoomEnabled={true}
         showsBuildings={true}
-        showsCompass={true}
-        showsMyLocationButton={true}
+        showsCompass={false}
+        showsMyLocationButton={false}
+        showsPointsOfInterest={true}
         showsScale={true}
         showsUserLocation={true}
         style={styles.container}
@@ -106,69 +94,33 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
           onPressClose={clearNewMarkerCoordinates}
         />
       )}
-      {!coordinate && (
-        <List
-          data={categories}
-          header={strings.categories}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              onPress={toggleCategorySelected(index)}
-              style={styles.categoriesFilterContainer}>
-              <Checkbox
-                checked={selectedCategories[index]}
-                onPress={toggleCategorySelected(index)}
-                style={styles.categoriesFilterItem}
-              />
-              <Text style={{ color: item.color }}>{item.name}</Text>
-            </TouchableOpacity>
-          )}
-          style={[styles.reference, { top: top + 8 }]}
-        />
+      {showMenu && (
+        <TouchableOpacity
+          activeOpacity={0.75}
+          // @ts-ignore
+          onPress={navigation.openDrawer}
+          style={[styles.button, { top: top + 8 }]}>
+          <View style={styles.buttonContainer}>
+            <Menu height={25} width={25} />
+          </View>
+        </TouchableOpacity>
       )}
-      <TouchableOpacity
-        onPress={navigateToProfile}
-        style={[styles.button, { top: top + 8 }]}>
-        <Menu height={25} width={25} />
-      </TouchableOpacity>
     </View>
   )
 }
 
-const strings = new LocalizedStrings({
-  'en-US': {
-    categories: 'Categories',
-  },
-  'es-UY': {
-    categories: 'Categorías',
-  },
-})
-
 const styles = StyleSheet.create({
   button: {
+    padding: 24,
+    position: 'absolute',
+    zIndex: 1,
+  },
+  buttonContainer: {
     backgroundColor: Color.White,
     borderRadius: 30,
     padding: 12,
-    position: 'absolute',
-    right: 16,
-    zIndex: 1,
-  },
-  categoriesFilterContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  categoriesFilterItem: {
-    height: 20,
-    marginRight: 8,
-    width: 20,
   },
   container: {
     flex: 1,
-  },
-  reference: {
-    backgroundColor: Color.White,
-    left: 16,
-    marginTop: 0,
-    position: 'absolute',
-    width: '50%',
   },
 })

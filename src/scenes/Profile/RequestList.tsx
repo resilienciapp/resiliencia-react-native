@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native'
 import { EmptyList } from 'src/components/List/EmptyList'
+import { Spinner } from 'src/components/Spinner'
 import { useUser } from 'src/gql/hooks/useUser'
 import { Color } from 'src/styles/Color'
 
@@ -43,10 +44,15 @@ export const RequestList: React.FunctionComponent = () => {
           .milliseconds,
     )
 
+  if (!data && loading) {
+    return <Spinner />
+  }
+
   return (
     <FlatList
       contentContainerStyle={styles.contentContainer}
       data={requests}
+      extraData={requests?.length}
       ListEmptyComponent={EmptyList}
       onRefresh={refetch}
       refreshing={loading}
@@ -84,12 +90,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   description: {
+    color: Color.Black,
     paddingTop: 4,
   },
   infoContainer: {
     flexDirection: 'row',
   },
   name: {
+    color: Color.Black,
     flex: 1,
     fontWeight: '500',
   },
