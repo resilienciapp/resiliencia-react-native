@@ -5,7 +5,6 @@ export enum Color {
   Green = '#008000',
   Grey = '#B6B9BB',
   MysticGray = '#F0F2F3',
-  Orange = '#FFA500',
   Reddish = '#FF3E28',
   SkyBlue = '#99D8FF',
   Steel = '#8A8C8F',
