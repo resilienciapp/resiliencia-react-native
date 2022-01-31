@@ -160,6 +160,7 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
         longitude: coordinate.longitude,
         name,
         recurrence,
+        timeZone: startTime.zoneName,
       })
     }
   }

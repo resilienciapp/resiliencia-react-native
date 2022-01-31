@@ -19,7 +19,6 @@ export const MarkerFragment = gql`
     requests {
       ...Request
     }
-    state
   }
   ${CategoryFragment}
   ${RequestFragment}

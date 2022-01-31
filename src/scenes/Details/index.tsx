@@ -1,5 +1,6 @@
 import { isNumber } from 'lodash'
 import { DateTime } from 'luxon'
+import pluralize from 'pluralize'
 import React, { useEffect, useMemo } from 'react'
 import {
   Dimensions,
@@ -9,12 +10,16 @@ import {
   Text,
   View,
 } from 'react-native'
+import LocalizedStrings from 'react-native-localization'
 import MapView, { Marker } from 'react-native-maps'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import RRule from 'rrule'
+import Schedule from 'src/assets/schedule.svg'
+import { Button, ButtonMode } from 'src/components/Button'
 import { RequestButton } from 'src/components/RequestButton'
 import { Spinner } from 'src/components/Spinner'
 import { SubscriptionButton } from 'src/components/SubscriptionButton'
+import { useConfirmMarker } from 'src/gql/hooks/useConfirmMarker'
 import { useMarker } from 'src/gql/hooks/useMarker'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
@@ -33,6 +38,9 @@ export const Details: RouteComponent<Route.Details> = ({
   },
 }) => {
   const { loading, marker, refetch } = useMarker(markerId)
+  const { confirmMarker, loading: loadingConfirmation } = useConfirmMarker({
+    marker: markerId,
+  })
 
   useEffect(() => {
     if (marker) {
@@ -69,6 +77,10 @@ export const Details: RouteComponent<Route.Details> = ({
     minute: recurrence.byminute[0],
     second: 0,
   })
+
+  const daysToExpire = Math.round(
+    DateTime.fromISO(marker.expiresAt).diffNow('days').days,
+  )
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -107,6 +119,22 @@ export const Details: RouteComponent<Route.Details> = ({
             {marker.description}
           </Text>
         )}
+        {daysToExpire < 5 && (
+          <View style={styles.expiresAt}>
+            <View style={styles.expiresAtContainer}>
+              <Schedule fill={Color.Reddish} height={20} width={20} />
+              <Text numberOfLines={1} style={styles.expiresAtText}>
+                {strings.formatString(
+                  pluralize(strings.expiresAt, daysToExpire),
+                  daysToExpire,
+                )}
+              </Text>
+            </View>
+            <Text numberOfLines={2} style={styles.expiresAtText}>
+              {strings.touchToConfirm}
+            </Text>
+          </View>
+        )}
         <View style={styles.sectionContainer}>
           <View style={styles.daysContainer}>
             {days.map((day, index) => (
@@ -135,12 +163,31 @@ export const Details: RouteComponent<Route.Details> = ({
         )}
       </ScrollView>
       <View style={styles.buttonContainer}>
+        <Button
+          disabled={loadingConfirmation}
+          mode={ButtonMode.Primary}
+          onPress={confirmMarker}
+          text={strings.confirm}
+        />
         <RequestButton marker={marker} />
         <SubscriptionButton markerId={marker.id} />
       </View>
     </SafeAreaView>
   )
 }
+
+const strings = new LocalizedStrings({
+  'en-US': {
+    confirm: 'Confirm event',
+    expiresAt: 'Expires in {0} day',
+    touchToConfirm: 'Confirm event to extend time',
+  },
+  'es-UY': {
+    confirm: 'Confirmar evento',
+    expiresAt: 'Expira en {0} día',
+    touchToConfirm: 'Confirme el evento para extender el tiempo',
+  },
+})
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -165,6 +212,21 @@ const styles = StyleSheet.create({
     color: Color.Black,
     fontSize: 12,
     marginTop: 24,
+  },
+  expiresAt: {
+    alignItems: 'center',
+  },
+  expiresAtContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 24,
+  },
+  expiresAtText: {
+    color: Color.Reddish,
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginLeft: 8,
   },
   map: {
     height: Dimensions.get('window').height * 0.2,

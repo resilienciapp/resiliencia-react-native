@@ -19,7 +19,7 @@ interface ButtonProps {
   onPress(): void
   reference?: React.LegacyRef<TouchableOpacity>
   style?: StyleProp<ViewStyle>
-  text?: string
+  text: string
   textStyle?: StyleProp<ViewStyle>
 }
 

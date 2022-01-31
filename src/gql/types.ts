@@ -38,7 +38,6 @@ export interface AddMarkerMutation_addMarker {
   name: string;
   recurrence: string;
   requests: AddMarkerMutation_addMarker_requests[];
-  state: MarkerState;
 }
 
 export interface AddMarkerMutation {
@@ -89,7 +88,6 @@ export interface AddRequestMutation_addRequest {
   name: string;
   recurrence: string;
   requests: AddRequestMutation_addRequest_requests[];
-  state: MarkerState;
 }
 
 export interface AddRequestMutation {
@@ -118,6 +116,56 @@ export interface CategoriesQuery_categories {
 
 export interface CategoriesQuery {
   categories: CategoriesQuery_categories[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ConfirmMarkerMutation
+// ====================================================
+
+export interface ConfirmMarkerMutation_confirmMarker_category {
+  color: string;
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface ConfirmMarkerMutation_confirmMarker_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface ConfirmMarkerMutation_confirmMarker_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: ConfirmMarkerMutation_confirmMarker_requests_user;
+}
+
+export interface ConfirmMarkerMutation_confirmMarker {
+  category: ConfirmMarkerMutation_confirmMarker_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: ConfirmMarkerMutation_confirmMarker_requests[];
+}
+
+export interface ConfirmMarkerMutation {
+  confirmMarker: ConfirmMarkerMutation_confirmMarker[];
+}
+
+export interface ConfirmMarkerMutationVariables {
+  input: ConfirmMarkerInput;
 }
 
 /* tslint:disable */
@@ -160,7 +208,6 @@ export interface UserLazyQuery_user_events_marker {
   name: string;
   recurrence: string;
   requests: UserLazyQuery_user_events_marker_requests[];
-  state: MarkerState;
 }
 
 export interface UserLazyQuery_user_events {
@@ -203,7 +250,6 @@ export interface UserLazyQuery_user_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: UserLazyQuery_user_subscriptions_marker_requests[];
-  state: MarkerState;
 }
 
 export interface UserLazyQuery_user_subscriptions {
@@ -263,7 +309,6 @@ export interface MarkerQuery_marker {
   name: string;
   recurrence: string;
   requests: MarkerQuery_marker_requests[];
-  state: MarkerState;
 }
 
 export interface MarkerQuery {
@@ -314,7 +359,6 @@ export interface MarkersQuery_markers {
   name: string;
   recurrence: string;
   requests: MarkersQuery_markers_requests[];
-  state: MarkerState;
 }
 
 export interface MarkersQuery {
@@ -424,7 +468,6 @@ export interface SubscribeMutation_subscribeMarker_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: SubscribeMutation_subscribeMarker_subscriptions_marker_requests[];
-  state: MarkerState;
 }
 
 export interface SubscribeMutation_subscribeMarker_subscriptions {
@@ -486,7 +529,6 @@ export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marke
   name: string;
   recurrence: string;
   requests: UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_requests[];
-  state: MarkerState;
 }
 
 export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions {
@@ -548,7 +590,6 @@ export interface UserQuery_user_events_marker {
   name: string;
   recurrence: string;
   requests: UserQuery_user_events_marker_requests[];
-  state: MarkerState;
 }
 
 export interface UserQuery_user_events {
@@ -591,7 +632,6 @@ export interface UserQuery_user_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: UserQuery_user_subscriptions_marker_requests[];
-  state: MarkerState;
 }
 
 export interface UserQuery_user_subscriptions {
@@ -651,7 +691,6 @@ export interface UserEventsQuery_user_events_marker {
   name: string;
   recurrence: string;
   requests: UserEventsQuery_user_events_marker_requests[];
-  state: MarkerState;
 }
 
 export interface UserEventsQuery_user_events {
@@ -707,7 +746,6 @@ export interface UserSubscriptionsQuery_user_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: UserSubscriptionsQuery_user_subscriptions_marker_requests[];
-  state: MarkerState;
 }
 
 export interface UserSubscriptionsQuery_user_subscriptions {
@@ -781,7 +819,6 @@ export interface Marker {
   name: string;
   recurrence: string;
   requests: Marker_requests[];
-  state: MarkerState;
 }
 
 /* tslint:disable */
@@ -846,7 +883,6 @@ export interface Events_events_marker {
   name: string;
   recurrence: string;
   requests: Events_events_marker_requests[];
-  state: MarkerState;
 }
 
 export interface Events_events {
@@ -898,7 +934,6 @@ export interface Subscriptions_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: Subscriptions_subscriptions_marker_requests[];
-  state: MarkerState;
 }
 
 export interface Subscriptions_subscriptions {
@@ -952,7 +987,6 @@ export interface User_events_marker {
   name: string;
   recurrence: string;
   requests: User_events_marker_requests[];
-  state: MarkerState;
 }
 
 export interface User_events {
@@ -995,7 +1029,6 @@ export interface User_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: User_subscriptions_marker_requests[];
-  state: MarkerState;
 }
 
 export interface User_subscriptions {
@@ -1020,12 +1053,6 @@ export interface User {
 // START Enums and Input Objects
 //==============================================================
 
-export enum MarkerState {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
-  PENDING_CONFIRMATION = "PENDING_CONFIRMATION",
-}
-
 export enum Platform {
   android = "android",
   ios = "ios",
@@ -1040,6 +1067,7 @@ export interface AddMarkerInput {
   longitude: number;
   name: string;
   recurrence: string;
+  timeZone: string;
 }
 
 export interface AddRequestInput {
@@ -1047,6 +1075,10 @@ export interface AddRequestInput {
   expiresAt?: any | null;
   marker: number;
   notifiable: boolean;
+}
+
+export interface ConfirmMarkerInput {
+  marker: number;
 }
 
 export interface RegisterDeviceTokenInput {
