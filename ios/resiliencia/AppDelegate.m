@@ -40,28 +40,28 @@ static void InitializeFlipper(UIApplication *application) {
 {
   NSString *googleKey = [ReactNativeConfig envFor:@"GOOGLE_API_KEY"];
   [GMSServices provideAPIKey:googleKey];
-  
+
   [FIRApp configure];
-  
+
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
-  
+
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 #if RCT_DEV
   [bridge moduleForClass:[RCTDevLoadingView class]];
 #endif
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"resiliencia"
+                                                   moduleName:@"Resilienciapp"
                                             initialProperties:nil];
-  
-  
+
+
   if (@available(iOS 13.0, *)) {
     rootView.backgroundColor = [UIColor systemBackgroundColor];
   } else {
     rootView.backgroundColor = [UIColor whiteColor];
   }
-  
+
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;

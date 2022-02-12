@@ -16,11 +16,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import RRule from 'rrule'
 import Schedule from 'src/assets/schedule.svg'
 import { Button, ButtonMode } from 'src/components/Button'
+import { TrashButton } from 'src/components/HeaderButton/TrashButton'
 import { RequestButton } from 'src/components/RequestButton'
 import { Spinner } from 'src/components/Spinner'
+import { Subscribers } from 'src/components/Subscribers'
 import { SubscriptionButton } from 'src/components/SubscriptionButton'
 import { useConfirmMarker } from 'src/gql/hooks/useConfirmMarker'
 import { useMarker } from 'src/gql/hooks/useMarker'
+import { useUserEvents } from 'src/gql/hooks/useUser'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
 import { Color } from 'src/styles/Color'
@@ -33,22 +36,27 @@ const days = [0, 1, 2, 3, 4, 5, 6]
 
 export const Details: RouteComponent<Route.Details> = ({
   navigation,
-  route: {
-    params: { markerId },
-  },
+  route: { params },
 }) => {
-  const { loading, marker, refetch } = useMarker(markerId)
-  const { confirmMarker, loading: loadingConfirmation } = useConfirmMarker({
-    marker: markerId,
-  })
+  const { loading, marker, refetch } = useMarker(params.markerId)
+  const { data } = useUserEvents()
+  const { confirmMarker, loading: loadingConfirmation } = useConfirmMarker(
+    params.markerId,
+  )
 
   useEffect(() => {
     if (marker) {
       navigation.setOptions({
+        headerRight: () =>
+          data?.user.events.find(
+            ({ marker: { id } }) => id === params.markerId,
+          ) ? (
+            <TrashButton markerId={marker.id} />
+          ) : null,
         title: marker.category.name,
       })
     }
-  }, [marker])
+  }, [!!data, marker])
 
   const requests = useMemo(
     () =>
@@ -119,6 +127,7 @@ export const Details: RouteComponent<Route.Details> = ({
             {marker.description}
           </Text>
         )}
+        <Subscribers amount={marker.subscribedUsers} />
         {daysToExpire < 5 && (
           <View style={styles.expiresAt}>
             <View style={styles.expiresAtContainer}>

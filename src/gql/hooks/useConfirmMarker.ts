@@ -2,36 +2,32 @@ import { gql, useMutation } from '@apollo/client'
 import LocalizedStrings from 'react-native-localization'
 import { strings as commonStrings } from 'src/common/strings'
 import { useFlashCardContext } from 'src/contexts/FlashCardContext'
-import {
-  ConfirmMarkerInput,
-  ConfirmMarkerMutation as ConfirmMarkerMutationData,
-  ConfirmMarkerMutationVariables,
-} from 'src/gql/types'
+import { ConfirmMarker, ConfirmMarkerVariables } from 'src/gql/types'
 
 import { MarkerFragment } from '../fragments/marker'
 
 const ConfirmMarkerMutation = gql`
-  mutation ConfirmMarkerMutation($input: ConfirmMarkerInput!) {
-    confirmMarker(input: $input) {
+  mutation ConfirmMarker($id: Int!) {
+    confirmMarker(id: $id) {
       ...Marker
     }
   }
   ${MarkerFragment}
 `
 
-export const useConfirmMarker = (input: ConfirmMarkerInput) => {
+export const useConfirmMarker = (id: number) => {
   const { showErrorMessage, showInfoMessage } = useFlashCardContext()
 
   const [mutate, { loading }] = useMutation<
-    ConfirmMarkerMutationData,
-    ConfirmMarkerMutationVariables
+    ConfirmMarker,
+    ConfirmMarkerVariables
   >(ConfirmMarkerMutation, {
     onCompleted: () => showInfoMessage(strings.success),
     onError: () => showErrorMessage(commonStrings.error),
   })
 
   return {
-    confirmMarker: () => mutate({ variables: { input } }),
+    confirmMarker: () => mutate({ variables: { id } }),
     loading,
   }
 }

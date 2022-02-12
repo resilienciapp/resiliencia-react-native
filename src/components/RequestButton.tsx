@@ -54,6 +54,6 @@ const strings = new LocalizedStrings({
     createRequest: 'Create request',
   },
   'es-UY': {
-    createRequest: 'Hacer pedido',
+    createRequest: 'Crear pedido',
   },
 })

@@ -8,6 +8,8 @@ import {
   UnsubscribeMarkerMutationVariables,
 } from 'src/gql/types'
 
+import { MarkerQuery } from './useMarker'
+
 const UnsubscribeMutation = gql`
   mutation UnsubscribeMarkerMutation($input: UnsubscribeMarkerInput!) {
     unsubscribeMarker(input: $input) {
@@ -34,7 +36,12 @@ export const useUnsubscribe = ({ onCompleted }: Props) => {
 
   return {
     loading,
-    unsubscribeMarker: (input: UnsubscribeMarkerInput) => () =>
-      mutate({ variables: { input } }),
+    unsubscribeMarker:
+      ({ marker }: UnsubscribeMarkerInput) =>
+      () =>
+        mutate({
+          refetchQueries: [{ query: MarkerQuery, variables: { id: marker } }],
+          variables: { input: { marker } },
+        }),
   }
 }

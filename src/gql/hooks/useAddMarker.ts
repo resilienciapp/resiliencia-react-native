@@ -30,7 +30,7 @@ export const useAddMarker = ({ onCompleted }: Props) => {
   >(AddMarkerMutation, {
     onCompleted,
     onError: () => showErrorMessage(commonStrings.error),
-    refetchQueries: 'all',
+    refetchQueries: 'active',
   })
 
   return {

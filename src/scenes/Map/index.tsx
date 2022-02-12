@@ -1,5 +1,5 @@
 import { useDrawerStatus } from '@react-navigation/drawer'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native'
 import MapView, {
   MapEvent,
@@ -8,6 +8,7 @@ import MapView, {
 } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Menu from 'src/assets/menu.svg'
+import { checkLocationPermission } from 'src/common/permissions'
 import { useSelectedCategoriesContext } from 'src/contexts/SelectedCategoriesContext'
 import { useCategories } from 'src/gql/hooks/useCategories'
 import { useMarkers } from 'src/gql/hooks/useMarkers'
@@ -45,6 +46,10 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
       .find(({ id }) => id === category.id),
   )
 
+  useEffect(() => {
+    checkLocationPermission()
+  }, [])
+
   const clearNewMarkerCoordinates = () => {
     setCoordinate(undefined)
   }
@@ -81,9 +86,11 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
         showsUserLocation={true}
         style={styles.container}
         zoomControlEnabled={true}>
-        {selectedMarkers.map(marker => (
-          <Marker key={marker.id} marker={marker} />
-        ))}
+        {selectedMarkers.map(marker => {
+          const key = `${marker.id}${marker.subscribedUsers}${marker.requests.length}${marker.expiresAt}`
+
+          return <Marker key={key} marker={marker} />
+        })}
         {coordinate && (
           <MapMarker coordinate={coordinate} pinColor={Color.Blue} />
         )}
@@ -99,7 +106,7 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
           activeOpacity={0.75}
           // @ts-ignore
           onPress={navigation.openDrawer}
-          style={[styles.button, { top: top + 8 }]}>
+          style={[styles.button, { top: top + 4 }]}>
           <View style={styles.buttonContainer}>
             <Menu height={25} width={25} />
           </View>
@@ -111,14 +118,14 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 24,
+    padding: 16,
     position: 'absolute',
     zIndex: 1,
   },
   buttonContainer: {
     backgroundColor: Color.White,
     borderRadius: 30,
-    padding: 12,
+    padding: 8,
   },
   container: {
     flex: 1,

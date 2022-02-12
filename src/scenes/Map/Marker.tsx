@@ -7,6 +7,7 @@ import LocalizedStrings from 'react-native-localization'
 import { Callout, Marker as MapMarker } from 'react-native-maps'
 import RRule from 'rrule'
 import Schedule from 'src/assets/schedule.svg'
+import { Subscribers } from 'src/components/Subscribers'
 import { MarkersQuery_markers as IMarker } from 'src/gql/types'
 import { Route } from 'src/routes/Route'
 import { ParamList } from 'src/routes/Stack'
@@ -104,15 +105,14 @@ export const Marker: React.FunctionComponent<Props> = ({ marker }) => {
         longitude: marker.longitude,
       }}
       pinColor={marker.category.color}>
-      <Callout
-        onPress={navigateToDetails}
-        renderToHardwareTextureAndroid={true}>
+      <Callout onPress={navigateToDetails}>
         <View style={styles.container}>
           <Text numberOfLines={2} style={styles.name}>
             {marker.name}
           </Text>
           {getEventState(marker)}
           <Text style={styles.description}>{marker.description}</Text>
+          <Subscribers amount={marker.subscribedUsers} />
           {daysToExpire < 5 && (
             <>
               <View style={styles.expiresAtContainer}>
@@ -180,14 +180,12 @@ const styles = StyleSheet.create({
     color: Color.Black,
     fontSize: 14,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   state: {
     fontSize: 12,
     fontWeight: '400',
     paddingTop: 4,
-  },
-  stateAboutToClose: {
-    color: Color.Orange,
   },
   stateClosed: {
     color: Color.Reddish,

@@ -8,6 +8,8 @@ import {
   SubscribeMutationVariables,
 } from 'src/gql/types'
 
+import { MarkerQuery } from './useMarker'
+
 const SubscribeMutation = gql`
   mutation SubscribeMutation($input: SubscribeMarkerInput!) {
     subscribeMarker(input: $input) {
@@ -34,7 +36,12 @@ export const useSubscribe = ({ onCompleted }: Props) => {
 
   return {
     loading,
-    subscribeMarker: (input: SubscribeMarkerInput) => () =>
-      mutate({ variables: { input } }),
+    subscribeMarker:
+      ({ marker }: SubscribeMarkerInput) =>
+      () =>
+        mutate({
+          refetchQueries: [{ query: MarkerQuery, variables: { id: marker } }],
+          variables: { input: { marker } },
+        }),
   }
 }

@@ -10,13 +10,14 @@ import { Color } from 'src/styles/Color'
 
 export enum ButtonMode {
   Primary = 'Primary',
+  PrimaryReversed = 'PrimaryReversed',
   Secondary = 'Secondary',
 }
 
 interface ButtonProps {
   disabled?: boolean
   mode: ButtonMode
-  onPress(): void
+  onPress?(): void
   reference?: React.LegacyRef<TouchableOpacity>
   style?: StyleProp<ViewStyle>
   text: string
@@ -61,7 +62,9 @@ const styles = (disabled: boolean) => ({
   [ButtonMode.Primary]: {
     container: {
       backgroundColor: disabled ? Color.Steel : Color.Blue,
+      borderColor: disabled ? Color.Steel : Color.Blue,
       borderRadius: 16,
+      borderWidth: 1,
       elevation: 8,
       shadowColor: Color.Steel,
       shadowOffset: {
@@ -75,9 +78,30 @@ const styles = (disabled: boolean) => ({
       color: Color.White,
     },
   },
+  [ButtonMode.PrimaryReversed]: {
+    container: {
+      backgroundColor: Color.White,
+      borderColor: disabled ? Color.Steel : Color.Blue,
+      borderRadius: 16,
+      borderWidth: 1,
+      elevation: 8,
+      shadowColor: Color.Steel,
+      shadowOffset: {
+        height: 5,
+        width: 0,
+      },
+      shadowOpacity: 0.75,
+      shadowRadius: 5,
+    },
+    text: {
+      color: disabled ? Color.Steel : Color.Blue,
+    },
+  },
   [ButtonMode.Secondary]: {
     container: {
       backgroundColor: Color.Transparent,
+      borderColor: Color.Transparent,
+      borderWidth: 1,
     },
     text: {
       color: Color.Steel,

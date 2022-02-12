@@ -1,6 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Picker } from '@react-native-picker/picker'
 import { isNumber } from 'class-validator'
+import { identity } from 'lodash'
 import { DateTime } from 'luxon'
 import React, { useEffect, useRef, useState } from 'react'
 import {
@@ -136,8 +137,8 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
   const addNewMarker = () => {
     if (categories.length) {
       const recurrence = new RRule({
-        byhour: startTime.hour,
-        byminute: startTime.minute,
+        byhour: startTime.toUTC().hour,
+        byminute: startTime.toUTC().minute,
         byweekday: days.reduce<number[]>(
           (accumulator, value, index) =>
             value ? accumulator.concat(index) : accumulator,
@@ -171,7 +172,7 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
     !isNumber(category) ||
     !startTime ||
     !endTime ||
-    !days.length
+    !days.some(identity)
 
   return (
     <Animated.ScrollView

@@ -38,10 +38,12 @@ export interface AddMarkerMutation_addMarker {
   name: string;
   recurrence: string;
   requests: AddMarkerMutation_addMarker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface AddMarkerMutation {
-  addMarker: AddMarkerMutation_addMarker[];
+  addMarker: AddMarkerMutation_addMarker;
 }
 
 export interface AddMarkerMutationVariables {
@@ -88,6 +90,8 @@ export interface AddRequestMutation_addRequest {
   name: string;
   recurrence: string;
   requests: AddRequestMutation_addRequest_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface AddRequestMutation {
@@ -124,31 +128,31 @@ export interface CategoriesQuery {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: ConfirmMarkerMutation
+// GraphQL mutation operation: ConfirmMarker
 // ====================================================
 
-export interface ConfirmMarkerMutation_confirmMarker_category {
+export interface ConfirmMarker_confirmMarker_category {
   color: string;
   description: string | null;
   id: number;
   name: string;
 }
 
-export interface ConfirmMarkerMutation_confirmMarker_requests_user {
+export interface ConfirmMarker_confirmMarker_requests_user {
   email: string;
   name: string;
 }
 
-export interface ConfirmMarkerMutation_confirmMarker_requests {
+export interface ConfirmMarker_confirmMarker_requests {
   createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
-  user: ConfirmMarkerMutation_confirmMarker_requests_user;
+  user: ConfirmMarker_confirmMarker_requests_user;
 }
 
-export interface ConfirmMarkerMutation_confirmMarker {
-  category: ConfirmMarkerMutation_confirmMarker_category;
+export interface ConfirmMarker_confirmMarker {
+  category: ConfirmMarker_confirmMarker_category;
   description: string | null;
   duration: number;
   expiresAt: any | null;
@@ -157,15 +161,69 @@ export interface ConfirmMarkerMutation_confirmMarker {
   longitude: number;
   name: string;
   recurrence: string;
-  requests: ConfirmMarkerMutation_confirmMarker_requests[];
+  requests: ConfirmMarker_confirmMarker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
-export interface ConfirmMarkerMutation {
-  confirmMarker: ConfirmMarkerMutation_confirmMarker[];
+export interface ConfirmMarker {
+  confirmMarker: ConfirmMarker_confirmMarker;
 }
 
-export interface ConfirmMarkerMutationVariables {
-  input: ConfirmMarkerInput;
+export interface ConfirmMarkerVariables {
+  id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DeleteMarker
+// ====================================================
+
+export interface DeleteMarker_deleteMarker_category {
+  color: string;
+  description: string | null;
+  id: number;
+  name: string;
+}
+
+export interface DeleteMarker_deleteMarker_requests_user {
+  email: string;
+  name: string;
+}
+
+export interface DeleteMarker_deleteMarker_requests {
+  createdAt: any;
+  description: string;
+  expiresAt: any | null;
+  id: number;
+  user: DeleteMarker_deleteMarker_requests_user;
+}
+
+export interface DeleteMarker_deleteMarker {
+  category: DeleteMarker_deleteMarker_category;
+  description: string | null;
+  duration: number;
+  expiresAt: any | null;
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  recurrence: string;
+  requests: DeleteMarker_deleteMarker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
+}
+
+export interface DeleteMarker {
+  deleteMarker: DeleteMarker_deleteMarker[];
+}
+
+export interface DeleteMarkerVariables {
+  id: number;
 }
 
 /* tslint:disable */
@@ -208,6 +266,8 @@ export interface UserLazyQuery_user_events_marker {
   name: string;
   recurrence: string;
   requests: UserLazyQuery_user_events_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface UserLazyQuery_user_events {
@@ -250,6 +310,8 @@ export interface UserLazyQuery_user_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: UserLazyQuery_user_subscriptions_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface UserLazyQuery_user_subscriptions {
@@ -309,6 +371,8 @@ export interface MarkerQuery_marker {
   name: string;
   recurrence: string;
   requests: MarkerQuery_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface MarkerQuery {
@@ -359,6 +423,8 @@ export interface MarkersQuery_markers {
   name: string;
   recurrence: string;
   requests: MarkersQuery_markers_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface MarkersQuery {
@@ -468,6 +534,8 @@ export interface SubscribeMutation_subscribeMarker_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: SubscribeMutation_subscribeMarker_subscriptions_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface SubscribeMutation_subscribeMarker_subscriptions {
@@ -529,6 +597,8 @@ export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marke
   name: string;
   recurrence: string;
   requests: UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions {
@@ -590,6 +660,8 @@ export interface UserQuery_user_events_marker {
   name: string;
   recurrence: string;
   requests: UserQuery_user_events_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface UserQuery_user_events {
@@ -632,6 +704,8 @@ export interface UserQuery_user_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: UserQuery_user_subscriptions_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface UserQuery_user_subscriptions {
@@ -691,6 +765,8 @@ export interface UserEventsQuery_user_events_marker {
   name: string;
   recurrence: string;
   requests: UserEventsQuery_user_events_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface UserEventsQuery_user_events {
@@ -746,6 +822,8 @@ export interface UserSubscriptionsQuery_user_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: UserSubscriptionsQuery_user_subscriptions_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface UserSubscriptionsQuery_user_subscriptions {
@@ -819,6 +897,8 @@ export interface Marker {
   name: string;
   recurrence: string;
   requests: Marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 /* tslint:disable */
@@ -883,6 +963,8 @@ export interface Events_events_marker {
   name: string;
   recurrence: string;
   requests: Events_events_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface Events_events {
@@ -934,6 +1016,8 @@ export interface Subscriptions_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: Subscriptions_subscriptions_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface Subscriptions_subscriptions {
@@ -987,6 +1071,8 @@ export interface User_events_marker {
   name: string;
   recurrence: string;
   requests: User_events_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface User_events {
@@ -1029,6 +1115,8 @@ export interface User_subscriptions_marker {
   name: string;
   recurrence: string;
   requests: User_subscriptions_marker_requests[];
+  subscribedUsers: number;
+  timeZone: string;
 }
 
 export interface User_subscriptions {
@@ -1075,10 +1163,6 @@ export interface AddRequestInput {
   expiresAt?: any | null;
   marker: number;
   notifiable: boolean;
-}
-
-export interface ConfirmMarkerInput {
-  marker: number;
 }
 
 export interface RegisterDeviceTokenInput {

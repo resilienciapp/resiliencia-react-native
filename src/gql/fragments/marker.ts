@@ -19,6 +19,8 @@ export const MarkerFragment = gql`
     requests {
       ...Request
     }
+    subscribedUsers
+    timeZone
   }
   ${CategoryFragment}
   ${RequestFragment}

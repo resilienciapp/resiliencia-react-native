@@ -9,6 +9,7 @@ import {
 import { requestMessagingPermission } from 'src/common/permissions'
 import { useRegisterDevice } from 'src/gql/hooks/useRegisterDevice'
 import { Platform as PlatformType } from 'src/gql/types'
+import { Details } from 'src/scenes/Details'
 import { Map } from 'src/scenes/Map'
 import { Color } from 'src/styles/Color'
 
@@ -61,6 +62,7 @@ export const RootNavigator = () => {
         name={Route.Map}
         options={{ headerShown: false }}
       />
+      <Stack.Screen component={Details} name={Route.Details} />
       {isAuthenticated ? ProfileGroup : AuthenticationGroup}
     </Stack.Navigator>
   )
