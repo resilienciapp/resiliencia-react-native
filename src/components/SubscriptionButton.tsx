@@ -5,8 +5,8 @@ import { StyleProp, ViewStyle } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import { Button, ButtonMode } from 'src/components/Button'
 import { useMarker } from 'src/gql/hooks/useMarker'
-import { useSubscribe } from 'src/gql/hooks/useSubscribe'
-import { useUnsubscribe } from 'src/gql/hooks/useUnsubscribe'
+import { useSubscribeMarker } from 'src/gql/hooks/useSubscribeMarker'
+import { useUnsubscribeMarker } from 'src/gql/hooks/useUnsubscribeMarker'
 import { useUser } from 'src/gql/hooks/useUser'
 
 interface Props {
@@ -23,12 +23,13 @@ export const SubscriptionButton: React.FunctionComponent<Props> = ({
   const { marker } = useMarker(markerId)
   const { data } = useUser()
 
-  const { loading: loadingSubscribe, subscribeMarker } = useSubscribe({
+  const { loading: loadingSubscribe, subscribeMarker } = useSubscribeMarker({
     onCompleted,
   })
-  const { loading: loadingUnsubscribe, unsubscribeMarker } = useUnsubscribe({
-    onCompleted,
-  })
+  const { loading: loadingUnsubscribe, unsubscribeMarker } =
+    useUnsubscribeMarker({
+      onCompleted,
+    })
 
   if (!marker || !data) {
     return null
@@ -53,8 +54,8 @@ export const SubscriptionButton: React.FunctionComponent<Props> = ({
   }
 
   const onPress = isSubscribed
-    ? unsubscribeMarker({ marker: marker.id })
-    : subscribeMarker({ marker: marker.id })
+    ? unsubscribeMarker(marker.id)
+    : subscribeMarker(marker.id)
 
   const text = isSubscribed ? strings.unsubscribe : strings.subscribe
 

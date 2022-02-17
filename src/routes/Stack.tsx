@@ -9,6 +9,7 @@ import React from 'react'
 import { Route } from './Route'
 
 export interface ParamList extends ParamListBase {
+  [Route.AdministratorGroup]: { markerId: number }
   [Route.Details]: { markerId: number }
   [Route.Request]: { markerId: number }
 }

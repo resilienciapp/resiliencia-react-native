@@ -105,11 +105,10 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     alignItems: 'center',
-    backgroundColor: Color.MysticGray,
-    borderRadius: 16,
+    borderRadius: 40,
     justifyContent: 'center',
-    margin: 16,
-    padding: 16,
+    marginBottom: 24,
+    marginHorizontal: 16,
   },
   infoEmail: {
     color: Color.Steel,

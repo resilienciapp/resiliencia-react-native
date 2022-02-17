@@ -1,4 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
+import LocalizedStrings from 'react-native-localization'
+import { useFlashCardContext } from 'src/contexts/FlashCardContext'
 import { MarkerFragment } from 'src/gql/fragments/marker'
 import { MarkersQuery as MarkersQueryData } from 'src/gql/types'
 
@@ -12,7 +14,20 @@ const MarkersQuery = gql`
 `
 
 export const useMarkers = () => {
-  const { data } = useQuery<MarkersQueryData>(MarkersQuery)
+  const { showErrorMessage } = useFlashCardContext()
+
+  const { data } = useQuery<MarkersQueryData>(MarkersQuery, {
+    onError: () => showErrorMessage(strings.error),
+  })
 
   return { markers: data?.markers ?? [] }
 }
+
+const strings = new LocalizedStrings({
+  'en-US': {
+    error: 'Error getting events near your location',
+  },
+  'es-UY': {
+    error: 'Error al obtener eventos cerca de tu ubicación',
+  },
+})

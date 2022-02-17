@@ -77,7 +77,7 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
       <Button
         disabled={buttonDisabled}
         mode={ButtonMode.Primary}
-        onPress={signUp({ email, name, password })}
+        onPress={signUp({ email: email.trim(), name: name.trim(), password })}
         text={strings.register}
       />
       <Button

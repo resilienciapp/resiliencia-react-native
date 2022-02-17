@@ -1,6 +1,6 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 import com.android.build.OutputFile
 
@@ -111,7 +111,7 @@ def enableProguardInReleaseBuilds = false
  * give correct results when using with locales other than en-US.  Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+def jscFlavor = 'org.webkit:android-jsc-intl:+'
 
 /**
  * Whether to enable the Hermes VM.
@@ -137,7 +137,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         manifestPlaceholders = [
                 GOOGLE_API_KEY: project.env.get("GOOGLE_API_KEY")
@@ -158,6 +158,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file(project.env.get("KEYSTORE_UPLOAD_STORE_FILE"))
+            storePassword project.env.get("KEYSTORE_UPLOAD_STORE_PASSWORD")
+            keyAlias project.env.get("KEYSTORE_UPLOAD_KEY_ALIAS")
+            keyPassword project.env.get("KEYSTORE_UPLOAD_KEY_PASSWORD")
+        }
     }
     buildTypes {
         debug {
@@ -171,7 +177,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

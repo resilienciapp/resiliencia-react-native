@@ -1,4 +1,4 @@
-import notifee, { EventType } from '@notifee/react-native'
+import notifee, { AndroidStyle, EventType } from '@notifee/react-native'
 import messaging from '@react-native-firebase/messaging'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { useEffect, useRef } from 'react'
@@ -9,14 +9,24 @@ import { useFlashCardContext } from 'src/contexts/FlashCardContext'
 import { useLazyUser } from 'src/gql/hooks/useLazyUser'
 import { Route } from 'src/routes/Route'
 import { ParamList } from 'src/routes/Stack'
+import { Color } from 'src/styles/Color'
 
 export enum Notification {
+  EVENT_ADMINISTRATION_REQUEST = 'EVENT_ADMINISTRATION_REQUEST',
+  EVENT_ADMINISTRATION_RESPONSE = 'EVENT_ADMINISTRATION_RESPONSE',
   MARKER_REQUEST = 'MARKER_REQUEST',
 }
 
-export type Payload = {
+type Payload = {
+  [Notification.EVENT_ADMINISTRATION_REQUEST]: {
+    markerId: string
+    markerName: string
+  }
+  [Notification.EVENT_ADMINISTRATION_RESPONSE]: {
+    markerId: string
+    markerName: string
+  }
   [Notification.MARKER_REQUEST]: {
-    description: string
     markerId: string
     markerName: string
     requestId: string
@@ -41,28 +51,33 @@ export const setBackgroundMessageHandler = () => {
       return
     }
 
-    switch (data.type) {
-      case Notification.MARKER_REQUEST:
-        {
-          const channelId = await notifee.createChannel({
-            id: Notification.MARKER_REQUEST,
-            name: strings.markerRequestChannel,
-          })
+    if (
+      data.type === Notification.EVENT_ADMINISTRATION_REQUEST ||
+      data.type === Notification.EVENT_ADMINISTRATION_RESPONSE ||
+      data.type === Notification.MARKER_REQUEST
+    ) {
+      const channelId = await notifee.createChannel({
+        id: data.type,
+        name: strings[data.type].channel,
+      })
 
-          await notifee.displayNotification({
-            android: {
-              channelId,
-              pressAction: {
-                id: data.requestId,
-                launchActivity: `${DeviceInfo.getBundleId()}.MainActivity`,
-              },
-            },
-            body: `${data.markerName} - ${data.description}`,
-            data,
-            title: strings.markerRequest,
-          })
-        }
-        break
+      await notifee.displayNotification({
+        android: {
+          channelId,
+          color: Color.SkyBlue,
+          pressAction: {
+            id: data.markerId + new Date().toISOString(),
+            launchActivity: `${DeviceInfo.getBundleId()}.MainActivity`,
+          },
+          showTimestamp: true,
+          smallIcon: 'ic_launcher_white',
+          style: { text: strings[data.type].body, type: AndroidStyle.BIGTEXT },
+          timestamp: Date.now(),
+        },
+        body: strings[data.type].body,
+        data,
+        title: strings[data.type].title,
+      })
     }
   })
 }
@@ -73,14 +88,23 @@ export const useOnNotification = () => {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(({ data }) => {
-      switch (data?.type) {
-        case Notification.MARKER_REQUEST:
-          {
-            const payload = data as Payload[Notification.MARKER_REQUEST]
-            showInfoMessage(`${payload.markerName} - ${payload.description}`)
-            refreshUser()
-          }
-          break
+      if (!data) {
+        return
+      }
+
+      if (
+        data.type === Notification.EVENT_ADMINISTRATION_REQUEST ||
+        data.type === Notification.EVENT_ADMINISTRATION_RESPONSE ||
+        data.type === Notification.MARKER_REQUEST
+      ) {
+        const payload = data as Payload[Notification.MARKER_REQUEST]
+        showInfoMessage(
+          strings.formatString(
+            strings[data.type].inside,
+            payload.markerName,
+          ) as string,
+        )
+        refreshUser()
       }
     })
 
@@ -137,11 +161,43 @@ export const useInitialNotification = () => {
 
 const strings = new LocalizedStrings({
   'en-US': {
-    markerRequest: 'You have a new request',
-    markerRequestChannel: 'New request',
+    [Notification.EVENT_ADMINISTRATION_REQUEST]: {
+      body: 'You have a new admin request',
+      channel: 'New admin request',
+      inside: '{0} just received an admin request.',
+      title: 'New admin request',
+    },
+    [Notification.EVENT_ADMINISTRATION_RESPONSE]: {
+      body: 'Your admin request has been answered. Tap to see the answer',
+      channel: 'New admin response',
+      inside: '{0} just answered your admin request.',
+      title: 'New admin response',
+    },
+    [Notification.MARKER_REQUEST]: {
+      body: 'Tap to see the new request of the subscribed events',
+      channel: 'New request',
+      inside: '{0} just made a new request.',
+      title: 'New request',
+    },
   },
   'es-UY': {
-    markerRequest: 'Tienes un nuevo pedido',
-    markerRequestChannel: 'Nuevo pedido',
+    [Notification.EVENT_ADMINISTRATION_REQUEST]: {
+      body: 'Toca para ver la nueva solicitud de administración',
+      channel: 'Nueva solicitud',
+      inside: 'Acabas de recibir una solicitud de administración para {0}.',
+      title: 'Nueva solicitud',
+    },
+    [Notification.EVENT_ADMINISTRATION_RESPONSE]: {
+      body: 'Han respondido tu solicitud de administrador. Toca para ver la respuesta',
+      channel: 'Nueva respuesta',
+      inside: '{0} acaba de responder tu solicitud de administrador.',
+      title: 'Nueva respuesta',
+    },
+    [Notification.MARKER_REQUEST]: {
+      body: 'Toca para ver el nuevo pedido de los eventos suscritos',
+      channel: 'Nuevo pedido',
+      inside: '{0} acaba de realizar un nuevo pedido.',
+      title: 'Nuevo pedido',
+    },
   },
 })

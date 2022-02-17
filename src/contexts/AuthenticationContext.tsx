@@ -1,8 +1,13 @@
 import { useApolloClient } from '@apollo/client'
 import notifee from '@notifee/react-native'
 import messaging from '@react-native-firebase/messaging'
-import React, { createContext, useContext, useState } from 'react'
-import { localStorage, LocalStorageItem } from 'src/common/localStorage'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import {
+  getItem,
+  LocalStorageItem,
+  removeItem,
+  setItem,
+} from 'src/common/localStorage'
 
 interface Props {
   isAuthenticated: boolean
@@ -17,18 +22,20 @@ export const AuthenticationProvider: React.FunctionComponent = ({
 }) => {
   const client = useApolloClient()
 
-  const [token, setToken] = useState(
-    localStorage.getString(LocalStorageItem.JWT),
-  )
+  const [token, setToken] = useState<string | null>(null)
 
-  const signIn = (token: string) => {
+  useEffect(() => {
+    getItem(LocalStorageItem.JWT).then(setToken)
+  }, [])
+
+  const signIn = async (token: string) => {
     setToken(token)
-    localStorage.set(LocalStorageItem.JWT, token)
+    await setItem(LocalStorageItem.JWT, token)
   }
 
   const signOut = async () => {
-    setToken(undefined)
-    localStorage.delete(LocalStorageItem.JWT)
+    setToken(null)
+    await removeItem(LocalStorageItem.JWT)
     await client.clearStore()
     await messaging().deleteToken()
     await notifee.cancelAllNotifications()

@@ -1,8 +1,8 @@
 import { setContext } from '@apollo/client/link/context'
-import { localStorage, LocalStorageItem } from 'src/common/localStorage'
+import { getItem, LocalStorageItem } from 'src/common/localStorage'
 
-export const authLink = setContext((_, context) => {
-  const token = localStorage.getString(LocalStorageItem.JWT)
+export const authLink = setContext(async (_, context) => {
+  const token = await getItem(LocalStorageItem.JWT)
 
   if (token) {
     return {

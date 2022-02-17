@@ -18,7 +18,7 @@ const DeleteMarkerMutation = gql`
 `
 
 export const useDeleteMarker = (id: number) => {
-  const [isModalVisible, setModalVisible] = useState(false)
+  const [isModalVisible, setModalVisibility] = useState(false)
   const { showErrorMessage, showInfoMessage } = useFlashCardContext()
   const { goBack } = useNavigation()
 
@@ -31,7 +31,7 @@ export const useDeleteMarker = (id: number) => {
       showInfoMessage(strings.success)
     },
     onError: () => {
-      setModalVisible(false)
+      setModalVisibility(false)
       showErrorMessage(commonStrings.error)
     },
     refetchQueries: ['MarkersQuery'],
@@ -41,7 +41,7 @@ export const useDeleteMarker = (id: number) => {
     deleteMarker: () => mutate({ variables: { id } }),
     isModalVisible,
     loading,
-    setModalVisible,
+    setModalVisibility,
   }
 }
 

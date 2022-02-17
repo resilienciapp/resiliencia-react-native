@@ -11,8 +11,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 
-import com.reactnativemmkv.MmkvModulePackage;
-
 import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -43,7 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
 
                 @Override
                 protected JSIModulePackage getJSIModulePackage() {
-                    return new ExampleJSIPackage();
+                    return new ReanimatedJSIModulePackage();
                 }
             };
 

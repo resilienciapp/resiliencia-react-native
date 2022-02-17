@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client'
+import { gql, useLazyQuery, useQuery } from '@apollo/client'
 import {
   EventsFragment,
   SubscriptionsFragment,
@@ -41,6 +41,9 @@ export const useUser = () => useQuery<UserQueryData>(UserQuery)
 
 export const useUserEvents = () =>
   useQuery<UserEventsQueryData>(UserEventsQuery)
+
+export const useLazyUserEvents = () =>
+  useLazyQuery<UserEventsQueryData>(UserEventsQuery)
 
 export const useUserSubscriptions = () =>
   useQuery<UserSubscriptionsQueryData>(UserSubscriptionsQuery)

@@ -1,4 +1,5 @@
 export enum Route {
+  AdministratorGroup = 'AdministratorGroup',
   AuthenticatedGroup = 'AuthenticatedGroup',
   Details = 'Details',
   Map = 'Map',

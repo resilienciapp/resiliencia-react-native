@@ -108,6 +108,35 @@ export interface AddRequestMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: AdminRequests
+// ====================================================
+
+export interface AdminRequests_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
+export interface AdminRequests_marker {
+  adminRequests: AdminRequests_marker_adminRequests[];
+  id: number;
+}
+
+export interface AdminRequests {
+  marker: AdminRequests_marker;
+}
+
+export interface AdminRequestsVariables {
+  id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: CategoriesQuery
 // ====================================================
 
@@ -458,6 +487,56 @@ export interface RegisterDeviceTokenMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: RequestMarkerAdministration
+// ====================================================
+
+export interface RequestMarkerAdministration_requestMarkerAdministration {
+  id: number;
+}
+
+export interface RequestMarkerAdministration {
+  requestMarkerAdministration: RequestMarkerAdministration_requestMarkerAdministration;
+}
+
+export interface RequestMarkerAdministrationVariables {
+  id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: RespondMarkerRequest
+// ====================================================
+
+export interface RespondMarkerRequest_respondMarkerRequest_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
+export interface RespondMarkerRequest_respondMarkerRequest {
+  adminRequests: RespondMarkerRequest_respondMarkerRequest_adminRequests[];
+  id: number;
+}
+
+export interface RespondMarkerRequest {
+  respondMarkerRequest: RespondMarkerRequest_respondMarkerRequest;
+}
+
+export interface RespondMarkerRequestVariables {
+  input: RespondMarkerRequestInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: SignInMutation
 // ====================================================
 
@@ -500,31 +579,31 @@ export interface SignUpMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: SubscribeMutation
+// GraphQL mutation operation: SubscribeMarker
 // ====================================================
 
-export interface SubscribeMutation_subscribeMarker_subscriptions_marker_category {
+export interface SubscribeMarker_subscribeMarker_subscriptions_marker_category {
   color: string;
   description: string | null;
   id: number;
   name: string;
 }
 
-export interface SubscribeMutation_subscribeMarker_subscriptions_marker_requests_user {
+export interface SubscribeMarker_subscribeMarker_subscriptions_marker_requests_user {
   email: string;
   name: string;
 }
 
-export interface SubscribeMutation_subscribeMarker_subscriptions_marker_requests {
+export interface SubscribeMarker_subscribeMarker_subscriptions_marker_requests {
   createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
-  user: SubscribeMutation_subscribeMarker_subscriptions_marker_requests_user;
+  user: SubscribeMarker_subscribeMarker_subscriptions_marker_requests_user;
 }
 
-export interface SubscribeMutation_subscribeMarker_subscriptions_marker {
-  category: SubscribeMutation_subscribeMarker_subscriptions_marker_category;
+export interface SubscribeMarker_subscribeMarker_subscriptions_marker {
+  category: SubscribeMarker_subscribeMarker_subscriptions_marker_category;
   description: string | null;
   duration: number;
   expiresAt: any | null;
@@ -533,28 +612,28 @@ export interface SubscribeMutation_subscribeMarker_subscriptions_marker {
   longitude: number;
   name: string;
   recurrence: string;
-  requests: SubscribeMutation_subscribeMarker_subscriptions_marker_requests[];
+  requests: SubscribeMarker_subscribeMarker_subscriptions_marker_requests[];
   subscribedUsers: number;
   timeZone: string;
 }
 
-export interface SubscribeMutation_subscribeMarker_subscriptions {
+export interface SubscribeMarker_subscribeMarker_subscriptions {
   date: any;
   id: number;
-  marker: SubscribeMutation_subscribeMarker_subscriptions_marker;
+  marker: SubscribeMarker_subscribeMarker_subscriptions_marker;
 }
 
-export interface SubscribeMutation_subscribeMarker {
+export interface SubscribeMarker_subscribeMarker {
   id: number;
-  subscriptions: SubscribeMutation_subscribeMarker_subscriptions[];
+  subscriptions: SubscribeMarker_subscribeMarker_subscriptions[];
 }
 
-export interface SubscribeMutation {
-  subscribeMarker: SubscribeMutation_subscribeMarker;
+export interface SubscribeMarker {
+  subscribeMarker: SubscribeMarker_subscribeMarker;
 }
 
-export interface SubscribeMutationVariables {
-  input: SubscribeMarkerInput;
+export interface SubscribeMarkerVariables {
+  id: number;
 }
 
 /* tslint:disable */
@@ -563,31 +642,31 @@ export interface SubscribeMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: UnsubscribeMarkerMutation
+// GraphQL mutation operation: UnsubscribeMarker
 // ====================================================
 
-export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_category {
+export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_category {
   color: string;
   description: string | null;
   id: number;
   name: string;
 }
 
-export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_requests_user {
+export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_requests_user {
   email: string;
   name: string;
 }
 
-export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_requests {
+export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_requests {
   createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
-  user: UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_requests_user;
+  user: UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_requests_user;
 }
 
-export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker {
-  category: UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_category;
+export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker {
+  category: UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_category;
   description: string | null;
   duration: number;
   expiresAt: any | null;
@@ -596,28 +675,28 @@ export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marke
   longitude: number;
   name: string;
   recurrence: string;
-  requests: UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker_requests[];
+  requests: UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_requests[];
   subscribedUsers: number;
   timeZone: string;
 }
 
-export interface UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions {
+export interface UnsubscribeMarker_unsubscribeMarker_subscriptions {
   date: any;
   id: number;
-  marker: UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions_marker;
+  marker: UnsubscribeMarker_unsubscribeMarker_subscriptions_marker;
 }
 
-export interface UnsubscribeMarkerMutation_unsubscribeMarker {
+export interface UnsubscribeMarker_unsubscribeMarker {
   id: number;
-  subscriptions: UnsubscribeMarkerMutation_unsubscribeMarker_subscriptions[];
+  subscriptions: UnsubscribeMarker_unsubscribeMarker_subscriptions[];
 }
 
-export interface UnsubscribeMarkerMutation {
-  unsubscribeMarker: UnsubscribeMarkerMutation_unsubscribeMarker;
+export interface UnsubscribeMarker {
+  unsubscribeMarker: UnsubscribeMarker_unsubscribeMarker;
 }
 
-export interface UnsubscribeMarkerMutationVariables {
-  input: UnsubscribeMarkerInput;
+export interface UnsubscribeMarkerVariables {
+  id: number;
 }
 
 /* tslint:disable */
@@ -1146,6 +1225,12 @@ export enum Platform {
   ios = "ios",
 }
 
+export enum RequestStatus {
+  accepted = "accepted",
+  pending = "pending",
+  rejected = "rejected",
+}
+
 export interface AddMarkerInput {
   category: number;
   description?: string | null;
@@ -1171,6 +1256,11 @@ export interface RegisterDeviceTokenInput {
   token: string;
 }
 
+export interface RespondMarkerRequestInput {
+  requestId: number;
+  response: RequestStatus;
+}
+
 export interface SignInInput {
   email: string;
   password: string;
@@ -1180,14 +1270,6 @@ export interface SignUpInput {
   email: string;
   name: string;
   password: string;
-}
-
-export interface SubscribeMarkerInput {
-  marker: number;
-}
-
-export interface UnsubscribeMarkerInput {
-  marker: number;
 }
 
 //==============================================================

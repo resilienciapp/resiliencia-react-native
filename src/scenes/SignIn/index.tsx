@@ -56,7 +56,7 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
       <Button
         disabled={buttonDisabled}
         mode={ButtonMode.Primary}
-        onPress={signIn({ email, password })}
+        onPress={signIn({ email: email.trim(), password })}
         text={strings.signIn}
       />
       <Button

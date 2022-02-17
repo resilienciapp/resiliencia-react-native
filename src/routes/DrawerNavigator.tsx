@@ -31,7 +31,7 @@ const CustomDrawerContent = ({ navigation }: DrawerContentComponentProps) => {
     if (isAuthenticated) {
       getUser()
     }
-  }, [])
+  }, [isAuthenticated])
 
   const { categories } = useCategories()
 
