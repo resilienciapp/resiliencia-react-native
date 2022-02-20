@@ -7,6 +7,13 @@
 // GraphQL mutation operation: AddMarkerMutation
 // ====================================================
 
+export interface AddMarkerMutation_addMarker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface AddMarkerMutation_addMarker_category {
   color: string;
   description: string | null;
@@ -28,6 +35,7 @@ export interface AddMarkerMutation_addMarker_requests {
 }
 
 export interface AddMarkerMutation_addMarker {
+  adminRequests: AddMarkerMutation_addMarker_adminRequests[];
   category: AddMarkerMutation_addMarker_category;
   description: string | null;
   duration: number;
@@ -59,6 +67,13 @@ export interface AddMarkerMutationVariables {
 // GraphQL mutation operation: AddRequestMutation
 // ====================================================
 
+export interface AddRequestMutation_addRequest_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface AddRequestMutation_addRequest_category {
   color: string;
   description: string | null;
@@ -80,6 +95,7 @@ export interface AddRequestMutation_addRequest_requests {
 }
 
 export interface AddRequestMutation_addRequest {
+  adminRequests: AddRequestMutation_addRequest_adminRequests[];
   category: AddRequestMutation_addRequest_category;
   description: string | null;
   duration: number;
@@ -160,6 +176,13 @@ export interface CategoriesQuery {
 // GraphQL mutation operation: ConfirmMarker
 // ====================================================
 
+export interface ConfirmMarker_confirmMarker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface ConfirmMarker_confirmMarker_category {
   color: string;
   description: string | null;
@@ -181,6 +204,7 @@ export interface ConfirmMarker_confirmMarker_requests {
 }
 
 export interface ConfirmMarker_confirmMarker {
+  adminRequests: ConfirmMarker_confirmMarker_adminRequests[];
   category: ConfirmMarker_confirmMarker_category;
   description: string | null;
   duration: number;
@@ -212,6 +236,13 @@ export interface ConfirmMarkerVariables {
 // GraphQL mutation operation: DeleteMarker
 // ====================================================
 
+export interface DeleteMarker_deleteMarker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface DeleteMarker_deleteMarker_category {
   color: string;
   description: string | null;
@@ -233,6 +264,7 @@ export interface DeleteMarker_deleteMarker_requests {
 }
 
 export interface DeleteMarker_deleteMarker {
+  adminRequests: DeleteMarker_deleteMarker_adminRequests[];
   category: DeleteMarker_deleteMarker_category;
   description: string | null;
   duration: number;
@@ -264,6 +296,13 @@ export interface DeleteMarkerVariables {
 // GraphQL query operation: UserLazyQuery
 // ====================================================
 
+export interface UserLazyQuery_user_events_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface UserLazyQuery_user_events_marker_category {
   color: string;
   description: string | null;
@@ -285,6 +324,7 @@ export interface UserLazyQuery_user_events_marker_requests {
 }
 
 export interface UserLazyQuery_user_events_marker {
+  adminRequests: UserLazyQuery_user_events_marker_adminRequests[];
   category: UserLazyQuery_user_events_marker_category;
   description: string | null;
   duration: number;
@@ -308,6 +348,13 @@ export interface UserLazyQuery_user_profile {
   name: string;
 }
 
+export interface UserLazyQuery_user_subscriptions_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface UserLazyQuery_user_subscriptions_marker_category {
   color: string;
   description: string | null;
@@ -329,6 +376,7 @@ export interface UserLazyQuery_user_subscriptions_marker_requests {
 }
 
 export interface UserLazyQuery_user_subscriptions_marker {
+  adminRequests: UserLazyQuery_user_subscriptions_marker_adminRequests[];
   category: UserLazyQuery_user_subscriptions_marker_category;
   description: string | null;
   duration: number;
@@ -369,6 +417,13 @@ export interface UserLazyQuery {
 // GraphQL query operation: MarkerQuery
 // ====================================================
 
+export interface MarkerQuery_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface MarkerQuery_marker_category {
   color: string;
   description: string | null;
@@ -390,6 +445,7 @@ export interface MarkerQuery_marker_requests {
 }
 
 export interface MarkerQuery_marker {
+  adminRequests: MarkerQuery_marker_adminRequests[];
   category: MarkerQuery_marker_category;
   description: string | null;
   duration: number;
@@ -421,6 +477,13 @@ export interface MarkerQueryVariables {
 // GraphQL query operation: MarkersQuery
 // ====================================================
 
+export interface MarkersQuery_markers_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface MarkersQuery_markers_category {
   color: string;
   description: string | null;
@@ -442,6 +505,7 @@ export interface MarkersQuery_markers_requests {
 }
 
 export interface MarkersQuery_markers {
+  adminRequests: MarkersQuery_markers_adminRequests[];
   category: MarkersQuery_markers_category;
   description: string | null;
   duration: number;
@@ -582,6 +646,13 @@ export interface SignUpMutationVariables {
 // GraphQL mutation operation: SubscribeMarker
 // ====================================================
 
+export interface SubscribeMarker_subscribeMarker_subscriptions_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface SubscribeMarker_subscribeMarker_subscriptions_marker_category {
   color: string;
   description: string | null;
@@ -603,6 +674,7 @@ export interface SubscribeMarker_subscribeMarker_subscriptions_marker_requests {
 }
 
 export interface SubscribeMarker_subscribeMarker_subscriptions_marker {
+  adminRequests: SubscribeMarker_subscribeMarker_subscriptions_marker_adminRequests[];
   category: SubscribeMarker_subscribeMarker_subscriptions_marker_category;
   description: string | null;
   duration: number;
@@ -645,6 +717,13 @@ export interface SubscribeMarkerVariables {
 // GraphQL mutation operation: UnsubscribeMarker
 // ====================================================
 
+export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_category {
   color: string;
   description: string | null;
@@ -666,6 +745,7 @@ export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_reques
 }
 
 export interface UnsubscribeMarker_unsubscribeMarker_subscriptions_marker {
+  adminRequests: UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_adminRequests[];
   category: UnsubscribeMarker_unsubscribeMarker_subscriptions_marker_category;
   description: string | null;
   duration: number;
@@ -708,6 +788,13 @@ export interface UnsubscribeMarkerVariables {
 // GraphQL query operation: UserQuery
 // ====================================================
 
+export interface UserQuery_user_events_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface UserQuery_user_events_marker_category {
   color: string;
   description: string | null;
@@ -729,6 +816,7 @@ export interface UserQuery_user_events_marker_requests {
 }
 
 export interface UserQuery_user_events_marker {
+  adminRequests: UserQuery_user_events_marker_adminRequests[];
   category: UserQuery_user_events_marker_category;
   description: string | null;
   duration: number;
@@ -752,6 +840,13 @@ export interface UserQuery_user_profile {
   name: string;
 }
 
+export interface UserQuery_user_subscriptions_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface UserQuery_user_subscriptions_marker_category {
   color: string;
   description: string | null;
@@ -773,6 +868,7 @@ export interface UserQuery_user_subscriptions_marker_requests {
 }
 
 export interface UserQuery_user_subscriptions_marker {
+  adminRequests: UserQuery_user_subscriptions_marker_adminRequests[];
   category: UserQuery_user_subscriptions_marker_category;
   description: string | null;
   duration: number;
@@ -813,6 +909,13 @@ export interface UserQuery {
 // GraphQL query operation: UserEventsQuery
 // ====================================================
 
+export interface UserEventsQuery_user_events_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface UserEventsQuery_user_events_marker_category {
   color: string;
   description: string | null;
@@ -834,6 +937,7 @@ export interface UserEventsQuery_user_events_marker_requests {
 }
 
 export interface UserEventsQuery_user_events_marker {
+  adminRequests: UserEventsQuery_user_events_marker_adminRequests[];
   category: UserEventsQuery_user_events_marker_category;
   description: string | null;
   duration: number;
@@ -870,6 +974,13 @@ export interface UserEventsQuery {
 // GraphQL query operation: UserSubscriptionsQuery
 // ====================================================
 
+export interface UserSubscriptionsQuery_user_subscriptions_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface UserSubscriptionsQuery_user_subscriptions_marker_category {
   color: string;
   description: string | null;
@@ -891,6 +1002,7 @@ export interface UserSubscriptionsQuery_user_subscriptions_marker_requests {
 }
 
 export interface UserSubscriptionsQuery_user_subscriptions_marker {
+  adminRequests: UserSubscriptionsQuery_user_subscriptions_marker_adminRequests[];
   category: UserSubscriptionsQuery_user_subscriptions_marker_category;
   description: string | null;
   duration: number;
@@ -945,6 +1057,13 @@ export interface Category {
 // GraphQL fragment: Marker
 // ====================================================
 
+export interface Marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface Marker_category {
   color: string;
   description: string | null;
@@ -966,6 +1085,7 @@ export interface Marker_requests {
 }
 
 export interface Marker {
+  adminRequests: Marker_adminRequests[];
   category: Marker_category;
   description: string | null;
   duration: number;
@@ -1011,6 +1131,13 @@ export interface Request {
 // GraphQL fragment: Events
 // ====================================================
 
+export interface Events_events_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface Events_events_marker_category {
   color: string;
   description: string | null;
@@ -1032,6 +1159,7 @@ export interface Events_events_marker_requests {
 }
 
 export interface Events_events_marker {
+  adminRequests: Events_events_marker_adminRequests[];
   category: Events_events_marker_category;
   description: string | null;
   duration: number;
@@ -1064,6 +1192,13 @@ export interface Events {
 // GraphQL fragment: Subscriptions
 // ====================================================
 
+export interface Subscriptions_subscriptions_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface Subscriptions_subscriptions_marker_category {
   color: string;
   description: string | null;
@@ -1085,6 +1220,7 @@ export interface Subscriptions_subscriptions_marker_requests {
 }
 
 export interface Subscriptions_subscriptions_marker {
+  adminRequests: Subscriptions_subscriptions_marker_adminRequests[];
   category: Subscriptions_subscriptions_marker_category;
   description: string | null;
   duration: number;
@@ -1119,6 +1255,13 @@ export interface Subscriptions {
 // GraphQL fragment: User
 // ====================================================
 
+export interface User_events_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface User_events_marker_category {
   color: string;
   description: string | null;
@@ -1140,6 +1283,7 @@ export interface User_events_marker_requests {
 }
 
 export interface User_events_marker {
+  adminRequests: User_events_marker_adminRequests[];
   category: User_events_marker_category;
   description: string | null;
   duration: number;
@@ -1163,6 +1307,13 @@ export interface User_profile {
   name: string;
 }
 
+export interface User_subscriptions_marker_adminRequests {
+  createdAt: any;
+  id: number;
+  status: RequestStatus;
+  userName: string;
+}
+
 export interface User_subscriptions_marker_category {
   color: string;
   description: string | null;
@@ -1184,6 +1335,7 @@ export interface User_subscriptions_marker_requests {
 }
 
 export interface User_subscriptions_marker {
+  adminRequests: User_subscriptions_marker_adminRequests[];
   category: User_subscriptions_marker_category;
   description: string | null;
   duration: number;

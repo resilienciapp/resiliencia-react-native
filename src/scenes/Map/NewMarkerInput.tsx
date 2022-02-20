@@ -192,12 +192,14 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
             width={20}
           />
           <InputText
+            autoCapitalize="sentences"
             placeholder={strings.name}
             placeholderTextColor={Color.Steel}
             onChangeText={setName}
             value={name}
           />
           <InputText
+            autoCapitalize="sentences"
             multiline={true}
             numberOfLines={5}
             placeholder={strings.description}
@@ -266,7 +268,14 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
           )}
           <View style={styles.categoryContainer2}>
             <View style={styles.categorySubContainer}>
-              <Text style={styles.endRepeat}>{strings.endRepeat}</Text>
+              <Text style={styles.endRepeat}>
+                {expiresAt
+                  ? strings.formatString(
+                      strings.expiresAt,
+                      expiresAtDate.toLocaleString(DateTime.DATE_FULL),
+                    )
+                  : strings.expiresAtPlaceholder}
+              </Text>
               <Checkbox
                 checked={expiresAt}
                 checkedBorderColor={Color.Blue}
@@ -306,7 +315,8 @@ const strings = new LocalizedStrings({
     category: 'Category',
     description: 'Description',
     duration: 'Duration',
-    endRepeat: 'End repeat',
+    expiresAt: 'Expires at {0}',
+    expiresAtPlaceholder: 'Expires',
     name: 'Name',
   },
   'es-UY': {
@@ -314,7 +324,8 @@ const strings = new LocalizedStrings({
     category: 'Categoría',
     description: 'Descripción',
     duration: 'Duración',
-    endRepeat: 'Finaliza',
+    expiresAt: 'Expira el {0}',
+    expiresAtPlaceholder: 'Expira',
     name: 'Nombre',
   },
 })
@@ -359,7 +370,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   contentContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 24,
   },
   daysContainer: {
     flexDirection: 'row',

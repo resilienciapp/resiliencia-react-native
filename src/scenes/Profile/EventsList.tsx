@@ -1,6 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
+import { showNotificationBadge } from 'src/common/marker'
 import { EmptyList } from 'src/components/List/EmptyList'
 import { Spinner } from 'src/components/Spinner'
 import { useUserEvents } from 'src/gql/hooks/useUser'
@@ -32,8 +33,9 @@ export const EventsList: React.FunctionComponent = () => {
       refreshing={loading}
       renderItem={({ item }) => (
         <EventItem
-          name={item.marker.name}
           category={item.marker.category.name}
+          name={item.marker.name}
+          notificationBadge={showNotificationBadge(item.marker)}
           onPress={navigateToDetail(item.marker)}
         />
       )}

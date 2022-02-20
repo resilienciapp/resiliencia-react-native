@@ -15,6 +15,7 @@ import MapView, { Marker } from 'react-native-maps'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import RRule from 'rrule'
 import Schedule from 'src/assets/schedule.svg'
+import { showNotificationBadge } from 'src/common/marker'
 import { Button, ButtonMode } from 'src/components/Button'
 import { AddButton } from 'src/components/HeaderButton/AddButton'
 import { GroupButton } from 'src/components/HeaderButton/GroupButton'
@@ -71,6 +72,7 @@ export const Details: RouteComponent<Route.Details> = ({
                   markerId: params.markerId,
                 })
               }
+              showBadge={showNotificationBadge(marker)}
             />
             <TrashButton markerId={marker.id} />
           </>
@@ -98,15 +100,14 @@ export const Details: RouteComponent<Route.Details> = ({
     return null
   }
 
-  const recurrence = RRule.fromString(marker.recurrence).options
+  const startOfDay = DateTime.local().startOf('day').toJSDate()
 
-  const weekdays = recurrence.byweekday ?? days
-  const startTime = DateTime.local().set({
-    hour: recurrence.byhour[0],
-    millisecond: 0,
-    minute: recurrence.byminute[0],
-    second: 0,
-  })
+  const recurrence = RRule.fromString(marker.recurrence)
+
+  const weekdays = recurrence.options.byweekday ?? days
+  const startTime = DateTime.fromJSDate(
+    recurrence.after(startOfDay, true) ?? recurrence.before(startOfDay, true),
+  )
 
   const daysToExpire = Math.round(
     DateTime.fromISO(marker.expiresAt).diffNow('days').days,
@@ -130,6 +131,7 @@ export const Details: RouteComponent<Route.Details> = ({
           rotateEnabled={false}
           scrollEnabled={false}
           style={styles.map}
+          zoomControlEnabled={true}
           zoomEnabled={false}>
           <Marker
             coordinate={{

@@ -1,10 +1,10 @@
 import { useDrawerStatus } from '@react-navigation/drawer'
-import React, { useEffect, useState } from 'react'
+import React, { LegacyRef, useEffect, useRef, useState } from 'react'
 import { StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native'
 import MapView, {
+  LatLng,
   MapEvent,
   Marker as MapMarker,
-  Region,
 } from 'react-native-maps'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Menu from 'src/assets/menu.svg'
@@ -31,7 +31,9 @@ const initialRegion = {
 }
 
 export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
-  const [coordinate, setCoordinate] = useState<Region>()
+  const mapRef = useRef<MapView>()
+
+  const [coordinate, setCoordinate] = useState<LatLng>()
 
   const isDrawerClosed = useDrawerStatus() === 'closed'
 
@@ -54,8 +56,21 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
     setCoordinate(undefined)
   }
 
-  const setNewMarkerCoordinates = (event: MapEvent) => {
-    setCoordinate({ ...event.nativeEvent.coordinate, ...delta })
+  const setNewMarkerCoordinates = ({ nativeEvent }: MapEvent) => {
+    mapRef.current?.animateCamera(
+      {
+        altitude: 5,
+        center: {
+          latitude: nativeEvent.coordinate.latitude - 0.0003,
+          longitude: nativeEvent.coordinate.longitude,
+        },
+        heading: 0,
+        pitch: 0,
+        zoom: 20,
+      },
+      { duration: 750 },
+    )
+    setCoordinate(nativeEvent.coordinate)
   }
 
   const showMenu = isDrawerClosed && !coordinate
@@ -70,11 +85,7 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
       <MapView
         initialRegion={initialRegion}
         onLongPress={setNewMarkerCoordinates}
-        region={
-          coordinate
-            ? { ...coordinate, latitude: coordinate.latitude - 0.03 }
-            : undefined
-        }
+        ref={mapRef as LegacyRef<MapView>}
         renderToHardwareTextureAndroid={true}
         rotateEnabled={true}
         scrollDuringRotateOrZoomEnabled={true}

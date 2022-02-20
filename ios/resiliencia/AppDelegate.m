@@ -52,7 +52,7 @@ static void InitializeFlipper(UIApplication *application) {
   [bridge moduleForClass:[RCTDevLoadingView class]];
 #endif
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"Resilienciapp"
+                                                   moduleName:@"resiliencia"
                                             initialProperties:nil];
 
 

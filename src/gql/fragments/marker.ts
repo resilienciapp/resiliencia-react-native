@@ -5,6 +5,12 @@ import { RequestFragment } from './request'
 
 export const MarkerFragment = gql`
   fragment Marker on Marker {
+    adminRequests {
+      createdAt
+      id
+      status
+      userName
+    }
     category {
       ...Category
     }
