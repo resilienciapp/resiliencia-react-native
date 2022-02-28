@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native'
+import {
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import Visibility from 'src/assets/visibility.svg'
 import VisibilityOff from 'src/assets/visibility_off.svg'
 import { Color } from 'src/styles/Color'
@@ -36,17 +42,13 @@ export const InputText: React.FunctionComponent<Props> = ({
     {textContentType === 'password' && (
       <>
         {secureTextEntry ? (
-          <Visibility
-            fill={Color.Steel}
-            height="50%"
-            onPress={toggleSecureTextEntry}
-          />
+          <TouchableOpacity onPress={toggleSecureTextEntry}>
+            <Visibility fill={Color.Steel} height={25} />
+          </TouchableOpacity>
         ) : (
-          <VisibilityOff
-            fill={Color.Steel}
-            height="50%"
-            onPress={toggleSecureTextEntry}
-          />
+          <TouchableOpacity onPress={toggleSecureTextEntry}>
+            <VisibilityOff fill={Color.Steel} height={25} />
+          </TouchableOpacity>
         )}
       </>
     )}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import Trash from 'src/assets/delete.svg'
 import { strings as commonStrings } from 'src/common/strings'
@@ -29,7 +29,9 @@ export const TrashButton: React.FunctionComponent<Props> = ({ markerId }) => {
         secondaryText={commonStrings.no}
         setModalVisibility={setModalVisibility}
       />
-      <Trash onPress={openModal} height={25} width={25} style={styles.icon} />
+      <TouchableOpacity onPress={openModal}>
+        <Trash height={25} width={25} style={styles.icon} />
+      </TouchableOpacity>
     </>
   )
 }

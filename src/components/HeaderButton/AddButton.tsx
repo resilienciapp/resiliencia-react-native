@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import LocalizedStrings from 'react-native-localization'
 import Add from 'src/assets/group_add.svg'
 import { strings as commonStrings } from 'src/common/strings'
@@ -45,7 +45,9 @@ export const AddButton: React.FunctionComponent<Props> = ({
         secondaryText={commonStrings.no}
         setModalVisibility={setModalVisibility}
       />
-      <Add onPress={toggleModal} height={25} width={25} style={styles.icon} />
+      <TouchableOpacity onPress={toggleModal}>
+        <Add height={25} width={25} style={styles.icon} />
+      </TouchableOpacity>
     </>
   )
 }
