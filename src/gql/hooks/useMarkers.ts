@@ -24,10 +24,10 @@ export const useMarkers = () => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     error: 'Error getting events near your location',
   },
-  'es-UY': {
+  es: {
     error: 'Error al obtener eventos cerca de tu ubicación',
   },
 })

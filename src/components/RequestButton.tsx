@@ -50,10 +50,10 @@ export const RequestButton: React.FunctionComponent<Props> = ({
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     createRequest: 'Create request',
   },
-  'es-UY': {
+  es: {
     createRequest: 'Crear pedido',
   },
 })

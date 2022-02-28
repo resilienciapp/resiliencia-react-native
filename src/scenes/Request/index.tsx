@@ -119,14 +119,14 @@ export const Request: RouteComponent<Route.Request> = ({
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     description: 'Description',
     expiresAt: 'Expires at {0}',
     expiresAtPlaceholder: 'Expires',
     notifiable: 'Notify subscribed persons',
     submit: 'Submit',
   },
-  'es-UY': {
+  es: {
     description: 'Descripción',
     expiresAt: 'Expira el {0}',
     expiresAtPlaceholder: 'Expira',

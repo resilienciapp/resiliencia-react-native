@@ -71,11 +71,11 @@ export const SubscriptionButton: React.FunctionComponent<Props> = ({
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     subscribe: 'Subscribe',
     unsubscribe: 'Unsubscribe',
   },
-  'es-UY': {
+  es: {
     subscribe: 'Subscribirse',
     unsubscribe: 'Desubscribirse',
   },

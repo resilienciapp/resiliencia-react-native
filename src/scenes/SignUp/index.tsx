@@ -17,6 +17,7 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
+  const [secureTextEntry, setSecureTextEntry] = useState(true)
 
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
@@ -34,6 +35,8 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
   const validatePassword = () => {
     setPasswordError(!!password && !validator.password(password))
   }
+
+  const toggleSecureTextEntry = () => setSecureTextEntry(!secureTextEntry)
 
   const buttonDisabled =
     !name ||
@@ -71,8 +74,9 @@ export const SignUp: RouteComponent<Route.SignUp> = ({ navigation }) => {
         placeholder={strings.password}
         reference={passwordRef}
         returnKeyType="done"
-        secureTextEntry={true}
+        secureTextEntry={secureTextEntry}
         textContentType="password"
+        toggleSecureTextEntry={toggleSecureTextEntry}
       />
       <Button
         disabled={buttonDisabled}

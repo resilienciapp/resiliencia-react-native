@@ -310,7 +310,7 @@ export const NewMarkerInput: React.FunctionComponent<Props> = ({
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     addEvent: 'Add event',
     category: 'Category',
     description: 'Description',
@@ -319,7 +319,7 @@ const strings = new LocalizedStrings({
     expiresAtPlaceholder: 'Expires',
     name: 'Name',
   },
-  'es-UY': {
+  es: {
     addEvent: 'Agregar evento',
     category: 'Categoría',
     description: 'Descripción',

@@ -35,11 +35,11 @@ export const TrashButton: React.FunctionComponent<Props> = ({ markerId }) => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     description: 'This action could not be reverted',
     header: 'Are you sure you want to delete this event?',
   },
-  'es-UY': {
+  es: {
     description: 'Esta acción no se podrá revertir',
     header: '¿Seguro que deseas eliminar este evento?',
   },

@@ -134,14 +134,14 @@ export const Marker: React.FunctionComponent<Props> = ({ marker }) => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     closed: 'Closed • Open at {0}',
     closedToday: 'Closed • Open at {0} of {1}',
     expiresAt: 'Expires in {0} day',
     open: 'Opens at {0}',
     touchToConfirm: 'Tap to extend time',
   },
-  'es-UY': {
+  es: {
     closed: 'Cerrado • Abre a las {0}',
     closedToday: 'Cerrado • Abre a las {0} del {1}',
     expiresAt: 'Expira en {0} día',

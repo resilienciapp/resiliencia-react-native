@@ -4,6 +4,7 @@ import LocalizedStrings from 'react-native-localization'
 import { strings as commonStrings } from 'src/common/strings'
 import { useFlashCardContext } from 'src/contexts/FlashCardContext'
 
+import { EventsFragment, SubscriptionsFragment } from '../fragments/user'
 import {
   RequestMarkerAdministration,
   RequestMarkerAdministrationVariables,
@@ -13,8 +14,12 @@ const RequestMarkerAdministrationMutation = gql`
   mutation RequestMarkerAdministration($id: Int!) {
     requestMarkerAdministration(id: $id) {
       id
+      ...Events
+      ...Subscriptions
     }
   }
+  ${EventsFragment}
+  ${SubscriptionsFragment}
 `
 
 enum Error {
@@ -43,12 +48,13 @@ export const useRequestMarkerAdministration = (id: number) => {
     RequestMarkerAdministration,
     RequestMarkerAdministrationVariables
   >(RequestMarkerAdministrationMutation, {
+    awaitRefetchQueries: true,
     onCompleted: () => {
       setModalVisibility(false)
       showInfoMessage(strings.success)
     },
     onError: ({ graphQLErrors }) => {
-      showErrorMessage(generateErrorMessage(graphQLErrors[0].extensions.code))
+      showErrorMessage(generateErrorMessage(graphQLErrors[0].message))
     },
   })
 
@@ -61,13 +67,13 @@ export const useRequestMarkerAdministration = (id: number) => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     alreadyAdministrator: 'You already are an administrator of this event.',
     alreadyRequested:
       'You already requested to be an administrator. Please wait until is responded.',
     success: 'Request sent successfully!',
   },
-  'es-UY': {
+  es: {
     alreadyAdministrator: 'Ya es administrador de este evento.',
     alreadyRequested:
       'Ya solicitaste ser un administrador, por favor espera la respuesta.',

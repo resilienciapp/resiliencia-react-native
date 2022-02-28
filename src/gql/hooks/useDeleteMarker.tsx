@@ -6,15 +6,12 @@ import { strings as commonStrings } from 'src/common/strings'
 import { useFlashCardContext } from 'src/contexts/FlashCardContext'
 import { DeleteMarker, DeleteMarkerVariables } from 'src/gql/types'
 
-import { MarkerFragment } from '../fragments/marker'
-
 const DeleteMarkerMutation = gql`
   mutation DeleteMarker($id: Int!) {
     deleteMarker(id: $id) {
-      ...Marker
+      id
     }
   }
-  ${MarkerFragment}
 `
 
 export const useDeleteMarker = (id: number) => {
@@ -46,10 +43,10 @@ export const useDeleteMarker = (id: number) => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     success: 'Event deleted successfully',
   },
-  'es-UY': {
+  es: {
     success: 'Evento eliminado con éxito',
   },
 })

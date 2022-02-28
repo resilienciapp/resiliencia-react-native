@@ -160,7 +160,7 @@ export const useInitialNotification = () => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     [Notification.EVENT_ADMINISTRATION_REQUEST]: {
       body: 'You have a new admin request',
       channel: 'New admin request',
@@ -180,7 +180,7 @@ const strings = new LocalizedStrings({
       title: 'New request',
     },
   },
-  'es-UY': {
+  es: {
     [Notification.EVENT_ADMINISTRATION_REQUEST]: {
       body: 'Toca para ver la nueva solicitud de administración',
       channel: 'Nueva solicitud',

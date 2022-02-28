@@ -25,12 +25,12 @@ export const Status: React.FunctionComponent<Props> = ({ status }) => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     accepted: 'Accepted',
     pending: 'Pending',
     rejected: 'Rejected',
   },
-  'es-UY': {
+  es: {
     accepted: 'Aceptada',
     pending: 'Pendiente',
     rejected: 'Rechazada',

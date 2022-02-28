@@ -24,7 +24,7 @@ export const getDay = (day: number) => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     friday: 'Fr',
     monday: 'Mo',
     saturday: 'Sa',
@@ -33,7 +33,7 @@ const strings = new LocalizedStrings({
     tuesday: 'Tu',
     wednesday: 'We',
   },
-  'es-UY': {
+  es: {
     friday: 'Vi',
     monday: 'Lu',
     saturday: 'Sa',

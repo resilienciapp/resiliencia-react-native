@@ -80,12 +80,12 @@ export const Profile: RouteComponent<Route.Profile> = () => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     events: 'My Events',
     requests: 'Active requests',
     subscriptions: 'Subscriptions',
   },
-  'es-UY': {
+  es: {
     events: 'Mis Eventos',
     requests: 'Pedidos activos',
     subscriptions: 'Subscripciones',

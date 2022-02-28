@@ -27,6 +27,7 @@ import { SubscriptionButton } from 'src/components/SubscriptionButton'
 import { useAuthenticationContext } from 'src/contexts/AuthenticationContext'
 import { useConfirmMarker } from 'src/gql/hooks/useConfirmMarker'
 import { useMarker } from 'src/gql/hooks/useMarker'
+import { useReportMarker } from 'src/gql/hooks/useReportMarker'
 import { useLazyUserEvents } from 'src/gql/hooks/useUser'
 import { Route } from 'src/routes/Route'
 import { RouteComponent } from 'src/routes/Stack'
@@ -48,6 +49,9 @@ export const Details: RouteComponent<Route.Details> = ({
   const { confirmMarker, loading: loadingConfirmation } = useConfirmMarker(
     params.markerId,
   )
+  const { reportMarker, loading: loadingReport } = useReportMarker(
+    params.markerId,
+  )
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -61,26 +65,30 @@ export const Details: RouteComponent<Route.Details> = ({
     }
 
     navigation.setOptions({
-      headerRight: () =>
-        data.user.events.find(
+      headerRight: () => {
+        const isOwner = data.user.events.find(
           ({ marker: { id } }) => id === params.markerId,
-        ) ? (
+        )
+
+        return (
           <>
-            <GroupButton
-              onPress={() =>
-                navigation.navigate(Route.AdministratorGroup, {
-                  markerId: params.markerId,
-                })
-              }
-              showBadge={showNotificationBadge(marker)}
-            />
-            <TrashButton markerId={marker.id} />
+            {isOwner && (
+              <GroupButton
+                onPress={() =>
+                  navigation.navigate(Route.AdministratorGroup, {
+                    markerId: params.markerId,
+                  })
+                }
+                showBadge={showNotificationBadge(marker)}
+              />
+            )}
+            {isOwner && <TrashButton markerId={marker.id} />}
+            <AddButton markerId={marker.id} visible={!isOwner} />
           </>
-        ) : (
-          <AddButton markerId={marker.id} />
-        ),
+        )
+      },
     })
-  }, [!!data, marker, isAuthenticated])
+  }, [data?.user.events.length, marker, isAuthenticated])
 
   const requests = useMemo(
     () =>
@@ -195,34 +203,56 @@ export const Details: RouteComponent<Route.Details> = ({
           </View>
         )}
       </ScrollView>
-      <View style={styles.buttonContainer}>
-        <Button
-          disabled={loadingConfirmation}
-          mode={ButtonMode.Primary}
-          onPress={confirmMarker}
-          text={strings.confirm}
-        />
-        {isAuthenticated && <RequestButton marker={marker} />}
-        {isAuthenticated && <SubscriptionButton markerId={marker.id} />}
-      </View>
+      {isAuthenticated && (
+        <View style={styles.buttonContainer}>
+          <RequestButton marker={marker} />
+          <SubscriptionButton markerId={marker.id} />
+          <View style={styles.buttonActionsContainer}>
+            <Button
+              disabled={loadingConfirmation}
+              mode={ButtonMode.PrimaryReversed}
+              onPress={confirmMarker}
+              style={styles.button}
+              text={strings.confirm}
+            />
+            <Button
+              disabled={loadingReport}
+              mode={ButtonMode.PrimaryReversed}
+              onPress={reportMarker}
+              style={styles.button}
+              text={strings.report}
+            />
+          </View>
+        </View>
+      )}
     </SafeAreaView>
   )
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
-    confirm: 'Confirm it is active 👍',
+  en: {
+    confirm: 'Confirm activity 👍',
     expiresAt: 'Expires in {0} day',
+    report: 'Report inactivity 👎',
     touchToConfirm: 'Confirm event to extend time',
   },
-  'es-UY': {
-    confirm: 'Confirmar que sigue activo 👍',
+  es: {
+    confirm: 'Confirmar actividad 👍',
     expiresAt: 'Expira en {0} día',
+    report: 'Reportar inactividad 👎',
     touchToConfirm: 'Confirme el evento para extender el tiempo',
   },
 })
 
 const styles = StyleSheet.create({
+  button: {
+    width: '49%',
+  },
+  buttonActionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   buttonContainer: {
     alignItems: 'center',
   },
@@ -272,8 +302,8 @@ const styles = StyleSheet.create({
   sectionContainer: {
     borderColor: Color.MysticGray,
     borderTopWidth: 2,
-    marginTop: 24,
-    paddingTop: 24,
+    marginTop: 16,
+    paddingTop: 16,
   },
   time: {
     alignSelf: 'center',

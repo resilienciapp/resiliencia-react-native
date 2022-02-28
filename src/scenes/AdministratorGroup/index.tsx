@@ -109,7 +109,9 @@ export const AdministratorGroup: RouteComponent<Route.AdministratorGroup> = ({
               <View style={styles.containerItem}>
                 <Person height={20} width={20} />
                 <Text style={styles.text}>
-                  {createdAt.toLocaleString(DateTime.DATETIME_SHORT)}
+                  {DateTime.fromISO(createdAt).toLocaleString(
+                    DateTime.DATETIME_SHORT,
+                  )}
                 </Text>
                 <Text style={styles.text}>{userName}</Text>
               </View>
@@ -128,7 +130,9 @@ export const AdministratorGroup: RouteComponent<Route.AdministratorGroup> = ({
               <View style={styles.containerItem}>
                 <Person height={20} width={20} />
                 <Text style={styles.text}>
-                  {createdAt.toLocaleString(DateTime.DATETIME_SHORT)}
+                  {DateTime.fromISO(createdAt).toLocaleString(
+                    DateTime.DATETIME_SHORT,
+                  )}
                 </Text>
                 <Text style={styles.text}>{userName}</Text>
               </View>
@@ -142,7 +146,7 @@ export const AdministratorGroup: RouteComponent<Route.AdministratorGroup> = ({
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     accept: 'Accept',
     header: 'List of admin requests',
     modalDescription: 'Do you want to add {0} as an event admin?',
@@ -150,7 +154,7 @@ const strings = new LocalizedStrings({
     noRequests: 'No admin requests yet',
     reject: 'Reject',
   },
-  'es-UY': {
+  es: {
     accept: 'Aceptar',
     header: 'Lista de solicitudes de administrador',
     modalDescription: '¿Quieres agregar a {0} como administrador del evento?',
@@ -196,7 +200,8 @@ const styles = StyleSheet.create({
   text: {
     color: Color.Black,
     fontSize: 14,
-    paddingHorizontal: 4,
+    paddingLeft: 4,
+    paddingRight: 8,
   },
   textBold: {
     fontWeight: 'bold',

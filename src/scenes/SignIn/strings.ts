@@ -1,13 +1,13 @@
 import LocalizedStrings from 'react-native-localization'
 
 export const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     email: 'Email',
     password: 'Password',
     signIn: 'Sign in',
     signUp: 'Create an account',
   },
-  'es-UY': {
+  es: {
     email: 'Correo electrónico',
     password: 'Contraseña',
     signIn: 'Iniciar sesión',

@@ -8,6 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { getClient } from './apollo'
 import { FlashCard } from './components/FlashCard'
+import { UpdateCard } from './components/UpdateCard'
 import { AuthenticationProvider } from './contexts/AuthenticationContext'
 import { FlashCardProvider } from './contexts/FlashCardContext'
 import { SelectedCategoriesProvider } from './contexts/SelectedCategoriesContext'
@@ -26,6 +27,7 @@ export const App = () => (
                 <>
                   <DrawerNavigator />
                   <FlashCard />
+                  <UpdateCard />
                 </>
               </SelectedCategoriesProvider>
             </FlashCardProvider>

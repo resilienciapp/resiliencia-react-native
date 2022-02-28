@@ -22,10 +22,10 @@ export const Subscribers: React.FunctionComponent<Props> = ({ amount }) => (
 )
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     subscribers: '({0}) person',
   },
-  'es-UY': {
+  es: {
     subscribers: '({0}) persona',
   },
 })

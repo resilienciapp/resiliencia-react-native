@@ -111,13 +111,13 @@ export const DrawerNavigator = () => (
 )
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     categories: 'Categories',
     profile: 'Profile',
     signIn: 'Sign In',
     signOut: 'Log out',
   },
-  'es-UY': {
+  es: {
     categories: 'Categorías',
     profile: 'Perfil',
     signIn: 'Iniciar sesión',

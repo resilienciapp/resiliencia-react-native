@@ -2,41 +2,39 @@ import { gql, useMutation } from '@apollo/client'
 import LocalizedStrings from 'react-native-localization'
 import { strings as commonStrings } from 'src/common/strings'
 import { useFlashCardContext } from 'src/contexts/FlashCardContext'
-import { ConfirmMarker, ConfirmMarkerVariables } from 'src/gql/types'
+import { ReportMarker, ReportMarkerVariables } from 'src/gql/types'
 
-import { MarkerFragment } from '../fragments/marker'
-
-const ConfirmMarkerMutation = gql`
-  mutation ConfirmMarker($id: Int!) {
-    confirmMarker(id: $id) {
-      ...Marker
+const ReportMarkerMutation = gql`
+  mutation ReportMarker($id: Int!) {
+    reportMarker(id: $id) {
+      id
     }
   }
-  ${MarkerFragment}
 `
 
-export const useConfirmMarker = (id: number) => {
+export const useReportMarker = (id: number) => {
   const { showErrorMessage, showInfoMessage } = useFlashCardContext()
 
   const [mutate, { loading }] = useMutation<
-    ConfirmMarker,
-    ConfirmMarkerVariables
-  >(ConfirmMarkerMutation, {
+    ReportMarker,
+    ReportMarkerVariables
+  >(ReportMarkerMutation, {
     onCompleted: () => showInfoMessage(strings.success),
     onError: () => showErrorMessage(commonStrings.error),
+    refetchQueries: ['MarkersQuery'],
   })
 
   return {
-    confirmMarker: () => mutate({ variables: { id } }),
     loading,
+    reportMarker: () => mutate({ variables: { id } }),
   }
 }
 
 const strings = new LocalizedStrings({
   en: {
-    success: 'Event confirmed successfully',
+    success: 'Event reported successfully',
   },
   es: {
-    success: 'Evento confirmado con éxito',
+    success: 'Evento reportado con éxito',
   },
 })

@@ -4,39 +4,39 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: AddMarkerMutation
+// GraphQL mutation operation: AddMarker
 // ====================================================
 
-export interface AddMarkerMutation_addMarker_adminRequests {
+export interface AddMarker_addMarker_adminRequests {
   createdAt: any;
   id: number;
   status: RequestStatus;
   userName: string;
 }
 
-export interface AddMarkerMutation_addMarker_category {
+export interface AddMarker_addMarker_category {
   color: string;
   description: string | null;
   id: number;
   name: string;
 }
 
-export interface AddMarkerMutation_addMarker_requests_user {
+export interface AddMarker_addMarker_requests_user {
   email: string;
   name: string;
 }
 
-export interface AddMarkerMutation_addMarker_requests {
+export interface AddMarker_addMarker_requests {
   createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
-  user: AddMarkerMutation_addMarker_requests_user;
+  user: AddMarker_addMarker_requests_user;
 }
 
-export interface AddMarkerMutation_addMarker {
-  adminRequests: AddMarkerMutation_addMarker_adminRequests[];
-  category: AddMarkerMutation_addMarker_category;
+export interface AddMarker_addMarker {
+  adminRequests: AddMarker_addMarker_adminRequests[];
+  category: AddMarker_addMarker_category;
   description: string | null;
   duration: number;
   expiresAt: any | null;
@@ -45,16 +45,16 @@ export interface AddMarkerMutation_addMarker {
   longitude: number;
   name: string;
   recurrence: string;
-  requests: AddMarkerMutation_addMarker_requests[];
+  requests: AddMarker_addMarker_requests[];
   subscribedUsers: number;
   timeZone: string;
 }
 
-export interface AddMarkerMutation {
-  addMarker: AddMarkerMutation_addMarker;
+export interface AddMarker {
+  addMarker: AddMarker_addMarker;
 }
 
-export interface AddMarkerMutationVariables {
+export interface AddMarkerVariables {
   input: AddMarkerInput;
 }
 
@@ -64,39 +64,39 @@ export interface AddMarkerMutationVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: AddRequestMutation
+// GraphQL mutation operation: AddRequest
 // ====================================================
 
-export interface AddRequestMutation_addRequest_adminRequests {
+export interface AddRequest_addRequest_adminRequests {
   createdAt: any;
   id: number;
   status: RequestStatus;
   userName: string;
 }
 
-export interface AddRequestMutation_addRequest_category {
+export interface AddRequest_addRequest_category {
   color: string;
   description: string | null;
   id: number;
   name: string;
 }
 
-export interface AddRequestMutation_addRequest_requests_user {
+export interface AddRequest_addRequest_requests_user {
   email: string;
   name: string;
 }
 
-export interface AddRequestMutation_addRequest_requests {
+export interface AddRequest_addRequest_requests {
   createdAt: any;
   description: string;
   expiresAt: any | null;
   id: number;
-  user: AddRequestMutation_addRequest_requests_user;
+  user: AddRequest_addRequest_requests_user;
 }
 
-export interface AddRequestMutation_addRequest {
-  adminRequests: AddRequestMutation_addRequest_adminRequests[];
-  category: AddRequestMutation_addRequest_category;
+export interface AddRequest_addRequest {
+  adminRequests: AddRequest_addRequest_adminRequests[];
+  category: AddRequest_addRequest_category;
   description: string | null;
   duration: number;
   expiresAt: any | null;
@@ -105,16 +105,16 @@ export interface AddRequestMutation_addRequest {
   longitude: number;
   name: string;
   recurrence: string;
-  requests: AddRequestMutation_addRequest_requests[];
+  requests: AddRequest_addRequest_requests[];
   subscribedUsers: number;
   timeZone: string;
 }
 
-export interface AddRequestMutation {
-  addRequest: AddRequestMutation_addRequest;
+export interface AddRequest {
+  addRequest: AddRequest_addRequest;
 }
 
-export interface AddRequestMutationVariables {
+export interface AddRequestVariables {
   input: AddRequestInput;
 }
 
@@ -145,6 +145,24 @@ export interface AdminRequests {
 
 export interface AdminRequestsVariables {
   id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: AppVersion
+// ====================================================
+
+export interface AppVersion_appVersion {
+  android: string;
+  ios: string;
+}
+
+export interface AppVersion {
+  appVersion: AppVersion_appVersion;
 }
 
 /* tslint:disable */
@@ -543,6 +561,27 @@ export interface RegisterDeviceTokenMutation {
 
 export interface RegisterDeviceTokenMutationVariables {
   input: RegisterDeviceTokenInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ReportMarker
+// ====================================================
+
+export interface ReportMarker_reportMarker {
+  id: number;
+}
+
+export interface ReportMarker {
+  reportMarker: ReportMarker_reportMarker;
+}
+
+export interface ReportMarkerVariables {
+  id: number;
 }
 
 /* tslint:disable */

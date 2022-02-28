@@ -10,9 +10,13 @@ import { Modal } from '../Modal'
 
 interface Props {
   markerId: number
+  visible: boolean
 }
 
-export const AddButton: React.FunctionComponent<Props> = ({ markerId }) => {
+export const AddButton: React.FunctionComponent<Props> = ({
+  markerId,
+  visible,
+}) => {
   const { isAuthenticated } = useAuthenticationContext()
 
   const {
@@ -26,7 +30,7 @@ export const AddButton: React.FunctionComponent<Props> = ({ markerId }) => {
     setModalVisibility(!isModalVisible)
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !visible) {
     return null
   }
 
@@ -47,10 +51,10 @@ export const AddButton: React.FunctionComponent<Props> = ({ markerId }) => {
 }
 
 const strings = new LocalizedStrings({
-  'en-US': {
+  en: {
     header: 'Do you want to request to be an administrator of this event?',
   },
-  'es-UY': {
+  es: {
     header: '¿Desea solicitar ser administrador de este evento?',
   },
 })

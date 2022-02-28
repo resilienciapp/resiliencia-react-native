@@ -15,6 +15,7 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState(false)
   const [password, setPassword] = useState('')
+  const [secureTextEntry, setSecureTextEntry] = useState(true)
 
   const passwordRef = useRef(null)
 
@@ -27,6 +28,8 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
   const validateEmail = () => {
     setEmailError(!!email && !validator.email(email))
   }
+
+  const toggleSecureTextEntry = () => setSecureTextEntry(!secureTextEntry)
 
   const buttonDisabled =
     !email || !validator.email(email) || !password || loading
@@ -50,8 +53,9 @@ export const SignIn: RouteComponent<Route.SignIn> = ({ navigation }) => {
         placeholder={strings.password}
         reference={passwordRef}
         returnKeyType="done"
-        secureTextEntry={true}
+        secureTextEntry={secureTextEntry}
         textContentType="password"
+        toggleSecureTextEntry={toggleSecureTextEntry}
       />
       <Button
         disabled={buttonDisabled}
