@@ -5,7 +5,7 @@ export const shouldUpdateApp = (
   minimumVersion: string,
   currentVersion: string = DeviceInfo.getVersion(),
 ) => {
-  const result = compareVersions(minimumVersion, currentVersion)
+  const result = compareVersions(currentVersion, minimumVersion)
 
   return result < 0
 }

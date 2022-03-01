@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
 import LocalizedStrings from 'react-native-localization'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Person from 'src/assets/person.svg'
@@ -72,25 +73,30 @@ const CustomDrawerContent = ({ navigation }: DrawerContentComponentProps) => {
         )}
         style={styles.list}
       />
-      {isAuthenticated ? (
-        <View style={styles.authenticatedContainer}>
-          <TouchableOpacity style={styles.button} onPress={signOut}>
-            <Text style={styles.text}>{strings.signOut}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={navigateToProfile} style={styles.profile}>
-            <Person height={35} style={styles.placeholder} width={35} />
-            <Text style={styles.textBold}>
-              {data?.user.profile.name ?? strings.profile}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <Button
-          onPress={navigateToSignIn}
-          mode={ButtonMode.Primary}
-          text={strings.signIn}
-        />
-      )}
+      <View style={styles.versionContainer}>
+        {isAuthenticated ? (
+          <View style={styles.authenticatedContainer}>
+            <TouchableOpacity style={styles.button} onPress={signOut}>
+              <Text style={styles.text}>{strings.signOut}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={navigateToProfile}
+              style={styles.profile}>
+              <Person height={35} style={styles.placeholder} width={35} />
+              <Text style={styles.textBold}>
+                {data?.user.profile.name ?? strings.profile}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <Button
+            onPress={navigateToSignIn}
+            mode={ButtonMode.Primary}
+            text={strings.signIn}
+          />
+        )}
+        <Text style={styles.version}>{DeviceInfo.getVersion()}</Text>
+      </View>
     </SafeAreaView>
   )
 }
@@ -183,5 +189,16 @@ const styles = StyleSheet.create({
     color: Color.Black,
     fontWeight: 'bold',
     paddingTop: 8,
+  },
+  version: {
+    color: Color.Grey,
+    fontSize: 14,
+    paddingTop: 12,
+  },
+  versionContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    width: '100%',
   },
 })
