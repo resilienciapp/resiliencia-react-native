@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import {
   Animated,
   Dimensions,
+  Easing,
   Platform,
   StyleSheet,
   Text,
@@ -30,6 +31,7 @@ export const UpdateCard: React.FunctionComponent = () => {
     Animated.timing(spinValue, {
       delay: 350,
       duration: 3000,
+      easing: Easing.linear,
       toValue: 1,
       useNativeDriver: true,
     }),
