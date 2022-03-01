@@ -231,15 +231,15 @@ export const Details: RouteComponent<Route.Details> = ({
 
 const strings = new LocalizedStrings({
   en: {
-    confirm: 'Confirm activity 👍',
+    confirm: 'Confirm activity\n 👍',
     expiresAt: 'Expires in {0} day',
-    report: 'Report inactivity 👎',
+    report: 'Report inactivity\n 👎',
     touchToConfirm: 'Confirm event to extend time',
   },
   es: {
-    confirm: 'Confirmar actividad 👍',
+    confirm: 'Confirmar actividad\n 👍',
     expiresAt: 'Expira en {0} día',
-    report: 'Reportar inactividad 👎',
+    report: 'Reportar inactividad\n 👎',
     touchToConfirm: 'Confirme el evento para extender el tiempo',
   },
 })
@@ -274,7 +274,8 @@ const styles = StyleSheet.create({
   description: {
     color: Color.Black,
     fontSize: 12,
-    marginTop: 24,
+    marginTop: 16,
+    textAlign: 'center',
   },
   expiresAt: {
     alignItems: 'center',

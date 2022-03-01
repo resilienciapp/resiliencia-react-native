@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingTop: 12,
+    paddingTop: 16,
   },
   text: {
     color: Color.Black,

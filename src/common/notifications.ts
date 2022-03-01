@@ -21,16 +21,49 @@ type Payload = {
   [Notification.EVENT_ADMINISTRATION_REQUEST]: {
     markerId: string
     markerName: string
+    type: Notification.EVENT_ADMINISTRATION_REQUEST
   }
   [Notification.EVENT_ADMINISTRATION_RESPONSE]: {
     markerId: string
     markerName: string
+    type: Notification.EVENT_ADMINISTRATION_RESPONSE
   }
   [Notification.MARKER_REQUEST]: {
     markerId: string
     markerName: string
     requestId: string
+    type: Notification.MARKER_REQUEST
   }
+}
+
+type Data =
+  | Payload[Notification.EVENT_ADMINISTRATION_REQUEST]
+  | Payload[Notification.EVENT_ADMINISTRATION_RESPONSE]
+  | Payload[Notification.EVENT_ADMINISTRATION_RESPONSE]
+
+const displayNotification = async (data: Data) => {
+  const channelId = await notifee.createChannel({
+    id: data.type,
+    name: strings[data.type].channel,
+  })
+
+  return notifee.displayNotification({
+    android: {
+      channelId,
+      color: Color.SkyBlue,
+      pressAction: {
+        id: data.markerId + new Date().toISOString(),
+        launchActivity: `${DeviceInfo.getBundleId()}.MainActivity`,
+      },
+      showTimestamp: true,
+      smallIcon: 'ic_launcher_white',
+      style: { text: strings[data.type].body, type: AndroidStyle.BIGTEXT },
+      timestamp: Date.now(),
+    },
+    body: strings[data.type].body,
+    data,
+    title: strings[data.type].title,
+  })
 }
 
 export const setBackgroundMessageHandler = () => {
@@ -56,38 +89,17 @@ export const setBackgroundMessageHandler = () => {
       data.type === Notification.EVENT_ADMINISTRATION_RESPONSE ||
       data.type === Notification.MARKER_REQUEST
     ) {
-      const channelId = await notifee.createChannel({
-        id: data.type,
-        name: strings[data.type].channel,
-      })
-
-      await notifee.displayNotification({
-        android: {
-          channelId,
-          color: Color.SkyBlue,
-          pressAction: {
-            id: data.markerId + new Date().toISOString(),
-            launchActivity: `${DeviceInfo.getBundleId()}.MainActivity`,
-          },
-          showTimestamp: true,
-          smallIcon: 'ic_launcher_white',
-          style: { text: strings[data.type].body, type: AndroidStyle.BIGTEXT },
-          timestamp: Date.now(),
-        },
-        body: strings[data.type].body,
-        data,
-        title: strings[data.type].title,
-      })
+      await displayNotification(data as Data)
     }
   })
 }
 
 export const useOnNotification = () => {
   const { showInfoMessage } = useFlashCardContext()
-  const [refreshUser] = useLazyUser()
+  const [refreshUser] = useLazyUser('network-only')
 
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(({ data }) => {
+    const unsubscribe = messaging().onMessage(async ({ data }) => {
       if (!data) {
         return
       }
@@ -98,13 +110,14 @@ export const useOnNotification = () => {
         data.type === Notification.MARKER_REQUEST
       ) {
         const payload = data as Payload[Notification.MARKER_REQUEST]
+        await refreshUser()
+        await displayNotification(data as Data)
         showInfoMessage(
           strings.formatString(
             strings[data.type].inside,
             payload.markerName,
           ) as string,
         )
-        refreshUser()
       }
     })
 

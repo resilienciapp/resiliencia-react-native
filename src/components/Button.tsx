@@ -55,6 +55,7 @@ const commonStyles = StyleSheet.create({
   },
   text: {
     fontWeight: 'bold',
+    textAlign: 'center',
   },
 })
 

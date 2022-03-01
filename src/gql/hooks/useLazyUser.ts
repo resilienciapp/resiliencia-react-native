@@ -1,4 +1,4 @@
-import { gql, useLazyQuery } from '@apollo/client'
+import { gql, useLazyQuery, WatchQueryFetchPolicy } from '@apollo/client'
 import { UserFragment } from 'src/gql/fragments/user'
 import { UserQuery as UserQueryData } from 'src/gql/types'
 
@@ -11,4 +11,5 @@ const UserLazyQuery = gql`
   ${UserFragment}
 `
 
-export const useLazyUser = () => useLazyQuery<UserQueryData>(UserLazyQuery)
+export const useLazyUser = (fetchPolicy?: WatchQueryFetchPolicy) =>
+  useLazyQuery<UserQueryData>(UserLazyQuery, { fetchPolicy })
