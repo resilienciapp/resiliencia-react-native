@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 import {
   Animated,
   Dimensions,
-  Easing,
   Platform,
   StyleSheet,
   Text,
@@ -17,21 +16,20 @@ import { Color } from 'src/styles/Color'
 
 import { Button, ButtonMode } from './Button'
 
-const spinValue = new Animated.Value(0)
-
-const spin = spinValue.interpolate({
-  inputRange: [0, 1],
-  outputRange: ['0deg', '360deg'],
-})
-
 export const UpdateCard: React.FunctionComponent = () => {
   const { data, error, loading, refetch } = useAppVersion()
+
+  const spinValue = new Animated.Value(0)
+
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  })
 
   Animated.loop(
     Animated.timing(spinValue, {
       delay: 350,
       duration: 3000,
-      easing: Easing.linear,
       toValue: 1,
       useNativeDriver: true,
     }),
