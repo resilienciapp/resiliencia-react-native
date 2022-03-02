@@ -19,6 +19,10 @@ import { Color } from 'src/styles/Color'
 
 import { Status } from './Status'
 
+const sort = (a: AdminRequest, b: AdminRequest) =>
+  DateTime.fromISO(b.createdAt).diff(DateTime.fromISO(a.createdAt), 'seconds')
+    .seconds
+
 export const AdministratorGroup: RouteComponent<Route.AdministratorGroup> = ({
   route: { params },
 }) => {
@@ -37,11 +41,12 @@ export const AdministratorGroup: RouteComponent<Route.AdministratorGroup> = ({
     !marker || marker.adminRequests.length === 0
       ? [[], []]
       : partition(
-          marker.adminRequests.sort(
-            (a, b) => b.createdAt.diff(a.createdAt, 'seconds').seconds,
-          ),
+          marker.adminRequests,
           ({ status }) => status === RequestStatus.pending,
         )
+
+  pendingRequests.sort(sort)
+  pastRequests.sort(sort)
 
   const onPressPrimary = () => {
     if (adminRequest) {
