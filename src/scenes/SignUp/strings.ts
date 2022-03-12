@@ -9,7 +9,7 @@ export const strings = new LocalizedStrings({
     signIn: 'Sign in',
   },
   es: {
-    email: 'Email',
+    email: 'Correo electrónico',
     name: 'Nombre',
     password: 'Contraseña',
     register: 'Registrarse',

@@ -61,12 +61,12 @@ export const Map: RouteComponent<Route.Map> = ({ navigation }) => {
       {
         altitude: 5,
         center: {
-          latitude: nativeEvent.coordinate.latitude - 0.0003,
+          latitude: nativeEvent.coordinate.latitude - 0.00095,
           longitude: nativeEvent.coordinate.longitude,
         },
         heading: 0,
         pitch: 0,
-        zoom: 20,
+        zoom: 18,
       },
       { duration: 750 },
     )
